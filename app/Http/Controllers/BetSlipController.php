@@ -125,6 +125,11 @@ class BetSlipController extends Controller
      */
     public function getBetSlip(Request $request)
     {
+        // Sadece AJAX istekleri için JSON döndür
+        if (!$request->ajax() && !$request->wantsJson()) {
+            return redirect('/');
+        }
+        
         return response()->json([
             'success' => true,
             'betSlip' => $this->getBetSlipData($request)

@@ -1,0 +1,19 @@
+GitHub Repository URL'si Alma Rehberi
+=====================================
+
+1. GitHub.com'a gidin ve giriş yapın
+2. Sağ üstte "+" → "New repository" tıklayın
+3. Repository name: supernovabet (veya betground)
+4. Private repository seçin
+5. Create repository tıklayın
+
+Repository oluştuktan sonra göreceğiniz URL:
+https://github.com/KULLANICI_ADINIZ/supernovabet.git
+
+Bu URL'yi kopyalayın ve aşağıdaki komutta kullanın:
+
+git remote add origin https://github.com/KULLANICI_ADINIZ/supernovabet.git
+git branch -M main  
+git push -u origin main
+
+NOT: KULLANICI_ADINIZ yerine kendi GitHub kullanıcı adınızı yazın!

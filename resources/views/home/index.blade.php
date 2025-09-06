@@ -213,3 +213,19 @@
     </section>
 </div>
 @endsection
+
+@push('scripts')
+<script>
+// Sayfa yüklendiğinde hata kontrolü
+document.addEventListener('DOMContentLoaded', function() {
+    // Eğer body'de JSON varsa temizle
+    const bodyText = document.body.innerText;
+    if (bodyText.includes('{"success":true') && bodyText.includes('"betSlip"')) {
+        console.error('JSON data leaked to page body, reloading...');
+        // Sayfayı temizle ve yeniden yükle
+        document.body.innerHTML = '';
+        window.location.reload();
+    }
+});
+</script>
+@endpush

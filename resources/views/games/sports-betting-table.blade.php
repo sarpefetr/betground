@@ -817,9 +817,12 @@
 let betSlip = [];
 let currentMatchMarkets = {};
 
-// Sayfa yüklendiğinde kupon verilerini yükle
+// Sayfa yüklendiğinde kupon verilerini yükle - sadece sports-betting sayfasında
 document.addEventListener('DOMContentLoaded', function() {
-    loadBetSlip();
+    // Sadece sports-betting sayfasında çalışsın
+    if (window.location.pathname.includes('canli-bahis') || window.location.pathname.includes('sports-betting')) {
+        loadBetSlip();
+    }
 });
 
 // Kupon toggle
