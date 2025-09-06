@@ -87,52 +87,175 @@
 
     <!-- Live Matches Section -->
     <section class="mb-12">
-        <h2 class="text-3xl font-bold mb-8 text-center">Canlı Maçlar</h2>
+        <h2 class="text-3xl font-bold mb-8 text-center">
+            <i class="fas fa-circle text-red-500 animate-pulse mr-2"></i>Canlı Maçlar
+        </h2>
+        <div id="liveMatchesContainer" class="bg-secondary rounded-xl p-6">
+            <div class="text-center py-8">
+                <i class="fas fa-spinner fa-spin text-gold text-3xl"></i>
+                <p class="mt-4 text-gray-400">Canlı maçlar yükleniyor...</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Live Casino Section -->
+    <section class="mb-12">
+        <h2 class="text-3xl font-bold mb-8 text-center">
+            <i class="fas fa-video text-gold mr-2"></i>Canlı Casino
+        </h2>
+        <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
+            @php
+                $liveCasinoGames = [
+                    ['name' => 'Lightning Roulette', 'provider' => 'Evolution', 'img' => 'https://via.placeholder.com/200x150/1a1a1a/FFD700?text=Lightning+Roulette'],
+                    ['name' => 'Crazy Time', 'provider' => 'Evolution', 'img' => 'https://via.placeholder.com/200x150/1a1a1a/FFD700?text=Crazy+Time'],
+                    ['name' => 'Blackjack VIP', 'provider' => 'Pragmatic', 'img' => 'https://via.placeholder.com/200x150/1a1a1a/FFD700?text=Blackjack+VIP'],
+                    ['name' => 'Speed Baccarat', 'provider' => 'Evolution', 'img' => 'https://via.placeholder.com/200x150/1a1a1a/FFD700?text=Speed+Baccarat'],
+                    ['name' => 'Dream Catcher', 'provider' => 'Evolution', 'img' => 'https://via.placeholder.com/200x150/1a1a1a/FFD700?text=Dream+Catcher'],
+                    ['name' => 'Turkish Roulette', 'provider' => 'Ezugi', 'img' => 'https://via.placeholder.com/200x150/1a1a1a/FFD700?text=Turkish+Roulette'],
+                ];
+            @endphp
+            
+            @foreach($liveCasinoGames as $game)
+                <div class="bg-secondary rounded-lg overflow-hidden card-hover cursor-pointer group" onclick="window.location.href='{{ route('live-casino') }}'">
+                    <div class="relative">
+                        <img src="{{ $game['img'] }}" alt="{{ $game['name'] }}" class="w-full h-32 object-cover">
+                        <div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                            <button class="bg-gold text-black px-4 py-2 rounded font-bold">
+                                <i class="fas fa-play mr-2"></i>Oyna
+                            </button>
+                        </div>
+                        <span class="absolute top-2 right-2 bg-red-600 text-white text-xs px-2 py-1 rounded">
+                            <i class="fas fa-circle text-xs mr-1"></i>CANLI
+                        </span>
+                    </div>
+                    <div class="p-3">
+                        <h4 class="font-medium text-sm truncate">{{ $game['name'] }}</h4>
+                        <p class="text-xs text-gray-400">{{ $game['provider'] }}</p>
+                    </div>
+                </div>
+            @endforeach
+        </div>
+        <div class="text-center mt-6">
+            <a href="{{ route('live-casino') }}" class="text-gold hover:text-yellow-500 font-medium">
+                <i class="fas fa-arrow-right mr-2"></i>Tüm Canlı Casino Oyunları
+            </a>
+        </div>
+    </section>
+
+    <!-- Slot Games Section -->
+    <section class="mb-12">
+        <h2 class="text-3xl font-bold mb-8 text-center">
+            <i class="fas fa-gamepad text-gold mr-2"></i>Popüler Slotlar
+        </h2>
+        <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
+            @php
+                $slotGames = [
+                    ['name' => 'Gates of Olympus', 'provider' => 'Pragmatic Play', 'img' => 'https://via.placeholder.com/200x150/1a1a1a/FFD700?text=Gates+of+Olympus'],
+                    ['name' => 'Sweet Bonanza', 'provider' => 'Pragmatic Play', 'img' => 'https://via.placeholder.com/200x150/1a1a1a/FFD700?text=Sweet+Bonanza'],
+                    ['name' => 'Book of Dead', 'provider' => 'Play\'n GO', 'img' => 'https://via.placeholder.com/200x150/1a1a1a/FFD700?text=Book+of+Dead'],
+                    ['name' => 'Wanted Dead or a Wild', 'provider' => 'Hacksaw', 'img' => 'https://via.placeholder.com/200x150/1a1a1a/FFD700?text=Wanted+Dead'],
+                    ['name' => 'Big Bass Bonanza', 'provider' => 'Pragmatic Play', 'img' => 'https://via.placeholder.com/200x150/1a1a1a/FFD700?text=Big+Bass'],
+                    ['name' => 'Starlight Princess', 'provider' => 'Pragmatic Play', 'img' => 'https://via.placeholder.com/200x150/1a1a1a/FFD700?text=Starlight+Princess'],
+                ];
+            @endphp
+            
+            @foreach($slotGames as $game)
+                <div class="bg-secondary rounded-lg overflow-hidden card-hover cursor-pointer group" onclick="window.location.href='{{ route('slots') }}'">
+                    <div class="relative">
+                        <img src="{{ $game['img'] }}" alt="{{ $game['name'] }}" class="w-full h-32 object-cover">
+                        <div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                            <button class="bg-gold text-black px-4 py-2 rounded font-bold">
+                                <i class="fas fa-play mr-2"></i>Oyna
+                            </button>
+                        </div>
+                    </div>
+                    <div class="p-3">
+                        <h4 class="font-medium text-sm truncate">{{ $game['name'] }}</h4>
+                        <p class="text-xs text-gray-400">{{ $game['provider'] }}</p>
+                    </div>
+                </div>
+            @endforeach
+        </div>
+        <div class="text-center mt-6">
+            <a href="{{ route('slots') }}" class="text-gold hover:text-yellow-500 font-medium">
+                <i class="fas fa-arrow-right mr-2"></i>Tüm Slot Oyunları
+            </a>
+        </div>
+    </section>
+
+    <!-- E-Sports Section -->
+    <section class="mb-12">
+        <h2 class="text-3xl font-bold mb-8 text-center">
+            <i class="fas fa-desktop text-gold mr-2"></i>E-Spor Maçları
+        </h2>
         <div class="bg-secondary rounded-xl p-6">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div class="bg-accent p-4 rounded-lg flex justify-between items-center">
-                    <div>
-                        <div class="flex items-center mb-2">
-                            <img src="https://via.placeholder.com/24x24" alt="Team 1" class="mr-2 rounded">
-                            <span>Manchester United</span>
-                        </div>
-                        <div class="flex items-center">
-                            <img src="https://via.placeholder.com/24x24" alt="Team 2" class="mr-2 rounded">
-                            <span>Liverpool</span>
-                        </div>
-                    </div>
-                    <div class="text-right">
-                        <div class="text-gold font-bold text-lg">2-1</div>
-                        <div class="text-sm text-gray-400">67'</div>
-                    </div>
-                    <button class="bg-gold text-black px-4 py-2 rounded ml-4 hover:bg-yellow-500">
-                        Bahis Yap
-                    </button>
-                </div>
+                @php
+                    $esportsMatches = [
+                        [
+                            'game' => 'CS:GO',
+                            'team1' => 'Natus Vincere',
+                            'team2' => 'FaZe Clan',
+                            'time' => '16:00',
+                            'odds' => ['team1' => 1.85, 'team2' => 2.10],
+                            'tournament' => 'ESL Pro League'
+                        ],
+                        [
+                            'game' => 'League of Legends',
+                            'team1' => 'T1',
+                            'team2' => 'Gen.G',
+                            'time' => '14:30',
+                            'odds' => ['team1' => 1.95, 'team2' => 1.95],
+                            'tournament' => 'LCK Spring'
+                        ],
+                        [
+                            'game' => 'Dota 2',
+                            'team1' => 'Team Spirit',
+                            'team2' => 'OG',
+                            'time' => '18:00',
+                            'odds' => ['team1' => 2.20, 'team2' => 1.70],
+                            'tournament' => 'DPC WEU'
+                        ],
+                        [
+                            'game' => 'Valorant',
+                            'team1' => 'Fnatic',
+                            'team2' => 'Team Liquid',
+                            'time' => '20:00',
+                            'odds' => ['team1' => 1.75, 'team2' => 2.15],
+                            'tournament' => 'VCT EMEA'
+                        ]
+                    ];
+                @endphp
                 
-                <div class="bg-accent p-4 rounded-lg flex justify-between items-center">
-                    <div>
-                        <div class="flex items-center mb-2">
-                            <img src="https://via.placeholder.com/24x24" alt="Team 1" class="mr-2 rounded">
-                            <span>Barcelona</span>
+                @foreach($esportsMatches as $match)
+                    <div class="bg-accent rounded-lg p-4">
+                        <div class="flex justify-between items-start mb-3">
+                            <div>
+                                <span class="bg-gold text-black text-xs px-2 py-1 rounded font-medium">{{ $match['game'] }}</span>
+                                <p class="text-xs text-gray-400 mt-1">{{ $match['tournament'] }}</p>
+                            </div>
+                            <span class="text-sm text-gray-400">{{ $match['time'] }}</span>
                         </div>
-                        <div class="flex items-center">
-                            <img src="https://via.placeholder.com/24x24" alt="Team 2" class="mr-2 rounded">
-                            <span>Real Madrid</span>
+                        <div class="space-y-2">
+                            <div class="flex items-center justify-between">
+                                <span class="text-sm">{{ $match['team1'] }}</span>
+                                <button onclick="alert('E-Spor bahisleri yakında!')" class="bg-primary hover:bg-gold hover:text-black transition-all px-3 py-1 rounded text-sm font-bold">
+                                    {{ number_format($match['odds']['team1'], 2) }}
+                                </button>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <span class="text-sm">{{ $match['team2'] }}</span>
+                                <button onclick="alert('E-Spor bahisleri yakında!')" class="bg-primary hover:bg-gold hover:text-black transition-all px-3 py-1 rounded text-sm font-bold">
+                                    {{ number_format($match['odds']['team2'], 2) }}
+                                </button>
+                            </div>
                         </div>
                     </div>
-                    <div class="text-right">
-                        <div class="text-gold font-bold text-lg">1-0</div>
-                        <div class="text-sm text-gray-400">45'</div>
-                    </div>
-                    <button class="bg-gold text-black px-4 py-2 rounded ml-4 hover:bg-yellow-500">
-                        Bahis Yap
-                    </button>
-                </div>
+                @endforeach
             </div>
             <div class="text-center mt-6">
-                <a href="{{ route('sports-betting') }}" class="text-gold hover:text-yellow-500 font-medium">
-                    <i class="fas fa-arrow-right mr-2"></i>Tüm Canlı Maçları Gör
+                <a href="{{ route('esports') }}" class="text-gold hover:text-yellow-500 font-medium">
+                    <i class="fas fa-arrow-right mr-2"></i>Tüm E-Spor Maçları
                 </a>
             </div>
         </div>
@@ -216,16 +339,192 @@
 
 @push('scripts')
 <script>
-// Sayfa yüklendiğinde hata kontrolü
+// Sayfa yüklendiğinde hata kontrolü ve maçları yükle
 document.addEventListener('DOMContentLoaded', function() {
     // Eğer body'de JSON varsa temizle
     const bodyText = document.body.innerText;
     if (bodyText.includes('{"success":true') && bodyText.includes('"betSlip"')) {
         console.error('JSON data leaked to page body, reloading...');
-        // Sayfayı temizle ve yeniden yükle
         document.body.innerHTML = '';
         window.location.reload();
+        return;
     }
+    
+    // Canlı maçları yükle
+    loadLiveMatchesForHome();
+    
+    // Her 30 saniyede bir güncelle
+    setInterval(loadLiveMatchesForHome, 30000);
 });
+
+// Canlı maçları yükle
+function loadLiveMatchesForHome() {
+    fetch('/api/sports/live-matches')
+        .then(response => response.json())
+        .then(data => {
+            const container = document.getElementById('liveMatchesContainer');
+            
+            if (data.matches && data.matches.length > 0) {
+                // Sadece ilk 4 maçı göster
+                const matches = data.matches.slice(0, 4);
+                let html = '<div class="grid grid-cols-1 md:grid-cols-2 gap-4">';
+                
+                matches.forEach(match => {
+                    const minute = match.minute || match.time || '0';
+                    const homeScore = match.home_score || match.homeScore || '0';
+                    const awayScore = match.away_score || match.awayScore || '0';
+                    
+                    html += `
+                        <div class="bg-accent rounded-lg p-4">
+                            <div class="flex justify-between items-start mb-3">
+                                <div class="flex-1">
+                                    <div class="text-sm text-gray-400 mb-1">${match.league || ''}</div>
+                                    <div class="flex items-center justify-between">
+                                        <div>
+                                            <div class="font-medium mb-1">${match.home_team || match.homeTeam}</div>
+                                            <div class="font-medium">${match.away_team || match.awayTeam}</div>
+                                        </div>
+                                        <div class="text-right ml-4">
+                                            <div class="text-2xl font-bold text-gold">${homeScore} - ${awayScore}</div>
+                                            <div class="text-sm text-gray-400">${minute}'</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-3 gap-2">
+                                <button onclick="addToSlipFromHome('${match.id}', '${match.home_team || match.homeTeam} vs ${match.away_team || match.awayTeam}', 'match_result', 'home', '1', ${match.odds?.home || match.bestOdds?.home || 2.00})" 
+                                        class="odd-box-home bg-primary hover:bg-gold hover:text-black transition-all p-2 rounded text-center">
+                                    <div class="text-xs text-gray-400">1</div>
+                                    <div class="font-bold">${(match.odds?.home || match.bestOdds?.home || 2.00).toFixed(2)}</div>
+                                </button>
+                                <button onclick="addToSlipFromHome('${match.id}', '${match.home_team || match.homeTeam} vs ${match.away_team || match.awayTeam}', 'match_result', 'draw', 'X', ${match.odds?.draw || match.bestOdds?.draw || 3.20})" 
+                                        class="odd-box-home bg-primary hover:bg-gold hover:text-black transition-all p-2 rounded text-center">
+                                    <div class="text-xs text-gray-400">X</div>
+                                    <div class="font-bold">${(match.odds?.draw || match.bestOdds?.draw || 3.20).toFixed(2)}</div>
+                                </button>
+                                <button onclick="addToSlipFromHome('${match.id}', '${match.home_team || match.homeTeam} vs ${match.away_team || match.awayTeam}', 'match_result', 'away', '2', ${match.odds?.away || match.bestOdds?.away || 3.50})" 
+                                        class="odd-box-home bg-primary hover:bg-gold hover:text-black transition-all p-2 rounded text-center">
+                                    <div class="text-xs text-gray-400">2</div>
+                                    <div class="font-bold">${(match.odds?.away || match.bestOdds?.away || 3.50).toFixed(2)}</div>
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                });
+                
+                html += '</div>';
+                html += `
+                    <div class="text-center mt-6">
+                        <a href="/canli-bahis" class="text-gold hover:text-yellow-500 font-medium">
+                            <i class="fas fa-arrow-right mr-2"></i>Tüm Canlı Maçları Gör
+                        </a>
+                    </div>
+                `;
+                
+                container.innerHTML = html;
+            } else {
+                container.innerHTML = `
+                    <div class="text-center py-8">
+                        <i class="fas fa-info-circle text-gold text-3xl mb-4"></i>
+                        <p class="text-gray-400">Şu anda canlı maç bulunmuyor.</p>
+                        <a href="/canli-bahis" class="text-gold hover:text-yellow-500 font-medium mt-4 inline-block">
+                            <i class="fas fa-calendar mr-2"></i>Yaklaşan Maçları Gör
+                        </a>
+                    </div>
+                `;
+            }
+        })
+        .catch(error => {
+            console.error('Error loading matches:', error);
+            document.getElementById('liveMatchesContainer').innerHTML = `
+                <div class="text-center py-8">
+                    <i class="fas fa-exclamation-triangle text-red-500 text-3xl mb-4"></i>
+                    <p class="text-gray-400">Maçlar yüklenirken bir hata oluştu.</p>
+                    <button onclick="loadLiveMatchesForHome()" class="text-gold hover:text-yellow-500 font-medium mt-4">
+                        <i class="fas fa-redo mr-2"></i>Tekrar Dene
+                    </button>
+                </div>
+            `;
+        });
+}
+
+// Ana sayfadan kupona ekle
+function addToSlipFromHome(matchId, eventName, marketType, selection, selectionName, odds) {
+    // Önce kullanıcı giriş yapmış mı kontrol et
+    @guest
+        alert('Bahis yapmak için lütfen giriş yapın!');
+        window.location.href = '/giris';
+        return;
+    @endguest
+    
+    // Kupon ekleme isteği
+    fetch('/api/betslip/add', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+        },
+        body: JSON.stringify({
+            match_id: matchId,
+            event_name: eventName,
+            market_type: marketType,
+            selection: selection,
+            selection_name: selectionName,
+            odds: odds
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            // Buton görünümünü güncelle
+            updateButtonState(matchId, marketType, selection);
+            
+            // Başarı bildirimi
+            showNotification('Bahis kupona eklendi!', 'success');
+        } else {
+            showNotification(data.message || 'Bir hata oluştu', 'error');
+        }
+    })
+    .catch(error => {
+        console.error('Error adding to bet slip:', error);
+        showNotification('Bir hata oluştu', 'error');
+    });
+}
+
+// Buton durumunu güncelle
+function updateButtonState(matchId, marketType, selection) {
+    const buttons = document.querySelectorAll('.odd-box-home');
+    buttons.forEach(btn => {
+        const onclick = btn.getAttribute('onclick');
+        if (onclick && onclick.includes(matchId) && onclick.includes(marketType)) {
+            if (onclick.includes(`'${selection}'`)) {
+                btn.classList.add('bg-gold', 'text-black');
+                btn.classList.remove('bg-primary', 'text-white');
+            } else {
+                btn.classList.remove('bg-gold', 'text-black');
+                btn.classList.add('bg-primary', 'text-white');
+            }
+        }
+    });
+}
+
+// Bildirim göster
+function showNotification(message, type = 'success') {
+    const notification = document.createElement('div');
+    notification.className = `fixed top-20 right-4 z-50 p-4 rounded-lg shadow-lg ${
+        type === 'success' ? 'bg-green-600' : 'bg-red-600'
+    } text-white`;
+    notification.innerHTML = `
+        <div class="flex items-center">
+            <i class="fas ${type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle'} mr-2"></i>
+            <span>${message}</span>
+        </div>
+    `;
+    document.body.appendChild(notification);
+    
+    setTimeout(() => {
+        notification.remove();
+    }, 3000);
+}
 </script>
 @endpush

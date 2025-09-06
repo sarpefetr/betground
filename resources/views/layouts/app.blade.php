@@ -41,6 +41,95 @@
             transform: translateY(-5px);
             box-shadow: 0 10px 25px rgba(255, 215, 0, 0.1);
         }
+        
+        /* Mobile Responsive Fixes */
+        @media (max-width: 768px) {
+            /* Header buttons */
+            .mobile-menu-btn {
+                padding: 8px 12px !important;
+                font-size: 14px !important;
+            }
+            
+            /* Navigation links */
+            nav a {
+                padding: 8px 12px !important;
+                font-size: 13px !important;
+            }
+            
+            /* Auth buttons */
+            .auth-buttons a, .auth-buttons button {
+                padding: 8px 16px !important;
+                font-size: 13px !important;
+                white-space: nowrap;
+            }
+            
+            /* General buttons */
+            button, .btn, a[role="button"] {
+                padding: 10px 16px !important;
+                font-size: 14px !important;
+            }
+            
+            /* Small buttons */
+            .btn-sm {
+                padding: 6px 12px !important;
+                font-size: 12px !important;
+            }
+            
+            /* Balance display */
+            .balance-display {
+                font-size: 14px !important;
+            }
+            
+            /* Overflow fixes */
+            body {
+                overflow-x: hidden;
+            }
+            
+            .container {
+                overflow-x: hidden;
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
+            
+            /* Table responsive */
+            .table-responsive {
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+            
+            /* Sports betting odds */
+            .odd-box {
+                padding: 6px 8px !important;
+                min-width: 50px !important;
+            }
+            
+            .odd-box .odd-name {
+                font-size: 10px !important;
+            }
+            
+            .odd-box .odd-value {
+                font-size: 12px !important;
+            }
+            
+            /* Match table */
+            .match-table {
+                font-size: 14px;
+            }
+            
+            .team-name {
+                font-size: 13px !important;
+            }
+            
+            /* Modal adjustments */
+            .modal {
+                padding: 1rem;
+            }
+            
+            .modal-content {
+                max-height: 80vh;
+                overflow-y: auto;
+            }
+        }
     </style>
     
     @stack('styles')
@@ -260,8 +349,53 @@
                     </ul>
                 </div>
             </div>
-            <div class="border-t border-accent mt-8 pt-8 text-center">
-                <p class="text-gray-400 text-sm">&copy; 2024 Supernovabet. Tüm hakları saklıdır.</p>
+            <div class="border-t border-accent mt-8 pt-8">
+                <!-- Lisans Bilgileri -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                    <div class="text-center">
+                        <img src="https://via.placeholder.com/120x60/FFD700/000000?text=CURACAO" alt="Curacao License" class="mx-auto mb-2 opacity-75 hover:opacity-100 transition-opacity">
+                        <p class="text-xs text-gray-500">License No: 8048/JAZ2019-015</p>
+                    </div>
+                    <div class="text-center">
+                        <img src="https://via.placeholder.com/120x60/FFD700/000000?text=18%2B" alt="18+" class="mx-auto mb-2 opacity-75 hover:opacity-100 transition-opacity">
+                        <p class="text-xs text-gray-500">Sorumlu Oyun</p>
+                    </div>
+                    <div class="text-center">
+                        <img src="https://via.placeholder.com/120x60/FFD700/000000?text=SSL" alt="SSL Secure" class="mx-auto mb-2 opacity-75 hover:opacity-100 transition-opacity">
+                        <p class="text-xs text-gray-500">256-bit SSL Güvenlik</p>
+                    </div>
+                </div>
+                
+                <!-- Ödeme Yöntemleri -->
+                <div class="text-center mb-6">
+                    <p class="text-xs text-gray-500 mb-3">Güvenli Ödeme Yöntemleri</p>
+                    <div class="flex justify-center space-x-4 opacity-75">
+                        <i class="fab fa-cc-visa text-2xl text-gray-400"></i>
+                        <i class="fab fa-cc-mastercard text-2xl text-gray-400"></i>
+                        <i class="fab fa-bitcoin text-2xl text-gray-400"></i>
+                        <i class="fab fa-ethereum text-2xl text-gray-400"></i>
+                        <i class="fas fa-university text-2xl text-gray-400"></i>
+                    </div>
+                </div>
+                
+                <!-- Yasal Uyarı -->
+                <div class="text-center mb-4">
+                    <p class="text-xs text-gray-500 max-w-4xl mx-auto">
+                        Supernovabet, Antillephone N.V. tarafından yetkilendirilmiş ve lisanslanmış olup, Curacao hükümeti tarafından verilen 8048/JAZ2019-015 lisans numarası altında faaliyet göstermektedir. 
+                        Kumar oynamak bağımlılık yapabilir. Lütfen sorumlu oynayın. 18 yaşından küçüklerin siteye erişimi yasaktır.
+                    </p>
+                </div>
+                
+                <!-- Copyright -->
+                <div class="text-center pt-4 border-t border-accent/50">
+                    <p class="text-gray-400 text-sm">&copy; 2024 Supernovabet. Tüm hakları saklıdır.</p>
+                    <p class="text-xs text-gray-600 mt-2">
+                        <a href="#" class="hover:text-gold">Gizlilik Politikası</a> | 
+                        <a href="#" class="hover:text-gold">Kullanım Şartları</a> | 
+                        <a href="#" class="hover:text-gold">Sorumlu Oyun</a> | 
+                        <a href="#" class="hover:text-gold">Çerez Politikası</a>
+                    </p>
+                </div>
             </div>
         </div>
     </footer>
