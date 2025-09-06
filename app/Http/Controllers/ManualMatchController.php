@@ -161,4 +161,32 @@ class ManualMatchController extends Controller
             'matches' => $liveMatches
         ]);
     }
+    
+    /**
+     * Get finished manual matches
+     */
+    public function getFinishedMatches()
+    {
+        $finishedMatches = ManualMatch::where('status', 'finished')
+            ->orderBy('updated_at', 'desc')
+            ->limit(10)
+            ->get()
+            ->map(function($match) {
+                return [
+                    'id' => 'manual-' . $match->id,
+                    'home_team' => $match->home_team,
+                    'away_team' => $match->away_team,
+                    'league' => $match->league,
+                    'home_score' => $match->home_score,
+                    'away_score' => $match->away_score,
+                    'status' => 'finished',
+                    'updated_at' => $match->updated_at
+                ];
+            });
+        
+        return response()->json([
+            'success' => true,
+            'matches' => $finishedMatches
+        ]);
+    }
 }

@@ -63,6 +63,7 @@ Route::prefix('api/betslip')->name('api.betslip.')->group(function () {
 
 // Manuel Maç API Routes (Public)
 Route::get('/api/manual-matches/live', [\App\Http\Controllers\ManualMatchController::class, 'getLiveMatches'])->name('api.manual-matches.live');
+Route::get('/api/manual-matches/finished', [\App\Http\Controllers\ManualMatchController::class, 'getFinishedMatches'])->name('api.manual-matches.finished');
 Route::get('/api/manual-matches/{manualMatch}/markets', [\App\Http\Controllers\ManualMatchController::class, 'getMarkets'])->name('api.manual-matches.markets');
 
 // Oyun Sayfaları (Giriş gerektirmez ama giriş yapılmışsa kullanıcı bilgisi gösterilir)

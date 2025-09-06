@@ -98,6 +98,19 @@
         </div>
     </section>
 
+    <!-- Finished Matches Section -->
+    <section class="mb-12">
+        <h2 class="text-3xl font-bold mb-8 text-center">
+            <i class="fas fa-check-circle text-green-500 mr-2"></i>Bitmiş Maçlar
+        </h2>
+        <div id="finishedMatchesContainer" class="bg-secondary rounded-xl p-6">
+            <div class="text-center py-8">
+                <i class="fas fa-spinner fa-spin text-gold text-3xl"></i>
+                <p class="mt-4 text-gray-400">Bitmiş maçlar yükleniyor...</p>
+            </div>
+        </div>
+    </section>
+
     <!-- Live Casino Section -->
     <section class="mb-12">
         <h2 class="text-3xl font-bold mb-8 text-center">
@@ -353,8 +366,12 @@ document.addEventListener('DOMContentLoaded', function() {
     // Canlı maçları yükle
     loadLiveMatchesForHome();
     
+    // Bitmiş maçları yükle
+    loadFinishedMatchesForHome();
+    
     // Her 30 saniyede bir güncelle
     setInterval(loadLiveMatchesForHome, 30000);
+    setInterval(loadFinishedMatchesForHome, 60000);
 });
 
 // Canlı maçları yükle
@@ -458,6 +475,13 @@ function addToSlipFromHome(matchId, eventName, marketType, selection, selectionN
         return;
     @endguest
     
+    // Manuel maç ID'sini kontrol et
+    if (!matchId.startsWith('manual-')) {
+        matchId = 'manual-' + matchId;
+    }
+    
+    console.log('Adding to bet slip:', { matchId, eventName, marketType, selection, selectionName, odds });
+    
     // Kupon ekleme isteği
     fetch('/api/betslip/add', {
         method: 'POST',
@@ -526,6 +550,73 @@ function showNotification(message, type = 'success') {
     setTimeout(() => {
         notification.remove();
     }, 3000);
+}
+
+// Bitmiş maçları yükle
+function loadFinishedMatchesForHome() {
+    // Manuel bitmiş maçları çek
+    fetch('/api/manual-matches/finished')
+        .then(response => response.json())
+        .then(data => {
+            const container = document.getElementById('finishedMatchesContainer');
+            
+            if (data.matches && data.matches.length > 0) {
+                // Sadece ilk 4 maçı göster
+                const matches = data.matches.slice(0, 4);
+                let html = '<div class="grid grid-cols-1 md:grid-cols-2 gap-4">';
+                
+                matches.forEach(match => {
+                    html += `
+                        <div class="bg-accent rounded-lg p-4 opacity-75">
+                            <div class="flex justify-between items-start mb-3">
+                                <div class="flex-1">
+                                    <div class="text-sm text-gray-400 mb-1">${match.league || ''}</div>
+                                    <div class="flex items-center justify-between">
+                                        <div>
+                                            <div class="font-medium mb-1">${match.home_team}</div>
+                                            <div class="font-medium">${match.away_team}</div>
+                                        </div>
+                                        <div class="text-right ml-4">
+                                            <div class="text-2xl font-bold text-gold">${match.home_score} - ${match.away_score}</div>
+                                            <div class="text-sm text-gray-400">Bitti</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex justify-between items-center mt-3 pt-3 border-t border-gray-700">
+                                <span class="text-xs text-gray-500">
+                                    <i class="fas fa-calendar-check mr-1"></i>
+                                    ${new Date(match.updated_at).toLocaleDateString('tr-TR')}
+                                </span>
+                                <span class="text-xs ${match.home_score > match.away_score ? 'text-green-400' : match.home_score < match.away_score ? 'text-red-400' : 'text-yellow-400'}">
+                                    ${match.home_score > match.away_score ? '1' : match.home_score < match.away_score ? '2' : 'X'} Kazandı
+                                </span>
+                            </div>
+                        </div>
+                    `;
+                });
+                
+                html += '</div>';
+                
+                container.innerHTML = html;
+            } else {
+                container.innerHTML = `
+                    <div class="text-center py-8">
+                        <i class="fas fa-info-circle text-gold text-3xl mb-4"></i>
+                        <p class="text-gray-400">Henüz bitmiş maç bulunmuyor.</p>
+                    </div>
+                `;
+            }
+        })
+        .catch(error => {
+            console.error('Error loading finished matches:', error);
+            document.getElementById('finishedMatchesContainer').innerHTML = `
+                <div class="text-center py-8">
+                    <i class="fas fa-exclamation-triangle text-red-500 text-3xl mb-4"></i>
+                    <p class="text-gray-400">Maçlar yüklenirken bir hata oluştu.</p>
+                </div>
+            `;
+        });
 }
 </script>
 @endpush

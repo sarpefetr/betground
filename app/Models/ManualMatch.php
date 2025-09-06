@@ -162,6 +162,88 @@ class ManualMatch extends Model
             'status' => 'finished',
             'current_minute' => 90
         ]);
+        
+        // Bu maça yapılan bahisleri değerlendir
+        $this->evaluateBets();
+    }
+    
+    // Bahisleri değerlendir
+    protected function evaluateBets()
+    {
+        // Bu maça ait pending bahisleri bul
+        $bets = \App\Models\Bet::where('status', 'pending')
+            ->where('bet_details', 'like', '%"match_id":"manual-' . $this->id . '"%')
+            ->get();
+        
+        foreach ($bets as $bet) {
+            $allWon = true;
+            $betDetails = $bet->bet_details;
+            
+            // Her bir bahis seçimini kontrol et
+            foreach ($betDetails as $detail) {
+                if (isset($detail['match_id']) && $detail['match_id'] == 'manual-' . $this->id) {
+                    // Maç sonucu kontrolü
+                    if ($detail['market_type'] == 'match_result') {
+                        $won = $this->checkMatchResult($detail['selection']);
+                        if (!$won) {
+                            $allWon = false;
+                            break;
+                        }
+                    }
+                    // Diğer market tipleri için kontroller eklenebilir
+                }
+            }
+            
+            // Eğer tüm seçimler kazandıysa
+            if ($allWon) {
+                $bet->update(['status' => 'won']);
+                
+                // Kazancı öde
+                $user = $bet->user;
+                if ($user && $user->wallet) {
+                    $winAmount = $bet->potential_win;
+                    $user->wallet->increment('balance', $winAmount);
+                    
+                    // Transaction kaydı oluştur
+                    $user->wallet->transactions()->create([
+                        'user_id' => $user->id,
+                        'type' => 'win',
+                        'amount' => $winAmount,
+                        'balance_before' => $user->wallet->balance - $winAmount,
+                        'balance_after' => $user->wallet->balance,
+                        'currency' => 'TRY',
+                        'description' => 'Bahis Kazancı #' . $bet->id,
+                        'reference_type' => 'App\Models\Bet',
+                        'reference_id' => $bet->id,
+                        'status' => 'completed'
+                    ]);
+                }
+            } else {
+                // Kaybetti
+                $bet->update(['status' => 'lost']);
+            }
+        }
+    }
+    
+    // Maç sonucu kontrolü
+    protected function checkMatchResult($selection)
+    {
+        $homeScore = $this->home_score;
+        $awayScore = $this->away_score;
+        
+        switch ($selection) {
+            case 'home':
+            case '1':
+                return $homeScore > $awayScore;
+            case 'draw':
+            case 'X':
+                return $homeScore == $awayScore;
+            case 'away':
+            case '2':
+                return $awayScore > $homeScore;
+            default:
+                return false;
+        }
     }
     
     // Gol ekle
