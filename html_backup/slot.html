@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="tr" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BetGround - Slot Oyunları</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#1a1a1a',
+                        secondary: '#2a2a2a',
+                        accent: '#3a3a3a',
+                        gold: '#ffd700',
+                        darkgray: '#171717'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .bg-gradient-dark {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+        }
+        .text-glow {
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+        }
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(255, 215, 0, 0.1);
+        }
+        .slot-card {
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(145deg, #2a2a2a, #1a1a1a);
+        }
+        .slot-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255, 215, 0, 0.1);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .slot-card:hover::before {
+            opacity: 1;
+        }
+        .jackpot-glow {
+            animation: pulse 2s infinite;
+        }
+    </style>
+</head>
+<body class="bg-primary text-white min-h-screen">
+    <!-- News Bar -->
+    <div class="bg-gold text-black text-center py-2 text-sm font-medium">
+        <div class="container mx-auto">
+            <span class="animate-pulse">📢 Site adresimiz 455.com dur bir sonraki adres 456.com olacaktır</span>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="bg-secondary shadow-lg border-b border-accent">
+        <div class="container mx-auto px-4">
+            <div class="flex items-center justify-between h-16">
+                <!-- Logo -->
+                <div class="flex items-center">
+                    <a href="index.html" class="text-gold text-2xl font-bold text-glow">
+                        <i class="fas fa-dice mr-2"></i>BetGround
+                    </a>
+                </div>
+
+                <!-- Navigation Links -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="index.html" class="flex items-center text-white hover:text-gold transition-colors">
+                        <i class="fas fa-home mr-2"></i>Ana Sayfa
+                    </a>
+                    <a href="canli-casino.html" class="flex items-center text-white hover:text-gold transition-colors">
+                        <i class="fas fa-video mr-2"></i>Canlı Casino
+                    </a>
+                    <a href="canli-bahis.html" class="flex items-center text-white hover:text-gold transition-colors">
+                        <i class="fas fa-futbol mr-2"></i>Canlı Bahis
+                    </a>
+                    <a href="slot.html" class="flex items-center text-gold border-b-2 border-gold pb-1">
+                        <i class="fas fa-gamepad mr-2"></i>Slot
+                    </a>
+                    <a href="oyunlar.html" class="flex items-center text-white hover:text-gold transition-colors">
+                        <i class="fas fa-puzzle-piece mr-2"></i>Oyunlar
+                    </a>
+                    <a href="e-sporlar.html" class="flex items-center text-white hover:text-gold transition-colors">
+                        <i class="fas fa-desktop mr-2"></i>E-Sporlar
+                    </a>
+                    <a href="sanal-sporlar.html" class="flex items-center text-white hover:text-gold transition-colors">
+                        <i class="fas fa-robot mr-2"></i>Sanal Sporlar
+                    </a>
+                    <a href="promosyonlar.html" class="flex items-center text-white hover:text-gold transition-colors">
+                        <i class="fas fa-gift mr-2"></i>Promosyonlar
+                    </a>
+                </div>
+
+                <!-- User Actions -->
+                <div class="flex items-center space-x-4">
+                    <a href="giris.html" class="bg-gold text-black px-4 py-2 rounded-lg hover:bg-yellow-500 transition-colors font-medium">
+                        <i class="fas fa-sign-in-alt mr-2"></i>Giriş
+                    </a>
+                    <a href="kayit.html" class="border border-gold text-gold px-4 py-2 rounded-lg hover:bg-gold hover:text-black transition-colors">
+                        <i class="fas fa-user-plus mr-2"></i>Kayıt
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8">
+        <!-- Page Header -->
+        <section class="mb-12">
+            <div class="text-center">
+                <h1 class="text-4xl font-bold mb-4 text-glow">
+                    <i class="fas fa-gamepad mr-3"></i>Slot Oyunları
+                </h1>
+                <p class="text-xl text-gray-300">Binlerce slot oyunu arasından favorinizi seçin</p>
+            </div>
+        </section>
+
+        <!-- Jackpot Section -->
+        <section class="mb-12">
+            <div class="bg-gradient-dark rounded-2xl p-8">
+                <div class="text-center mb-8">
+                    <h2 class="text-3xl font-bold mb-4 jackpot-glow text-gold">🎰 MEGA JACKPOT 🎰</h2>
+                    <div class="text-5xl font-bold text-gold mb-4 jackpot-glow">₺2.847.392</div>
+                    <p class="text-gray-300">Son kazanan: Mehmet K. - ₺147.000</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div class="slot-card bg-secondary p-4 rounded-xl card-hover cursor-pointer">
+                        <div class="text-center">
+                            <div class="text-gold text-3xl mb-2">💎</div>
+                            <h3 class="font-bold mb-1">Mega Fortune</h3>
+                            <div class="text-gold font-bold">₺847.392</div>
+                        </div>
+                    </div>
+                    <div class="slot-card bg-secondary p-4 rounded-xl card-hover cursor-pointer">
+                        <div class="text-center">
+                            <div class="text-gold text-3xl mb-2">👑</div>
+                            <h3 class="font-bold mb-1">Hall of Gods</h3>
+                            <div class="text-gold font-bold">₺1.234.567</div>
+                        </div>
+                    </div>
+                    <div class="slot-card bg-secondary p-4 rounded-xl card-hover cursor-pointer">
+                        <div class="text-center">
+                            <div class="text-gold text-3xl mb-2">⚡</div>
+                            <h3 class="font-bold mb-1">Divine Fortune</h3>
+                            <div class="text-gold font-bold">₺765.433</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Filters -->
+        <section class="mb-8" x-data="{ selectedCategory: 'all' }">
+            <div class="flex flex-wrap gap-4 justify-center">
+                <button @click="selectedCategory = 'all'" 
+                        :class="selectedCategory === 'all' ? 'bg-gold text-black' : 'bg-secondary text-white hover:bg-accent'"
+                        class="px-6 py-2 rounded-lg font-medium transition-colors">
+                    Tümü
+                </button>
+                <button @click="selectedCategory = 'popular'" 
+                        :class="selectedCategory === 'popular' ? 'bg-gold text-black' : 'bg-secondary text-white hover:bg-accent'"
+                        class="px-6 py-2 rounded-lg font-medium transition-colors">
+                    Popüler
+                </button>
+                <button @click="selectedCategory = 'new'" 
+                        :class="selectedCategory === 'new' ? 'bg-gold text-black' : 'bg-secondary text-white hover:bg-accent'"
+                        class="px-6 py-2 rounded-lg font-medium transition-colors">
+                    Yeni
+                </button>
+                <button @click="selectedCategory = 'jackpot'" 
+                        :class="selectedCategory === 'jackpot' ? 'bg-gold text-black' : 'bg-secondary text-white hover:bg-accent'"
+                        class="px-6 py-2 rounded-lg font-medium transition-colors">
+                    Jackpot
+                </button>
+                <button @click="selectedCategory = 'classic'" 
+                        :class="selectedCategory === 'classic' ? 'bg-gold text-black' : 'bg-secondary text-white hover:bg-accent'"
+                        class="px-6 py-2 rounded-lg font-medium transition-colors">
+                    Klasik
+                </button>
+            </div>
+        </section>
+
+        <!-- Slot Games Grid -->
+        <section>
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4">
+                <!-- Slot Game 1 -->
+                <div class="slot-card rounded-xl overflow-hidden card-hover cursor-pointer">
+                    <div class="relative h-32 bg-gradient-to-br from-purple-600 to-blue-600 flex items-center justify-center">
+                        <div class="text-4xl">🍒</div>
+                        <div class="absolute top-2 right-2 bg-red-600 text-white px-1 py-0.5 rounded text-xs">
+                            HOT
+                        </div>
+                    </div>
+                    <div class="p-3 bg-secondary">
+                        <h3 class="font-bold text-sm mb-1 truncate">Sweet Bonanza</h3>
+                        <div class="flex justify-between items-center text-xs text-gray-400">
+                            <span>Pragmatic Play</span>
+                            <span class="text-gold">RTP: 96.5%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Slot Game 2 -->
+                <div class="slot-card rounded-xl overflow-hidden card-hover cursor-pointer">
+                    <div class="relative h-32 bg-gradient-to-br from-green-600 to-emerald-600 flex items-center justify-center">
+                        <div class="text-4xl">🎰</div>
+                        <div class="absolute top-2 right-2 bg-gold text-black px-1 py-0.5 rounded text-xs font-bold">
+                            NEW
+                        </div>
+                    </div>
+                    <div class="p-3 bg-secondary">
+                        <h3 class="font-bold text-sm mb-1 truncate">Book of Dead</h3>
+                        <div class="flex justify-between items-center text-xs text-gray-400">
+                            <span>Play'n GO</span>
+                            <span class="text-gold">RTP: 94.2%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Slot Game 3 -->
+                <div class="slot-card rounded-xl overflow-hidden card-hover cursor-pointer">
+                    <div class="relative h-32 bg-gradient-to-br from-red-600 to-pink-600 flex items-center justify-center">
+                        <div class="text-4xl">💎</div>
+                        <div class="absolute top-2 right-2 bg-purple-600 text-white px-1 py-0.5 rounded text-xs">
+                            JACKPOT
+                        </div>
+                    </div>
+                    <div class="p-3 bg-secondary">
+                        <h3 class="font-bold text-sm mb-1 truncate">Starburst</h3>
+                        <div class="flex justify-between items-center text-xs text-gray-400">
+                            <span>NetEnt</span>
+                            <span class="text-gold">RTP: 96.1%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Slot Game 4 -->
+                <div class="slot-card rounded-xl overflow-hidden card-hover cursor-pointer">
+                    <div class="relative h-32 bg-gradient-to-br from-yellow-600 to-orange-600 flex items-center justify-center">
+                        <div class="text-4xl">🏴‍☠️</div>
+                    </div>
+                    <div class="p-3 bg-secondary">
+                        <h3 class="font-bold text-sm mb-1 truncate">Pirates Gold</h3>
+                        <div class="flex justify-between items-center text-xs text-gray-400">
+                            <span>Pragmatic Play</span>
+                            <span class="text-gold">RTP: 95.5%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Slot Game 5 -->
+                <div class="slot-card rounded-xl overflow-hidden card-hover cursor-pointer">
+                    <div class="relative h-32 bg-gradient-to-br from-indigo-600 to-purple-600 flex items-center justify-center">
+                        <div class="text-4xl">⚡</div>
+                    </div>
+                    <div class="p-3 bg-secondary">
+                        <h3 class="font-bold text-sm mb-1 truncate">Zeus Lightning</h3>
+                        <div class="flex justify-between items-center text-xs text-gray-400">
+                            <span>Red Tiger</span>
+                            <span class="text-gold">RTP: 96.3%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Slot Game 6 -->
+                <div class="slot-card rounded-xl overflow-hidden card-hover cursor-pointer">
+                    <div class="relative h-32 bg-gradient-to-br from-teal-600 to-cyan-600 flex items-center justify-center">
+                        <div class="text-4xl">🐺</div>
+                    </div>
+                    <div class="p-3 bg-secondary">
+                        <h3 class="font-bold text-sm mb-1 truncate">Wolf Gold</h3>
+                        <div class="flex justify-between items-center text-xs text-gray-400">
+                            <span>Pragmatic Play</span>
+                            <span class="text-gold">RTP: 96.0%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Slot Game 7 -->
+                <div class="slot-card rounded-xl overflow-hidden card-hover cursor-pointer">
+                    <div class="relative h-32 bg-gradient-to-br from-rose-600 to-red-600 flex items-center justify-center">
+                        <div class="text-4xl">🌹</div>
+                    </div>
+                    <div class="p-3 bg-secondary">
+                        <h3 class="font-bold text-sm mb-1 truncate">Wild Rose</h3>
+                        <div class="flex justify-between items-center text-xs text-gray-400">
+                            <span>Synot Games</span>
+                            <span class="text-gold">RTP: 94.8%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Slot Game 8 -->
+                <div class="slot-card rounded-xl overflow-hidden card-hover cursor-pointer">
+                    <div class="relative h-32 bg-gradient-to-br from-amber-600 to-yellow-600 flex items-center justify-center">
+                        <div class="text-4xl">🍋</div>
+                    </div>
+                    <div class="p-3 bg-secondary">
+                        <h3 class="font-bold text-sm mb-1 truncate">Fruit Party</h3>
+                        <div class="flex justify-between items-center text-xs text-gray-400">
+                            <span>Pragmatic Play</span>
+                            <span class="text-gold">RTP: 96.5%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Slot Game 9 -->
+                <div class="slot-card rounded-xl overflow-hidden card-hover cursor-pointer">
+                    <div class="relative h-32 bg-gradient-to-br from-slate-600 to-gray-600 flex items-center justify-center">
+                        <div class="text-4xl">🔮</div>
+                    </div>
+                    <div class="p-3 bg-secondary">
+                        <h3 class="font-bold text-sm mb-1 truncate">Mystic Mirror</h3>
+                        <div class="flex justify-between items-center text-xs text-gray-400">
+                            <span>Red Tiger</span>
+                            <span class="text-gold">RTP: 95.8%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Slot Game 10 -->
+                <div class="slot-card rounded-xl overflow-hidden card-hover cursor-pointer">
+                    <div class="relative h-32 bg-gradient-to-br from-emerald-600 to-teal-600 flex items-center justify-center">
+                        <div class="text-4xl">🎭</div>
+                    </div>
+                    <div class="p-3 bg-secondary">
+                        <h3 class="font-bold text-sm mb-1 truncate">Carnival</h3>
+                        <div class="flex justify-between items-center text-xs text-gray-400">
+                            <span>Microgaming</span>
+                            <span class="text-gold">RTP: 96.2%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Slot Game 11 -->
+                <div class="slot-card rounded-xl overflow-hidden card-hover cursor-pointer">
+                    <div class="relative h-32 bg-gradient-to-br from-violet-600 to-purple-600 flex items-center justify-center">
+                        <div class="text-4xl">🎪</div>
+                    </div>
+                    <div class="p-3 bg-secondary">
+                        <h3 class="font-bold text-sm mb-1 truncate">Circus Delight</h3>
+                        <div class="flex justify-between items-center text-xs text-gray-400">
+                            <span>Endorphina</span>
+                            <span class="text-gold">RTP: 96.1%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Slot Game 12 -->
+                <div class="slot-card rounded-xl overflow-hidden card-hover cursor-pointer">
+                    <div class="relative h-32 bg-gradient-to-br from-orange-600 to-red-600 flex items-center justify-center">
+                        <div class="text-4xl">🔥</div>
+                    </div>
+                    <div class="p-3 bg-secondary">
+                        <h3 class="font-bold text-sm mb-1 truncate">Hot Fiesta</h3>
+                        <div class="flex justify-between items-center text-xs text-gray-400">
+                            <span>Pragmatic Play</span>
+                            <span class="text-gold">RTP: 96.8%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Load More Button -->
+            <div class="text-center mt-12">
+                <button class="bg-gold text-black px-8 py-3 rounded-lg font-bold hover:bg-yellow-500 transition-colors">
+                    <i class="fas fa-plus mr-2"></i>Daha Fazla Yükle
+                </button>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-darkgray border-t border-accent mt-16">
+        <div class="container mx-auto px-4 py-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-gold font-bold text-lg mb-4">BetGround</h3>
+                    <p class="text-gray-400 text-sm">Güvenilir ve eğlenceli bahis deneyimi</p>
+                </div>
+                <div>
+                    <h4 class="text-white font-medium mb-4">Oyunlar</h4>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><a href="canli-casino.html" class="hover:text-gold">Canlı Casino</a></li>
+                        <li><a href="slot.html" class="hover:text-gold">Slot Oyunları</a></li>
+                        <li><a href="canli-bahis.html" class="hover:text-gold">Spor Bahisleri</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-medium mb-4">Hesap</h4>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><a href="para-yatir.html" class="hover:text-gold">Para Yatır</a></li>
+                        <li><a href="para-cek.html" class="hover:text-gold">Para Çek</a></li>
+                        <li><a href="promosyonlar.html" class="hover:text-gold">Promosyonlar</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-medium mb-4">Destek</h4>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><a href="#" class="hover:text-gold">Canlı Destek</a></li>
+                        <li><a href="#" class="hover:text-gold">SSS</a></li>
+                        <li><a href="#" class="hover:text-gold">İletişim</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-accent mt-8 pt-8 text-center">
+                <p class="text-gray-400 text-sm">&copy; 2024 BetGround. Tüm hakları saklıdır.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

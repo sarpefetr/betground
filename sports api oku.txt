@@ -1,0 +1,1306 @@
+Getting Started
+1. Get an API Key
+Head over to our pricing page and sign up for a free account here. You’ll receive an API key that will grant you access to the API.
+
+After creating an account you will receive an email with your API key. You will then use this key to authenticate your requests to the API.
+
+2. Make Your First Request
+Now that you have your API key, you can start making requests to the Sports Game Odds API. You’ll want to add your API key into the ‘X-API-Key’ header for each request you make.
+
+Manually - With a Browser Extension
+You can use a browser extension like Postman Interceptor or Restlet Client to manually send requests to the API.
+
+Install the extension.
+Open the extension and create a new request.
+Set the request type to GET.
+Enter the API endpoint URL, e.g., https://api.sportsgameodds.com/v2/sports/.
+Add a new header with the key X-API-Key and the value as your API key.
+Send the request and view the response.
+Manually - With an App Like Postman
+Postman is a powerful tool for testing and interacting with APIs.
+
+Download and install Postman.
+Open Postman and create a new request.
+Set the request type to GET.
+Enter the API endpoint URL, e.g., https://api.sportsgameodds.com/v2/sports/.
+Go to the Headers tab and add a new header with the key X-API-Key and the value as your API key.
+Click Send to make the request and view the response.
+Manually - From the Reference Docs
+You can also make requests directly from our API Reference page. Each endpoint has an interactive section where you can input your API key and parameters to see the response.
+
+With Code
+
+Javascript
+
+Python
+
+Ruby
+
+PHP
+
+Java
+
+// This example uses fetch() but you can use any HTTP library
+const requestOptions = {
+    method: 'GET',
+    headers: { 'X-Api-Key': 'YOUR_API_KEY' }
+};
+const requestUrl = 'https://api.sportsgameodds.com/v2/sports/'; 
+fetch(requestUrl, requestOptions) 
+  .then(response => response.json()) 
+  .then(data => console.log(data))
+  .catch(error => console.error('Error:', error));
+Head over to our detailed API reference here to see all the available endpoints and parameters that the Sports Game Odds API has to offer.
+
+API Reference
+
+
+Getting Data in Batches
+This following information only applies to the /teams, /events, and /odds endpoints.
+
+Most endpoints will always return all results which match your query. However, since the /teams, /events, and /odds endpoints can potentially return hundreds or even thousands of results, the resulting objects are paginated/limited and must be fetched in batches.
+
+The number of items by each request to these endpoints is determined by the limit parameter. This parameter currently has a default value of 10 but can be overridden up to a max value of 100.
+
+In some cases you may want to fetch all of the results from these endpoints. To do this, you can feed the nextCursor in the resonse as the cursor parameter in your next request to pick up where you left off. When the response does not contain a nextCursor property, you have reached the end of the results.
+
+Let’s take the following example, where we want to grab all finalized NBA events:
+
+
+Javascript
+
+Python
+
+Ruby
+
+PHP
+
+java
+
+$next_cursor = null;
+$event_data = [];
+
+do {
+    $ch = curl_init();
+    $url = "https://api.sportsgameodds.com/v2/events?leagueID=NBA&marketOddsAvailable=true&limit=50&cursor=" . urlencode($next_cursor);
+
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    curl_setopt($ch, CURLOPT_URL, $url);
+
+    $response = curl_exec($ch);
+    curl_close($ch);
+
+    $data = json_decode($response, true);
+    $event_data = array_merge($event_data, $data['events']);
+
+    $next_cursor = $data['nextCursor'];
+
+} while ($next_cursor);
+
+foreach ($event_data as $event) {
+    $odds = $event['odds'];
+    foreach ($odds as $odd_id => $odd_object) {
+        echo "Odd ID: " . $odd_id . "\n";
+        echo "Odd Value: " . $odd_object['closeOdds'] . "\n";
+    }
+}
+Pager
+Previous page
+Rate Limiting
+Next page
+
+
+
+Football Markets
+Below is a list of odds markets available to at least one Football league. Additional markets (those not listed here) can be made available through a custom plan by contacting us.
+
+Market	OddIDs	Identifiers	LeagueIDs
+Moneyline	Home:
+points-home-game-ml-home
+Away:
+points-away-game-ml-away	statID:
+points
+betTypeID:
+ml
+periodID:
+game
+statEntityIDs:
+home, away	CFL
+NCAAF
+NFL
+USFL
+XFL
+Spread	Home:
+points-home-game-sp-home
+Away:
+points-away-game-sp-away	statID:
+points
+betTypeID:
+sp
+periodID:
+game
+statEntityIDs:
+home, away	CFL
+NCAAF
+NFL
+USFL
+XFL
+Team Points Over/Under	Home Team - Over:
+points-home-game-ou-over
+Away Team - Over:
+points-away-game-ou-over
+Home Team - Under:
+points-home-game-ou-under
+Away Team - Under:
+points-away-game-ou-under	statID:
+points
+betTypeID:
+ou
+periodID:
+game
+statEntityIDs:
+home, away	CFL
+NCAAF
+NFL
+USFL
+XFL
+Over/Under	Over:
+points-all-game-ou-over
+Under:
+points-all-game-ou-under	statID:
+points
+betTypeID:
+ou
+periodID:
+game
+statEntityID:
+all	CFL
+NCAAF
+NFL
+USFL
+XFL
+Player Points Over/Under	Over:
+points-ANY_PLAYER_ID-game-ou-over
+Under:
+points-ANY_PLAYER_ID-game-ou-under	statID:
+points
+betTypeID:
+ou
+periodID:
+game
+statEntityID:
+ANY_PLAYER_ID	CFL
+NCAAF
+NFL
+USFL
+XFL
+Team Points Even/Odd	Home Team - Even:
+points-home-game-eo-even
+Away Team - Even:
+points-away-game-eo-even
+Home Team - Odd:
+points-home-game-eo-odd
+Away Team - Odd:
+points-away-game-eo-odd	statID:
+points
+betTypeID:
+eo
+periodID:
+game
+statEntityIDs:
+home, away	CFL
+NCAAF
+NFL
+USFL
+XFL
+Total Points Even/Odd	Even:
+points-all-game-eo-even
+Odd:
+points-all-game-eo-odd	statID:
+points
+betTypeID:
+eo
+periodID:
+game
+statEntityID:
+all	CFL
+NCAAF
+NFL
+USFL
+XFL
+Player Points Even/Odd	Even:
+points-ANY_PLAYER_ID-game-eo-even
+Odd:
+points-ANY_PLAYER_ID-game-eo-odd	statID:
+points
+betTypeID:
+eo
+periodID:
+game
+statEntityID:
+ANY_PLAYER_ID	CFL
+NCAAF
+NFL
+USFL
+XFL
+Team Any Points Yes/No
+
+Team Anytime Points	Home Team - Yes:
+points-home-game-yn-yes
+Away Team - Yes:
+points-away-game-yn-yes
+Home Team - No:
+points-home-game-yn-no
+Away Team - No:
+points-away-game-yn-no	statID:
+points
+betTypeID:
+yn
+periodID:
+game
+statEntityIDs:
+home, away	CFL
+NCAAF
+NFL
+USFL
+XFL
+Any Points Yes/No
+
+Anytime Points	Yes:
+points-all-game-yn-yes
+No:
+points-all-game-yn-no	statID:
+points
+betTypeID:
+yn
+periodID:
+game
+statEntityID:
+all	CFL
+NCAAF
+NFL
+USFL
+XFL
+Player Any Points Yes/No
+
+Player Anytime Points	Yes:
+points-ANY_PLAYER_ID-game-yn-yes
+No:
+points-ANY_PLAYER_ID-game-yn-no	statID:
+points
+betTypeID:
+yn
+periodID:
+game
+statEntityID:
+ANY_PLAYER_ID	CFL
+NCAAF
+NFL
+USFL
+XFL
+3-Way Moneyline	Away Team - Away:
+points-away-game-ml3way-away
+Home Team - Home:
+points-home-game-ml3way-home
+Away Team - Away/Draw:
+points-away-game-ml3way-away+draw
+Home Team - Home/Draw:
+points-home-game-ml3way-home+draw	statID:
+points
+betTypeID:
+ml3way
+periodID:
+game
+statEntityIDs:
+away, home	CFL
+NCAAF
+NFL
+USFL
+XFL
+Regulation Moneyline	Home:
+points-home-reg-ml-home
+Away:
+points-away-reg-ml-away	statID:
+points
+betTypeID:
+ml
+periodID:
+reg
+statEntityIDs:
+home, away	CFL
+NCAAF
+NFL
+USFL
+XFL
+Regulation Spread	Home:
+points-home-reg-sp-home
+Away:
+points-away-reg-sp-away	statID:
+points
+betTypeID:
+sp
+periodID:
+reg
+statEntityIDs:
+home, away	CFL
+NCAAF
+NFL
+USFL
+XFL
+Regulation Over/Under	Over:
+points-all-reg-ou-over
+Under:
+points-all-reg-ou-under	statID:
+points
+betTypeID:
+ou
+periodID:
+reg
+statEntityID:
+all	CFL
+NCAAF
+NFL
+USFL
+XFL
+Regulation 3-Way Moneyline	Away Team - Away:
+points-away-reg-ml3way-away
+Home Team - Home:
+points-home-reg-ml3way-home
+Draw:
+points-all-reg-ml3way-draw
+Away Team - Away/Draw:
+points-away-reg-ml3way-away+draw
+Home Team - Home/Draw:
+points-home-reg-ml3way-home+draw
+Home/Away:
+points-all-reg-ml3way-not_draw	statID:
+points
+betTypeID:
+ml3way
+periodID:
+reg
+statEntityIDs:
+away, home, all	CFL
+NCAAF
+NFL
+USFL
+XFL
+1st Half Moneyline	Home:
+points-home-1h-ml-home
+Away:
+points-away-1h-ml-away	statID:
+points
+betTypeID:
+ml
+periodID:
+1h
+statEntityIDs:
+home, away	CFL
+NCAAF
+NFL
+USFL
+XFL
+1st Half Spread	Home:
+points-home-1h-sp-home
+Away:
+points-away-1h-sp-away	statID:
+points
+betTypeID:
+sp
+periodID:
+1h
+statEntityIDs:
+home, away	CFL
+NCAAF
+NFL
+USFL
+XFL
+Team 1st Half Points Over/Under	Home Team - Over:
+points-home-1h-ou-over
+Away Team - Over:
+points-away-1h-ou-over
+Home Team - Under:
+points-home-1h-ou-under
+Away Team - Under:
+points-away-1h-ou-under	statID:
+points
+betTypeID:
+ou
+periodID:
+1h
+statEntityIDs:
+home, away	CFL
+NCAAF
+NFL
+USFL
+XFL
+1st Half Over/Under	Over:
+points-all-1h-ou-over
+Under:
+points-all-1h-ou-under	statID:
+points
+betTypeID:
+ou
+periodID:
+1h
+statEntityID:
+all	CFL
+NCAAF
+NFL
+USFL
+XFL
+Player 1st Half Points Over/Under	Over:
+points-ANY_PLAYER_ID-1h-ou-over
+Under:
+points-ANY_PLAYER_ID-1h-ou-under	statID:
+points
+betTypeID:
+ou
+periodID:
+1h
+statEntityID:
+ANY_PLAYER_ID	CFL
+NCAAF
+NFL
+USFL
+XFL
+Team 1st Half Points Even/Odd	Home Team - Even:
+points-home-1h-eo-even
+Away Team - Even:
+points-away-1h-eo-even
+Home Team - Odd:
+points-home-1h-eo-odd
+Away Team - Odd:
+points-away-1h-eo-odd	statID:
+points
+betTypeID:
+eo
+periodID:
+1h
+statEntityIDs:
+home, away	CFL
+NCAAF
+NFL
+USFL
+XFL
+Total 1st Half Points Even/Odd	Even:
+points-all-1h-eo-even
+Odd:
+points-all-1h-eo-odd	statID:
+points
+betTypeID:
+eo
+periodID:
+1h
+statEntityID:
+all	CFL
+NCAAF
+NFL
+USFL
+XFL
+Player 1st Half Points Even/Odd	Even:
+points-ANY_PLAYER_ID-1h-eo-even
+Odd:
+points-ANY_PLAYER_ID-1h-eo-odd	statID:
+points
+betTypeID:
+eo
+periodID:
+1h
+statEntityID:
+ANY_PLAYER_ID	CFL
+NCAAF
+NFL
+USFL
+XFL
+Team Any 1st Half Points Yes/No
+
+Team Anytime Points (1st Half)	Home Team - Yes:
+points-home-1h-yn-yes
+Away Team - Yes:
+points-away-1h-yn-yes
+Home Team - No:
+points-home-1h-yn-no
+Away Team - No:
+points-away-1h-yn-no	statID:
+points
+betTypeID:
+yn
+periodID:
+1h
+statEntityIDs:
+home, away	CFL
+NCAAF
+NFL
+USFL
+XFL
+Any 1st Half Points Yes/No
+
+Anytime Points (1st Half)	Yes:
+points-all-1h-yn-yes
+No:
+points-all-1h-yn-no	statID:
+points
+betTypeID:
+yn
+periodID:
+1h
+statEntityID:
+all	CFL
+NCAAF
+NFL
+USFL
+XFL
+Player Any 1st Half Points Yes/No
+
+Player Anytime Points (1st Half)	Yes:
+points-ANY_PLAYER_ID-1h-yn-yes
+No:
+points-ANY_PLAYER_ID-1h-yn-no	statID:
+points
+betTypeID:
+yn
+periodID:
+1h
+statEntityID:
+ANY_PLAYER_ID	CFL
+NCAAF
+NFL
+USFL
+XFL
+1st Half 3-Way Moneyline	Away Team - Away:
+points-away-1h-ml3way-away
+Home Team - Home:
+points-home-1h-ml3way-home
+Away Team - Away/Draw:
+points-away-1h-ml3way-away+draw
+Home Team - Home/Draw:
+points-home-1h-ml3way-home+draw	statID:
+points
+betTypeID:
+ml3way
+periodID:
+1h
+statEntityIDs:
+away, home	CFL
+NCAAF
+NFL
+USFL
+XFL
+2nd Half Moneyline	Home:
+points-home-2h-ml-home
+Away:
+points-away-2h-ml-away	statID:
+points
+betTypeID:
+ml
+periodID:
+2h
+statEntityIDs:
+home, away	CFL
+NCAAF
+NFL
+USFL
+XFL
+2nd Half Spread	Home:
+points-home-2h-sp-home
+Away:
+points-away-2h-sp-away	statID:
+points
+betTypeID:
+sp
+periodID:
+2h
+statEntityIDs:
+home, away	CFL
+NCAAF
+NFL
+USFL
+XFL
+Team 2nd Half Points Over/Under	Home Team - Over:
+points-home-2h-ou-over
+Away Team - Over:
+points-away-2h-ou-over
+Home Team - Under:
+points-home-2h-ou-under
+Away Team - Under:
+points-away-2h-ou-under	statID:
+points
+betTypeID:
+ou
+periodID:
+2h
+statEntityIDs:
+home, away	CFL
+NCAAF
+NFL
+USFL
+XFL
+2nd Half Over/Under	Over:
+points-all-2h-ou-over
+Under:
+points-all-2h-ou-under	statID:
+points
+betTypeID:
+ou
+periodID:
+2h
+statEntityID:
+all	CFL
+NCAAF
+NFL
+USFL
+XFL
+Player 2nd Half Points Over/Under	Over:
+points-ANY_PLAYER_ID-2h-ou-over
+Under:
+points-ANY_PLAYER_ID-2h-ou-under	statID:
+points
+betTypeID:
+ou
+periodID:
+2h
+statEntityID:
+ANY_PLAYER_ID	CFL
+NCAAF
+NFL
+USFL
+XFL
+Team 2nd Half Points Even/Odd	Home Team - Even:
+points-home-2h-eo-even
+Away Team - Even:
+points-away-2h-eo-even
+Home Team - Odd:
+points-home-2h-eo-odd
+Away Team - Odd:
+points-away-2h-eo-odd	statID:
+points
+betTypeID:
+eo
+periodID:
+2h
+statEntityIDs:
+home, away	CFL
+NCAAF
+NFL
+USFL
+XFL
+Total 2nd Half Points Even/Odd	Even:
+points-all-2h-eo-even
+Odd:
+points-all-2h-eo-odd	statID:
+points
+betTypeID:
+eo
+periodID:
+2h
+statEntityID:
+all	CFL
+NCAAF
+NFL
+USFL
+XFL
+Player 2nd Half Points Even/Odd	Even:
+points-ANY_PLAYER_ID-2h-eo-even
+Odd:
+points-ANY_PLAYER_ID-2h-eo-odd	statID:
+points
+betTypeID:
+eo
+periodID:
+2h
+statEntityID:
+ANY_PLAYER_ID	CFL
+NCAAF
+NFL
+USFL
+XFL
+Team Any 2nd Half Points Yes/No
+
+Team Anytime Points (2nd Half)	Home Team - Yes:
+points-home-2h-yn-yes
+Away Team - Yes:
+points-away-2h-yn-yes
+Home Team - No:
+points-home-2h-yn-no
+Away Team - No:
+points-away-2h-yn-no	statID:
+points
+betTypeID:
+yn
+periodID:
+2h
+statEntityIDs:
+home, away	CFL
+NCAAF
+NFL
+USFL
+XFL
+Any 2nd Half Points Yes/No
+
+Anytime Points (2nd Half)	Yes:
+points-all-2h-yn-yes
+No:
+points-all-2h-yn-no	statID:
+points
+betTypeID:
+yn
+periodID:
+2h
+statEntityID:
+all	CFL
+NCAAF
+NFL
+USFL
+XFL
+Player Any 2nd Half Points Yes/No
+
+Player Anytime Points (2nd Half)	Yes:
+points-ANY_PLAYER_ID-2h-yn-yes
+No:
+points-ANY_PLAYER_ID-2h-yn-no	statID:
+points
+betTypeID:
+yn
+periodID:
+2h
+statEntityID:
+ANY_PLAYER_ID	CFL
+NCAAF
+NFL
+USFL
+XFL
+2nd Half 3-Way Moneyline	Away Team - Away:
+points-away-2h-ml3way-away
+Home Team - Home:
+points-home-2h-ml3way-home
+Away Team - Away/Draw:
+points-away-2h-ml3way-away+draw
+Home Team - Home/Draw:
+points-home-2h-ml3way-home+draw	statID:
+points
+betTypeID:
+ml3way
+periodID:
+2h
+statEntityIDs:
+away, home	CFL
+NCAAF
+NFL
+USFL
+XFL
+1st Quarter Moneyline	Home:
+points-home-1q-ml-home
+Away:
+points-away-1q-ml-away	statID:
+points
+betTypeID:
+ml
+periodID:
+1q
+statEntityIDs:
+home, away	CFL
+NCAAF
+NFL
+USFL
+XFL
+1st Quarter Spread	Home:
+points-home-1q-sp-home
+Away:
+points-away-1q-sp-away	statID:
+points
+betTypeID:
+sp
+periodID:
+1q
+statEntityIDs:
+home, away	CFL
+NCAAF
+NFL
+USFL
+XFL
+Team 1st Quarter Points Over/Under	Home Team - Over:
+points-home-1q-ou-over
+Away Team - Over:
+points-away-1q-ou-over
+Home Team - Under:
+points-home-1q-ou-under
+Away Team - Under:
+points-away-1q-ou-under	statID:
+points
+betTypeID:
+ou
+periodID:
+1q
+statEntityIDs:
+home, away	CFL
+NCAAF
+NFL
+USFL
+XFL
+1st Quarter Over/Under	Over:
+points-all-1q-ou-over
+Under:
+points-all-1q-ou-under	statID:
+points
+betTypeID:
+ou
+periodID:
+1q
+statEntityID:
+all	CFL
+NCAAF
+NFL
+USFL
+XFL
+Player 1st Quarter Points Over/Under	Over:
+points-ANY_PLAYER_ID-1q-ou-over
+Under:
+points-ANY_PLAYER_ID-1q-ou-under	statID:
+points
+betTypeID:
+ou
+periodID:
+1q
+statEntityID:
+ANY_PLAYER_ID	CFL
+NCAAF
+NFL
+USFL
+XFL
+Team 1st Quarter Points Even/Odd	Home Team - Even:
+points-home-1q-eo-even
+Away Team - Even:
+points-away-1q-eo-even
+Home Team - Odd:
+points-home-1q-eo-odd
+Away Team - Odd:
+points-away-1q-eo-odd	statID:
+points
+betTypeID:
+eo
+periodID:
+1q
+statEntityIDs:
+home, away	CFL
+NCAAF
+NFL
+USFL
+XFL
+Total 1st Quarter Points Even/Odd	Even:
+points-all-1q-eo-even
+Odd:
+points-all-1q-eo-odd	statID:
+points
+betTypeID:
+eo
+periodID:
+1q
+statEntityID:
+all	CFL
+NCAAF
+NFL
+USFL
+XFL
+Player 1st Quarter Points Even/Odd	Even:
+points-ANY_PLAYER_ID-1q-eo-even
+Odd:
+points-ANY_PLAYER_ID-1q-eo-odd	statID:
+points
+betTypeID:
+eo
+periodID:
+1q
+statEntityID:
+ANY_PLAYER_ID	CFL
+NCAAF
+NFL
+USFL
+XFL
+Team Any 1st Quarter Points Yes/No
+
+Team Anytime Points (1st Quarter)	Home Team - Yes:
+points-home-1q-yn-yes
+Away Team - Yes:
+points-away-1q-yn-yes
+Home Team - No:
+points-home-1q-yn-no
+Away Team - No:
+points-away-1q-yn-no	statID:
+points
+betTypeID:
+yn
+periodID:
+1q
+statEntityIDs:
+home, away	CFL
+NCAAF
+NFL
+USFL
+XFL
+Any 1st Quarter Points Yes/No
+
+Anytime Points (1st Quarter)	Yes:
+points-all-1q-yn-yes
+No:
+points-all-1q-yn-no	statID:
+points
+betTypeID:
+yn
+periodID:
+1q
+statEntityID:
+all	CFL
+NCAAF
+NFL
+USFL
+XFL
+Player Any 1st Quarter Points Yes/No
+
+Player Anytime Points (1st Quarter)	Yes:
+points-ANY_PLAYER_ID-1q-yn-yes
+No:
+points-ANY_PLAYER_ID-1q-yn-no	statID:
+points
+betTypeID:
+yn
+periodID:
+1q
+statEntityID:
+ANY_PLAYER_ID	CFL
+NCAAF
+NFL
+USFL
+XFL
+1st Quarter 3-Way Moneyline	Away Team - Away:
+points-away-1q-ml3way-away
+Home Team - Home:
+points-home-1q-ml3way-home
+Away Team - Away/Draw:
+points-away-1q-ml3way-away+draw
+Home Team - Home/Draw:
+points-home-1q-ml3way-home+draw	statID:
+points
+betTypeID:
+ml3way
+periodID:
+1q
+statEntityIDs:
+away, home	CFL
+NCAAF
+NFL
+USFL
+XFL
+2nd Quarter Moneyline	Home:
+points-home-2q-ml-home
+Away:
+points-away-2q-ml-away	statID:
+points
+betTypeID:
+ml
+periodID:
+2q
+statEntityIDs:
+home, away	CFL
+NCAAF
+NFL
+USFL
+XFL
+2nd Quarter Spread	Home:
+points-home-2q-sp-home
+Away:
+points-away-2q-sp-away	statID:
+points
+betTypeID:
+sp
+periodID:
+2q
+statEntityIDs:
+home, away	CFL
+NCAAF
+NFL
+USFL
+XFL
+Team 2nd Quarter Points Over/Under	Home Team - Over:
+points-home-2q-ou-over
+Away Team - Over:
+points-away-2q-ou-over
+Home Team - Under:
+points-home-2q-ou-under
+Away Team - Under:
+points-away-2q-ou-under	statID:
+points
+betTypeID:
+ou
+periodID:
+2q
+statEntityIDs:
+home, away	CFL
+NCAAF
+NFL
+USFL
+XFL
+2nd Quarter Over/Under	Over:
+points-all-2q-ou-over
+Under:
+points-all-2q-ou-under	statID:
+points
+betTypeID:
+ou
+periodID:
+2q
+statEntityID:
+all	CFL
+NCAAF
+NFL
+USFL
+XFL
+Player 2nd Quarter Points Over/Under	Over:
+points-ANY_PLAYER_ID-2q-ou-over
+Under:
+points-ANY_PLAYER_ID-2q-ou-under	statID:
+points
+betTypeID:
+ou
+periodID:
+2q
+statEntityID:
+ANY_PLAYER_ID	CFL
+NCAAF
+NFL
+USFL
+XFL
+Team 2nd Quarter Points Even/Odd	Home Team - Even:
+points-home-2q-eo-even
+Away Team - Even:
+points-away-2q-eo-even
+Home Team - Odd:
+points-home-2q-eo-odd
+Away Team - Odd:
+points-away-2q-eo-odd	statID:
+points
+betTypeID:
+eo
+periodID:
+2q
+statEntityIDs:
+home, away	CFL
+NCAAF
+NFL
+USFL
+XFL
+Total 2nd Quarter Points Even/Odd	Even:
+points-all-2q-eo-even
+Odd:
+points-all-2q-eo-odd	statID:
+points
+betTypeID:
+eo
+periodID:
+2q
+statEntityID:
+all	CFL
+NCAAF
+NFL
+USFL
+XFL
+Player 2nd Quarter Points Even/Odd	Even:
+points-ANY_PLAYER_ID-2q-eo-even
+Odd:
+points-ANY_PLAYER_ID-2q-eo-odd	statID:
+points
+betTypeID:
+eo
+periodID:
+2q
+statEntityID:
+ANY_PLAYER_ID	CFL
+NCAAF
+NFL
+USFL
+XFL
+Team Any 2nd Quarter Points Yes/No
+
+Team Anytime Points (2nd Quarter)	Home Team - Yes:
+points-home-2q-yn-yes
+Away Team - Yes:
+points-away-2q-yn-yes
+Home Team - No:
+points-home-2q-yn-no
+Away Team - No:
+points-away-2q-yn-no	statID:
+points
+betTypeID:
+yn
+periodID:
+2q
+statEntityIDs:
+home, away	CFL
+NCAAF
+NFL
+USFL
+XFL
+Any 2nd Quarter Points Yes/No
+
+Anytime Points (2nd Quarter)	Yes:
+points-all-2q-yn-yes
+No:
+points-all-2q-yn-no	statID:
+points
+betTypeID:
+yn
+periodID:
+2q
+statEntityID:
+all	CFL
+NCAAF
+NFL
+USFL
+XFL
+Player Any 2nd Quarter Points Yes/No
+
+Player Anytime Points (2nd Quarter)	Yes:
+points-ANY_PLAYER_ID-2q-yn-yes
+No:
+points-ANY_PLAYER_ID-2q-yn-no	statID:
+points
+betTypeID:
+yn
+periodID:
+2q
+statEntityID:
+ANY_PLAYER_ID	CFL
+NCAAF
+NFL
+USFL
+XFL
+2nd Quarter 3-Way Moneyline	Away Team - Away:
+points-away-2q-ml3way-away
+Home Team - Home:
+points-home-2q-ml3way-home
+Away Team - Away/Draw:
+points-away-2q-ml3way-away+draw
+Home Team - Home/Draw:
+points-home-2q-ml3way-home+draw	statID:
+points
+betTypeID:
+ml3way
+periodID:
+2q
+statEntityIDs:
+away, home	CFL
+NCAAF
+NFL
+USFL
+XFL
+3rd Quarter Moneyline	Home:
+points-home-3q-ml-home
+Away:
+points-away-3q-ml-away	statID:
+points
+betTypeID:
+ml
+periodID:
+3q
+statEntityIDs:
+home, away	CFL
+NCAAF
+NFL
+USFL
+XFL
+3rd Quarter Spread	Home:
+points-home-3q-sp-home
+Away:
+points-away-3q-sp-away	statID:
+points
+betTypeID:
+sp
+periodID:
+3q
+statEntityIDs:
+home, away	CFL
+NCAAF
+NFL
+USFL
+XFL
+Team 3rd Quarter Points Over/Under	Home Team - Over:
+points-home-3q-ou-over
+Away Team - Over:
+points-away-3q-ou-over
+Home Team - Under:
+points-home-3q-ou-under
+Away Team - Under:
+points-away-3q-ou-under	statID:
+points
+betTypeID:
+ou
+periodID:
+3q
+statEntityIDs:
+home, away	CFL
+NCAAF
+NFL
+USFL
+XFL
+3rd Quarter Over/Under	Over:
+points-all-3q-ou-over
+Under:
+points-all-3q-ou-under	statID:
+points
+betTypeID:
+ou
+periodID:
+3q
+statEntityID:
+all	CFL
+NCAAF
+NFL
+USFL
+XFL
+Player 3rd Quarter Points Over/Under	Over:
+points-ANY_PLAYER_ID-3q-ou-over
+Under:
+points-ANY_PLAYER_ID-3q-ou-under	statID:
+points
+betTypeID:
+ou
+periodID:
+3q
+statEntityID:
+ANY_PLAYER_ID	CFL
+NCAAF
+NFL
+USFL
+XFL
+Team 3rd Quarter Points Even/Odd	Home Team - Even:
+points-home-3q-eo-even
+Away Team - Even:
+points-away-3q-eo-even
+Home Team - Odd:
+points-home-3q-eo-odd
+Away Team - Odd:
+points-away-3q-eo-odd	statID:
+points
+betTypeID:
+eo
+periodID:
+3q
+statEntityIDs:
+home, away	CFL
+NCAAF
+NFL
+USFL
+XFL
+Total 3rd Quarter Points Even/Odd	Even:
+points-all-3q-eo-even
+Odd:
+points-all-3q-eo-odd	statID:
+points
+betTypeID:
+eo
+periodID:
+3q
+statEntityID:
+all	CFL
+NCAAF
+NFL

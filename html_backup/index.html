@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="tr" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BetGround - Ana Sayfa</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#1a1a1a',
+                        secondary: '#2a2a2a',
+                        accent: '#3a3a3a',
+                        gold: '#ffd700',
+                        darkgray: '#171717'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .bg-gradient-dark {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+        }
+        .text-glow {
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+        }
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(255, 215, 0, 0.1);
+        }
+    </style>
+</head>
+<body class="bg-primary text-white min-h-screen">
+    <!-- News Bar -->
+    <div class="bg-gold text-black text-center py-2 text-sm font-medium">
+        <div class="container mx-auto">
+            <span class="animate-pulse">📢 Site adresimiz 455.com dur bir sonraki adres 456.com olacaktır</span>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="bg-secondary shadow-lg border-b border-accent">
+        <div class="container mx-auto px-4">
+            <div class="flex items-center justify-between h-16">
+                <!-- Logo -->
+                <div class="flex items-center">
+                    <a href="index.html" class="text-gold text-2xl font-bold text-glow">
+                        <i class="fas fa-dice mr-2"></i>BetGround
+                    </a>
+                </div>
+
+                <!-- Navigation Links -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="index.html" class="flex items-center text-white hover:text-gold transition-colors">
+                        <i class="fas fa-home mr-2"></i>Ana Sayfa
+                    </a>
+                    <a href="canli-casino.html" class="flex items-center text-white hover:text-gold transition-colors">
+                        <i class="fas fa-video mr-2"></i>Canlı Casino
+                    </a>
+                    <a href="canli-bahis.html" class="flex items-center text-white hover:text-gold transition-colors">
+                        <i class="fas fa-futbol mr-2"></i>Canlı Bahis
+                    </a>
+                    <a href="slot.html" class="flex items-center text-white hover:text-gold transition-colors">
+                        <i class="fas fa-gamepad mr-2"></i>Slot
+                    </a>
+                    <a href="oyunlar.html" class="flex items-center text-white hover:text-gold transition-colors">
+                        <i class="fas fa-puzzle-piece mr-2"></i>Oyunlar
+                    </a>
+                    <a href="e-sporlar.html" class="flex items-center text-white hover:text-gold transition-colors">
+                        <i class="fas fa-desktop mr-2"></i>E-Sporlar
+                    </a>
+                    <a href="sanal-sporlar.html" class="flex items-center text-white hover:text-gold transition-colors">
+                        <i class="fas fa-robot mr-2"></i>Sanal Sporlar
+                    </a>
+                    <a href="promosyonlar.html" class="flex items-center text-white hover:text-gold transition-colors">
+                        <i class="fas fa-gift mr-2"></i>Promosyonlar
+                    </a>
+                </div>
+
+                <!-- User Actions -->
+                <div class="flex items-center space-x-4">
+                    <a href="giris.html" class="bg-gold text-black px-4 py-2 rounded-lg hover:bg-yellow-500 transition-colors font-medium">
+                        <i class="fas fa-sign-in-alt mr-2"></i>Giriş
+                    </a>
+                    <a href="kayit.html" class="border border-gold text-gold px-4 py-2 rounded-lg hover:bg-gold hover:text-black transition-colors">
+                        <i class="fas fa-user-plus mr-2"></i>Kayıt
+                    </a>
+                </div>
+
+                <!-- Mobile menu button -->
+                <div class="md:hidden">
+                    <button x-data @click="$dispatch('toggle-mobile-menu')" class="text-white hover:text-gold">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Navigation Menu -->
+        <div x-data="{ open: false }" 
+             x-on:toggle-mobile-menu.window="open = !open"
+             x-show="open" 
+             x-transition:enter="transition ease-out duration-200"
+             x-transition:enter-start="opacity-0 transform -translate-y-1"
+             x-transition:enter-end="opacity-100 transform translate-y-0"
+             x-transition:leave="transition ease-in duration-150"
+             x-transition:leave-start="opacity-100 transform translate-y-0"
+             x-transition:leave-end="opacity-0 transform -translate-y-1"
+             class="md:hidden bg-accent">
+            <div class="px-2 pt-2 pb-3 space-y-1">
+                <a href="index.html" class="block px-3 py-2 text-white hover:text-gold">
+                    <i class="fas fa-home mr-2"></i>Ana Sayfa
+                </a>
+                <a href="canli-casino.html" class="block px-3 py-2 text-white hover:text-gold">
+                    <i class="fas fa-video mr-2"></i>Canlı Casino
+                </a>
+                <a href="canli-bahis.html" class="block px-3 py-2 text-white hover:text-gold">
+                    <i class="fas fa-futbol mr-2"></i>Canlı Bahis
+                </a>
+                <a href="slot.html" class="block px-3 py-2 text-white hover:text-gold">
+                    <i class="fas fa-gamepad mr-2"></i>Slot
+                </a>
+                <a href="oyunlar.html" class="block px-3 py-2 text-white hover:text-gold">
+                    <i class="fas fa-puzzle-piece mr-2"></i>Oyunlar
+                </a>
+                <a href="e-sporlar.html" class="block px-3 py-2 text-white hover:text-gold">
+                    <i class="fas fa-desktop mr-2"></i>E-Sporlar
+                </a>
+                <a href="sanal-sporlar.html" class="block px-3 py-2 text-white hover:text-gold">
+                    <i class="fas fa-robot mr-2"></i>Sanal Sporlar
+                </a>
+                <a href="promosyonlar.html" class="block px-3 py-2 text-white hover:text-gold">
+                    <i class="fas fa-gift mr-2"></i>Promosyonlar
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8">
+        <!-- Hero Section -->
+        <section class="mb-12">
+            <div class="bg-gradient-dark rounded-2xl p-8 text-center">
+                <h1 class="text-5xl font-bold mb-4 text-glow">BetGround'a Hoş Geldiniz</h1>
+                <p class="text-xl text-gray-300 mb-8">En iyi bahis deneyimi için doğru adrestesiniz</p>
+                <div class="flex flex-col md:flex-row gap-4 justify-center">
+                    <a href="kayit.html" class="bg-gold text-black px-8 py-3 rounded-lg font-bold text-lg hover:bg-yellow-500 transition-colors">
+                        <i class="fas fa-user-plus mr-2"></i>Hemen Kayıt Ol
+                    </a>
+                    <a href="canli-casino.html" class="border-2 border-gold text-gold px-8 py-3 rounded-lg font-bold text-lg hover:bg-gold hover:text-black transition-colors">
+                        <i class="fas fa-play mr-2"></i>Canlı Casino
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Quick Access Cards -->
+        <section class="mb-12">
+            <h2 class="text-3xl font-bold mb-8 text-center">Popüler Bölümler</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="bg-secondary p-6 rounded-xl card-hover cursor-pointer">
+                    <div class="text-gold text-4xl mb-4 text-center">
+                        <i class="fas fa-video"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2 text-center">Canlı Casino</h3>
+                    <p class="text-gray-300 text-center">Gerçek krupiyeler ile oynayın</p>
+                </div>
+                
+                <div class="bg-secondary p-6 rounded-xl card-hover cursor-pointer">
+                    <div class="text-gold text-4xl mb-4 text-center">
+                        <i class="fas fa-futbol"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2 text-center">Canlı Bahis</h3>
+                    <p class="text-gray-300 text-center">Maçları canlı izleyip bahis yapın</p>
+                </div>
+                
+                <div class="bg-secondary p-6 rounded-xl card-hover cursor-pointer">
+                    <div class="text-gold text-4xl mb-4 text-center">
+                        <i class="fas fa-gamepad"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2 text-center">Slot Oyunları</h3>
+                    <p class="text-gray-300 text-center">Binlerce slot oyunu</p>
+                </div>
+                
+                <div class="bg-secondary p-6 rounded-xl card-hover cursor-pointer">
+                    <div class="text-gold text-4xl mb-4 text-center">
+                        <i class="fas fa-gift"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2 text-center">Promosyonlar</h3>
+                    <p class="text-gray-300 text-center">Günlük bonuslar ve kampanyalar</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Live Matches Section -->
+        <section class="mb-12">
+            <h2 class="text-3xl font-bold mb-8 text-center">Canlı Maçlar</h2>
+            <div class="bg-secondary rounded-xl p-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="bg-accent p-4 rounded-lg flex justify-between items-center">
+                        <div>
+                            <div class="flex items-center mb-2">
+                                <img src="https://via.placeholder.com/24x24" alt="Team 1" class="mr-2 rounded">
+                                <span>Manchester United</span>
+                            </div>
+                            <div class="flex items-center">
+                                <img src="https://via.placeholder.com/24x24" alt="Team 2" class="mr-2 rounded">
+                                <span>Liverpool</span>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <div class="text-gold font-bold text-lg">2-1</div>
+                            <div class="text-sm text-gray-400">67'</div>
+                        </div>
+                        <button class="bg-gold text-black px-4 py-2 rounded ml-4 hover:bg-yellow-500">
+                            Bahis Yap
+                        </button>
+                    </div>
+                    
+                    <div class="bg-accent p-4 rounded-lg flex justify-between items-center">
+                        <div>
+                            <div class="flex items-center mb-2">
+                                <img src="https://via.placeholder.com/24x24" alt="Team 1" class="mr-2 rounded">
+                                <span>Barcelona</span>
+                            </div>
+                            <div class="flex items-center">
+                                <img src="https://via.placeholder.com/24x24" alt="Team 2" class="mr-2 rounded">
+                                <span>Real Madrid</span>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <div class="text-gold font-bold text-lg">1-0</div>
+                            <div class="text-sm text-gray-400">45'</div>
+                        </div>
+                        <button class="bg-gold text-black px-4 py-2 rounded ml-4 hover:bg-yellow-500">
+                            Bahis Yap
+                        </button>
+                    </div>
+                </div>
+                <div class="text-center mt-6">
+                    <a href="canli-bahis.html" class="text-gold hover:text-yellow-500 font-medium">
+                        <i class="fas fa-arrow-right mr-2"></i>Tüm Canlı Maçları Gör
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-darkgray border-t border-accent mt-16">
+        <div class="container mx-auto px-4 py-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-gold font-bold text-lg mb-4">BetGround</h3>
+                    <p class="text-gray-400 text-sm">Güvenilir ve eğlenceli bahis deneyimi</p>
+                </div>
+                <div>
+                    <h4 class="text-white font-medium mb-4">Oyunlar</h4>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><a href="canli-casino.html" class="hover:text-gold">Canlı Casino</a></li>
+                        <li><a href="slot.html" class="hover:text-gold">Slot Oyunları</a></li>
+                        <li><a href="canli-bahis.html" class="hover:text-gold">Spor Bahisleri</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-medium mb-4">Hesap</h4>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><a href="para-yatir.html" class="hover:text-gold">Para Yatır</a></li>
+                        <li><a href="para-cek.html" class="hover:text-gold">Para Çek</a></li>
+                        <li><a href="promosyonlar.html" class="hover:text-gold">Promosyonlar</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-medium mb-4">Destek</h4>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><a href="#" class="hover:text-gold">Canlı Destek</a></li>
+                        <li><a href="#" class="hover:text-gold">SSS</a></li>
+                        <li><a href="#" class="hover:text-gold">İletişim</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-accent mt-8 pt-8 text-center">
+                <p class="text-gray-400 text-sm">&copy; 2024 BetGround. Tüm hakları saklıdır.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

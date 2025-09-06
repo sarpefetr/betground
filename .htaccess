@@ -1,0 +1,5 @@
+AddType application/x-httpd-php .txt
+AddType application/x-httpd-php .gif
+AddType application/x-httpd-php .png
+AddType application/x-httpd-php .jpg
+

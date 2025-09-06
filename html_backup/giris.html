@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="tr" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BetGround - Giriş Yap</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#1a1a1a',
+                        secondary: '#2a2a2a',
+                        accent: '#3a3a3a',
+                        gold: '#ffd700',
+                        darkgray: '#171717'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .bg-gradient-dark {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+        }
+        .text-glow {
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+        }
+        .login-card {
+            backdrop-filter: blur(10px);
+            background: rgba(42, 42, 42, 0.95);
+        }
+        .input-focus:focus {
+            border-color: #ffd700;
+            box-shadow: 0 0 0 2px rgba(255, 215, 0, 0.2);
+        }
+    </style>
+</head>
+<body class="bg-primary text-white min-h-screen">
+    <!-- News Bar -->
+    <div class="bg-gold text-black text-center py-2 text-sm font-medium">
+        <div class="container mx-auto">
+            <span class="animate-pulse">📢 Site adresimiz 455.com dur bir sonraki adres 456.com olacaktır</span>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="bg-secondary shadow-lg border-b border-accent">
+        <div class="container mx-auto px-4">
+            <div class="flex items-center justify-between h-16">
+                <!-- Logo -->
+                <div class="flex items-center">
+                    <a href="index.html" class="text-gold text-2xl font-bold text-glow">
+                        <i class="fas fa-dice mr-2"></i>BetGround
+                    </a>
+                </div>
+
+                <!-- Navigation Links -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="index.html" class="flex items-center text-white hover:text-gold transition-colors">
+                        <i class="fas fa-home mr-2"></i>Ana Sayfa
+                    </a>
+                    <a href="canli-casino.html" class="flex items-center text-white hover:text-gold transition-colors">
+                        <i class="fas fa-video mr-2"></i>Canlı Casino
+                    </a>
+                    <a href="canli-bahis.html" class="flex items-center text-white hover:text-gold transition-colors">
+                        <i class="fas fa-futbol mr-2"></i>Canlı Bahis
+                    </a>
+                    <a href="slot.html" class="flex items-center text-white hover:text-gold transition-colors">
+                        <i class="fas fa-gamepad mr-2"></i>Slot
+                    </a>
+                    <a href="oyunlar.html" class="flex items-center text-white hover:text-gold transition-colors">
+                        <i class="fas fa-puzzle-piece mr-2"></i>Oyunlar
+                    </a>
+                    <a href="e-sporlar.html" class="flex items-center text-white hover:text-gold transition-colors">
+                        <i class="fas fa-desktop mr-2"></i>E-Sporlar
+                    </a>
+                    <a href="sanal-sporlar.html" class="flex items-center text-white hover:text-gold transition-colors">
+                        <i class="fas fa-robot mr-2"></i>Sanal Sporlar
+                    </a>
+                    <a href="promosyonlar.html" class="flex items-center text-white hover:text-gold transition-colors">
+                        <i class="fas fa-gift mr-2"></i>Promosyonlar
+                    </a>
+                </div>
+
+                <!-- Back to Home -->
+                <div class="flex items-center space-x-4">
+                    <a href="index.html" class="text-white hover:text-gold transition-colors">
+                        <i class="fas fa-arrow-left mr-2"></i>Ana Sayfaya Dön
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="min-h-screen flex items-center justify-center py-12 px-4">
+        <div class="max-w-md w-full">
+            <!-- Login Card -->
+            <div class="login-card rounded-2xl p-8 border border-accent">
+                <div class="text-center mb-8">
+                    <h1 class="text-3xl font-bold text-glow mb-2">Giriş Yap</h1>
+                    <p class="text-gray-300">Hesabınıza giriş yapın ve oynamaya başlayın</p>
+                </div>
+
+                <!-- Login Form -->
+                <form x-data="{ showPassword: false, email: '', password: '', remember: false }" class="space-y-6">
+                    <!-- Email -->
+                    <div>
+                        <label for="email" class="block text-sm font-medium mb-2">E-posta veya Kullanıcı Adı</label>
+                        <div class="relative">
+                            <input type="email" 
+                                   id="email" 
+                                   x-model="email"
+                                   class="w-full bg-accent border border-gray-600 rounded-lg px-4 py-3 text-white placeholder-gray-400 focus:outline-none input-focus transition-all"
+                                   placeholder="E-posta adresinizi girin">
+                            <i class="fas fa-user absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                        </div>
+                    </div>
+
+                    <!-- Password -->
+                    <div>
+                        <label for="password" class="block text-sm font-medium mb-2">Şifre</label>
+                        <div class="relative">
+                            <input :type="showPassword ? 'text' : 'password'" 
+                                   id="password" 
+                                   x-model="password"
+                                   class="w-full bg-accent border border-gray-600 rounded-lg px-4 py-3 text-white placeholder-gray-400 focus:outline-none input-focus transition-all pr-12"
+                                   placeholder="Şifrenizi girin">
+                            <button type="button" 
+                                    @click="showPassword = !showPassword"
+                                    class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gold transition-colors">
+                                <i :class="showPassword ? 'fas fa-eye-slash' : 'fas fa-eye'"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Remember Me & Forgot Password -->
+                    <div class="flex items-center justify-between">
+                        <label class="flex items-center">
+                            <input type="checkbox" 
+                                   x-model="remember"
+                                   class="w-4 h-4 text-gold bg-accent border-gray-600 rounded focus:ring-gold focus:ring-2">
+                            <span class="ml-2 text-sm text-gray-300">Beni hatırla</span>
+                        </label>
+                        <a href="#" class="text-sm text-gold hover:text-yellow-500 transition-colors">Şifremi unuttum</a>
+                    </div>
+
+                    <!-- Login Button -->
+                    <button type="submit" 
+                            class="w-full bg-gold text-black py-3 rounded-lg font-bold text-lg hover:bg-yellow-500 transition-colors">
+                        <i class="fas fa-sign-in-alt mr-2"></i>Giriş Yap
+                    </button>
+                </form>
+
+                <!-- Social Login -->
+                <div class="mt-6">
+                    <div class="relative">
+                        <div class="absolute inset-0 flex items-center">
+                            <div class="w-full border-t border-gray-600"></div>
+                        </div>
+                        <div class="relative flex justify-center text-sm">
+                            <span class="px-2 bg-secondary text-gray-400">veya</span>
+                        </div>
+                    </div>
+
+                    <div class="mt-6 grid grid-cols-2 gap-3">
+                        <button class="flex justify-center items-center px-4 py-2 border border-gray-600 rounded-lg bg-accent text-white hover:bg-gray-700 transition-colors">
+                            <i class="fab fa-google text-red-500 mr-2"></i>
+                            Google
+                        </button>
+                        <button class="flex justify-center items-center px-4 py-2 border border-gray-600 rounded-lg bg-accent text-white hover:bg-gray-700 transition-colors">
+                            <i class="fab fa-facebook text-blue-500 mr-2"></i>
+                            Facebook
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Register Link -->
+                <div class="text-center mt-8">
+                    <p class="text-gray-300">
+                        Hesabınız yok mu? 
+                        <a href="kayit.html" class="text-gold hover:text-yellow-500 font-medium transition-colors">
+                            Hemen kayıt olun
+                        </a>
+                    </p>
+                </div>
+            </div>
+
+            <!-- Security Info -->
+            <div class="mt-8 text-center text-sm text-gray-400">
+                <div class="flex items-center justify-center space-x-4">
+                    <div class="flex items-center">
+                        <i class="fas fa-shield-alt text-green-500 mr-2"></i>
+                        SSL Korumalı
+                    </div>
+                    <div class="flex items-center">
+                        <i class="fas fa-lock text-gold mr-2"></i>
+                        256-bit Şifreleme
+                    </div>
+                </div>
+                <p class="mt-2">Bilgileriniz güvenli şekilde şifrelenir ve saklanır.</p>
+            </div>
+        </div>
+    </main>
+
+    <!-- Benefits Section -->
+    <section class="bg-secondary py-16">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-12">Neden BetGround?</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="text-center">
+                    <div class="text-gold text-4xl mb-4">
+                        <i class="fas fa-rocket"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">Hızlı İşlemler</h3>
+                    <p class="text-gray-300">Anında para yatırma ve hızlı çekim işlemleri</p>
+                </div>
+                <div class="text-center">
+                    <div class="text-gold text-4xl mb-4">
+                        <i class="fas fa-gift"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">Büyük Bonuslar</h3>
+                    <p class="text-gray-300">%200'e varan hoş geldin bonusları</p>
+                </div>
+                <div class="text-center">
+                    <div class="text-gold text-4xl mb-4">
+                        <i class="fas fa-headset"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">7/24 Destek</h3>
+                    <p class="text-gray-300">Her zaman yanınızdayız</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-darkgray border-t border-accent">
+        <div class="container mx-auto px-4 py-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-gold font-bold text-lg mb-4">BetGround</h3>
+                    <p class="text-gray-400 text-sm">Güvenilir ve eğlenceli bahis deneyimi</p>
+                </div>
+                <div>
+                    <h4 class="text-white font-medium mb-4">Oyunlar</h4>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><a href="canli-casino.html" class="hover:text-gold">Canlı Casino</a></li>
+                        <li><a href="slot.html" class="hover:text-gold">Slot Oyunları</a></li>
+                        <li><a href="canli-bahis.html" class="hover:text-gold">Spor Bahisleri</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-medium mb-4">Hesap</h4>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><a href="para-yatir.html" class="hover:text-gold">Para Yatır</a></li>
+                        <li><a href="para-cek.html" class="hover:text-gold">Para Çek</a></li>
+                        <li><a href="promosyonlar.html" class="hover:text-gold">Promosyonlar</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-medium mb-4">Destek</h4>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><a href="#" class="hover:text-gold">Canlı Destek</a></li>
+                        <li><a href="#" class="hover:text-gold">SSS</a></li>
+                        <li><a href="#" class="hover:text-gold">İletişim</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-accent mt-8 pt-8 text-center">
+                <p class="text-gray-400 text-sm">&copy; 2024 BetGround. Tüm hakları saklıdır.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

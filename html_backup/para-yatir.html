@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="tr" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BetGround - Para Yatır</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#1a1a1a',
+                        secondary: '#2a2a2a',
+                        accent: '#3a3a3a',
+                        gold: '#ffd700',
+                        darkgray: '#171717'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .bg-gradient-dark {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+        }
+        .text-glow {
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+        }
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(255, 215, 0, 0.1);
+        }
+        .payment-method {
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+        .payment-method.selected {
+            border-color: #ffd700;
+            background: rgba(255, 215, 0, 0.1);
+        }
+        .deposit-card {
+            backdrop-filter: blur(10px);
+            background: rgba(42, 42, 42, 0.95);
+        }
+        .input-focus:focus {
+            border-color: #ffd700;
+            box-shadow: 0 0 0 2px rgba(255, 215, 0, 0.2);
+        }
+    </style>
+</head>
+<body class="bg-primary text-white min-h-screen">
+    <!-- News Bar -->
+    <div class="bg-gold text-black text-center py-2 text-sm font-medium">
+        <div class="container mx-auto">
+            <span class="animate-pulse">📢 Site adresimiz 455.com dur bir sonraki adres 456.com olacaktır</span>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="bg-secondary shadow-lg border-b border-accent">
+        <div class="container mx-auto px-4">
+            <div class="flex items-center justify-between h-16">
+                <!-- Logo -->
+                <div class="flex items-center">
+                    <a href="index.html" class="text-gold text-2xl font-bold text-glow">
+                        <i class="fas fa-dice mr-2"></i>BetGround
+                    </a>
+                </div>
+
+                <!-- Navigation Links -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="index.html" class="flex items-center text-white hover:text-gold transition-colors">
+                        <i class="fas fa-home mr-2"></i>Ana Sayfa
+                    </a>
+                    <a href="canli-casino.html" class="flex items-center text-white hover:text-gold transition-colors">
+                        <i class="fas fa-video mr-2"></i>Canlı Casino
+                    </a>
+                    <a href="canli-bahis.html" class="flex items-center text-white hover:text-gold transition-colors">
+                        <i class="fas fa-futbol mr-2"></i>Canlı Bahis
+                    </a>
+                    <a href="slot.html" class="flex items-center text-white hover:text-gold transition-colors">
+                        <i class="fas fa-gamepad mr-2"></i>Slot
+                    </a>
+                    <a href="oyunlar.html" class="flex items-center text-white hover:text-gold transition-colors">
+                        <i class="fas fa-puzzle-piece mr-2"></i>Oyunlar
+                    </a>
+                    <a href="e-sporlar.html" class="flex items-center text-white hover:text-gold transition-colors">
+                        <i class="fas fa-desktop mr-2"></i>E-Sporlar
+                    </a>
+                    <a href="sanal-sporlar.html" class="flex items-center text-white hover:text-gold transition-colors">
+                        <i class="fas fa-robot mr-2"></i>Sanal Sporlar
+                    </a>
+                    <a href="promosyonlar.html" class="flex items-center text-white hover:text-gold transition-colors">
+                        <i class="fas fa-gift mr-2"></i>Promosyonlar
+                    </a>
+                </div>
+
+                <!-- User Info -->
+                <div class="flex items-center space-x-4">
+                    <div class="text-right">
+                        <div class="text-sm text-gray-300">Bakiye</div>
+                        <div class="text-gold font-bold">₺1.247,50</div>
+                    </div>
+                    <div class="bg-accent rounded-full p-2">
+                        <i class="fas fa-user text-gold"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8">
+        <!-- Page Header -->
+        <section class="mb-8">
+            <div class="text-center">
+                <h1 class="text-4xl font-bold mb-4 text-glow">
+                    <i class="fas fa-credit-card mr-3"></i>Para Yatır
+                </h1>
+                <p class="text-xl text-gray-300">Hesabınıza hızlı ve güvenli para yatırın</p>
+            </div>
+        </section>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- Payment Methods -->
+            <div class="lg:col-span-2">
+                <div class="deposit-card rounded-2xl p-6 border border-accent">
+                    <h2 class="text-2xl font-bold mb-6">Ödeme Yöntemi Seçin</h2>
+                    
+                    <div x-data="{ selectedMethod: 'credit-card' }" class="space-y-4">
+                        <!-- Credit Card -->
+                        <div @click="selectedMethod = 'credit-card'" 
+                             :class="selectedMethod === 'credit-card' ? 'selected' : ''"
+                             class="payment-method bg-secondary rounded-xl p-4 cursor-pointer card-hover">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center">
+                                    <div class="text-gold text-2xl mr-4">
+                                        <i class="fas fa-credit-card"></i>
+                                    </div>
+                                    <div>
+                                        <h3 class="font-bold text-lg">Kredi/Banka Kartı</h3>
+                                        <p class="text-sm text-gray-400">Visa, MasterCard</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-center space-x-2">
+                                    <span class="bg-green-600 text-white px-2 py-1 rounded text-xs">ANLIK</span>
+                                    <i class="fab fa-cc-visa text-2xl text-blue-600"></i>
+                                    <i class="fab fa-cc-mastercard text-2xl text-red-600"></i>
+                                </div>
+                            </div>
+                            <div class="mt-3 text-sm text-gray-300">
+                                Min: ₺50 - Maks: ₺50.000 | Komisyon: %0
+                            </div>
+                        </div>
+
+                        <!-- Bank Transfer -->
+                        <div @click="selectedMethod = 'bank-transfer'" 
+                             :class="selectedMethod === 'bank-transfer' ? 'selected' : ''"
+                             class="payment-method bg-secondary rounded-xl p-4 cursor-pointer card-hover">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center">
+                                    <div class="text-gold text-2xl mr-4">
+                                        <i class="fas fa-university"></i>
+                                    </div>
+                                    <div>
+                                        <h3 class="font-bold text-lg">Banka Havalesi/EFT</h3>
+                                        <p class="text-sm text-gray-400">Tüm bankalar</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-center space-x-2">
+                                    <span class="bg-yellow-600 text-white px-2 py-1 rounded text-xs">0-24 SAAT</span>
+                                </div>
+                            </div>
+                            <div class="mt-3 text-sm text-gray-300">
+                                Min: ₺100 - Maks: ₺100.000 | Komisyon: %0
+                            </div>
+                        </div>
+
+                        <!-- Crypto -->
+                        <div @click="selectedMethod = 'crypto'" 
+                             :class="selectedMethod === 'crypto' ? 'selected' : ''"
+                             class="payment-method bg-secondary rounded-xl p-4 cursor-pointer card-hover">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center">
+                                    <div class="text-gold text-2xl mr-4">
+                                        <i class="fab fa-bitcoin"></i>
+                                    </div>
+                                    <div>
+                                        <h3 class="font-bold text-lg">Kripto Para</h3>
+                                        <p class="text-sm text-gray-400">Bitcoin, Ethereum, USDT</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-center space-x-2">
+                                    <span class="bg-green-600 text-white px-2 py-1 rounded text-xs">ANLIK</span>
+                                    <i class="fab fa-bitcoin text-2xl text-orange-500"></i>
+                                </div>
+                            </div>
+                            <div class="mt-3 text-sm text-gray-300">
+                                Min: ₺200 - Maks: ₺200.000 | Komisyon: %0
+                            </div>
+                        </div>
+
+                        <!-- E-Wallet -->
+                        <div @click="selectedMethod = 'ewallet'" 
+                             :class="selectedMethod === 'ewallet' ? 'selected' : ''"
+                             class="payment-method bg-secondary rounded-xl p-4 cursor-pointer card-hover">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center">
+                                    <div class="text-gold text-2xl mr-4">
+                                        <i class="fas fa-wallet"></i>
+                                    </div>
+                                    <div>
+                                        <h3 class="font-bold text-lg">E-Cüzdan</h3>
+                                        <p class="text-sm text-gray-400">PayPal, Skrill, Neteller</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-center space-x-2">
+                                    <span class="bg-green-600 text-white px-2 py-1 rounded text-xs">ANLIK</span>
+                                </div>
+                            </div>
+                            <div class="mt-3 text-sm text-gray-300">
+                                Min: ₺75 - Maks: ₺25.000 | Komisyon: %2
+                            </div>
+                        </div>
+
+                        <!-- Mobile Payment -->
+                        <div @click="selectedMethod = 'mobile'" 
+                             :class="selectedMethod === 'mobile' ? 'selected' : ''"
+                             class="payment-method bg-secondary rounded-xl p-4 cursor-pointer card-hover">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center">
+                                    <div class="text-gold text-2xl mr-4">
+                                        <i class="fas fa-mobile-alt"></i>
+                                    </div>
+                                    <div>
+                                        <h3 class="font-bold text-lg">Mobil Ödeme</h3>
+                                        <p class="text-sm text-gray-400">Turkcell, Vodafone, Türk Telekom</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-center space-x-2">
+                                    <span class="bg-green-600 text-white px-2 py-1 rounded text-xs">ANLIK</span>
+                                </div>
+                            </div>
+                            <div class="mt-3 text-sm text-gray-300">
+                                Min: ₺50 - Maks: ₺500 | Komisyon: %8
+                            </div>
+                        </div>
+
+                        <!-- Deposit Form -->
+                        <div x-show="selectedMethod" x-transition class="mt-8 p-6 bg-accent rounded-xl">
+                            <h3 class="text-xl font-bold mb-4">Yatırım Detayları</h3>
+                            
+                            <!-- Amount -->
+                            <div class="mb-6">
+                                <label class="block text-sm font-medium mb-2">Yatırım Tutarı</label>
+                                <div class="relative">
+                                    <input type="number" 
+                                           placeholder="0"
+                                           class="w-full bg-secondary border border-gray-600 rounded-lg px-4 py-3 text-white text-xl font-bold text-center focus:outline-none input-focus transition-all">
+                                    <div class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gold font-bold">₺</div>
+                                </div>
+                                
+                                <!-- Quick amounts -->
+                                <div class="grid grid-cols-4 gap-2 mt-3">
+                                    <button class="bg-secondary border border-gray-600 rounded-lg py-2 text-sm hover:border-gold transition-colors">₺100</button>
+                                    <button class="bg-secondary border border-gray-600 rounded-lg py-2 text-sm hover:border-gold transition-colors">₺250</button>
+                                    <button class="bg-secondary border border-gray-600 rounded-lg py-2 text-sm hover:border-gold transition-colors">₺500</button>
+                                    <button class="bg-secondary border border-gray-600 rounded-lg py-2 text-sm hover:border-gold transition-colors">₺1000</button>
+                                </div>
+                            </div>
+
+                            <!-- Credit Card Form -->
+                            <div x-show="selectedMethod === 'credit-card'" x-transition class="space-y-4">
+                                <div>
+                                    <label class="block text-sm font-medium mb-2">Kart Numarası</label>
+                                    <input type="text" 
+                                           placeholder="1234 5678 9012 3456"
+                                           class="w-full bg-secondary border border-gray-600 rounded-lg px-4 py-3 text-white focus:outline-none input-focus transition-all">
+                                </div>
+                                <div class="grid grid-cols-2 gap-4">
+                                    <div>
+                                        <label class="block text-sm font-medium mb-2">Son Kullanım</label>
+                                        <input type="text" 
+                                               placeholder="MM/YY"
+                                               class="w-full bg-secondary border border-gray-600 rounded-lg px-4 py-3 text-white focus:outline-none input-focus transition-all">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium mb-2">CVV</label>
+                                        <input type="text" 
+                                               placeholder="123"
+                                               class="w-full bg-secondary border border-gray-600 rounded-lg px-4 py-3 text-white focus:outline-none input-focus transition-all">
+                                    </div>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium mb-2">Kart Sahibi</label>
+                                    <input type="text" 
+                                           placeholder="Kartın üzerindeki isim"
+                                           class="w-full bg-secondary border border-gray-600 rounded-lg px-4 py-3 text-white focus:outline-none input-focus transition-all">
+                                </div>
+                            </div>
+
+                            <!-- Bank Transfer Info -->
+                            <div x-show="selectedMethod === 'bank-transfer'" x-transition class="space-y-4">
+                                <div class="bg-secondary p-4 rounded-lg">
+                                    <h4 class="font-bold mb-2">Banka Bilgileri</h4>
+                                    <div class="space-y-2 text-sm">
+                                        <div>Banka: <span class="text-gold">Türkiye İş Bankası</span></div>
+                                        <div>Şube: <span class="text-gold">Kadıköy Şubesi (1234)</span></div>
+                                        <div>Hesap No: <span class="text-gold">1234567890</span></div>
+                                        <div>IBAN: <span class="text-gold">TR12 0006 4000 0011 2345 6789 01</span></div>
+                                        <div>Hesap Adı: <span class="text-gold">BetGround Ltd.</span></div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium mb-2">Açıklama (Kullanıcı adınızı yazın)</label>
+                                    <input type="text" 
+                                           placeholder="Kullanıcı adınız"
+                                           class="w-full bg-secondary border border-gray-600 rounded-lg px-4 py-3 text-white focus:outline-none input-focus transition-all">
+                                </div>
+                            </div>
+
+                            <!-- Submit Button -->
+                            <button class="w-full bg-gold text-black py-3 rounded-lg font-bold text-lg hover:bg-yellow-500 transition-colors mt-6">
+                                <i class="fas fa-credit-card mr-2"></i>
+                                <span x-text="selectedMethod === 'bank-transfer' ? 'Bilgileri Kaydet' : 'Para Yatır'"></span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sidebar -->
+            <div class="space-y-6">
+                <!-- Current Balance -->
+                <div class="bg-secondary rounded-xl p-6 border border-accent">
+                    <h3 class="text-xl font-bold mb-4">Güncel Bakiye</h3>
+                    <div class="text-center">
+                        <div class="text-3xl font-bold text-gold mb-2">₺1.247,50</div>
+                        <div class="text-sm text-gray-400">Ana bakiye</div>
+                    </div>
+                    <div class="mt-4 pt-4 border-t border-accent">
+                        <div class="flex justify-between text-sm">
+                            <span>Bonus Bakiye:</span>
+                            <span class="text-gold">₺125,00</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Deposit Bonus -->
+                <div class="bg-gradient-dark rounded-xl p-6 border border-gold">
+                    <div class="text-center">
+                        <div class="text-gold text-3xl mb-2">🎁</div>
+                        <h3 class="text-xl font-bold mb-2">Yatırım Bonusu</h3>
+                        <div class="text-2xl font-bold text-gold mb-2">%100</div>
+                        <p class="text-sm text-gray-300 mb-4">₺500'e kadar bonus</p>
+                        <div class="bg-gold text-black px-3 py-1 rounded text-xs font-bold">
+                            AKTİF
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Transactions -->
+                <div class="bg-secondary rounded-xl p-6 border border-accent">
+                    <h3 class="text-xl font-bold mb-4">Son İşlemler</h3>
+                    <div class="space-y-3">
+                        <div class="flex justify-between items-center pb-2 border-b border-accent">
+                            <div>
+                                <div class="font-medium">Para Yatırma</div>
+                                <div class="text-xs text-gray-400">2 saat önce</div>
+                            </div>
+                            <div class="text-green-500 font-bold">+₺500</div>
+                        </div>
+                        <div class="flex justify-between items-center pb-2 border-b border-accent">
+                            <div>
+                                <div class="font-medium">Slot Oyunu</div>
+                                <div class="text-xs text-gray-400">5 saat önce</div>
+                            </div>
+                            <div class="text-red-500 font-bold">-₺150</div>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <div>
+                                <div class="font-medium">Bonus</div>
+                                <div class="text-xs text-gray-400">1 gün önce</div>
+                            </div>
+                            <div class="text-gold font-bold">+₺100</div>
+                        </div>
+                    </div>
+                    <a href="#" class="block text-center text-gold text-sm hover:text-yellow-500 mt-4">
+                        Tümünü Gör <i class="fas fa-arrow-right ml-1"></i>
+                    </a>
+                </div>
+
+                <!-- Support -->
+                <div class="bg-secondary rounded-xl p-6 border border-accent text-center">
+                    <div class="text-gold text-3xl mb-3">
+                        <i class="fas fa-headset"></i>
+                    </div>
+                    <h3 class="font-bold mb-2">Yardıma mı ihtiyacınız var?</h3>
+                    <p class="text-sm text-gray-400 mb-4">7/24 canlı destek hizmetimiz</p>
+                    <button class="bg-gold text-black px-4 py-2 rounded-lg font-medium hover:bg-yellow-500 transition-colors">
+                        <i class="fas fa-comments mr-2"></i>Canlı Destek
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-darkgray border-t border-accent mt-16">
+        <div class="container mx-auto px-4 py-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-gold font-bold text-lg mb-4">BetGround</h3>
+                    <p class="text-gray-400 text-sm">Güvenilir ve eğlenceli bahis deneyimi</p>
+                </div>
+                <div>
+                    <h4 class="text-white font-medium mb-4">Oyunlar</h4>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><a href="canli-casino.html" class="hover:text-gold">Canlı Casino</a></li>
+                        <li><a href="slot.html" class="hover:text-gold">Slot Oyunları</a></li>
+                        <li><a href="canli-bahis.html" class="hover:text-gold">Spor Bahisleri</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-medium mb-4">Hesap</h4>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><a href="para-yatir.html" class="hover:text-gold">Para Yatır</a></li>
+                        <li><a href="para-cek.html" class="hover:text-gold">Para Çek</a></li>
+                        <li><a href="promosyonlar.html" class="hover:text-gold">Promosyonlar</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-medium mb-4">Destek</h4>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><a href="#" class="hover:text-gold">Canlı Destek</a></li>
+                        <li><a href="#" class="hover:text-gold">SSS</a></li>
+                        <li><a href="#" class="hover:text-gold">İletişim</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-accent mt-8 pt-8 text-center">
+                <p class="text-gray-400 text-sm">&copy; 2024 BetGround. Tüm hakları saklıdır.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

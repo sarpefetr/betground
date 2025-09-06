@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="tr" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BetGround - Canlı Bahis</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#1a1a1a',
+                        secondary: '#2a2a2a',
+                        accent: '#3a3a3a',
+                        gold: '#ffd700',
+                        darkgray: '#171717'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .bg-gradient-dark {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+        }
+        .text-glow {
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+        }
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(255, 215, 0, 0.1);
+        }
+        .match-live {
+            animation: pulse 2s infinite;
+        }
+        .odds-button {
+            transition: all 0.2s ease;
+        }
+        .odds-button:hover {
+            background: rgba(255, 215, 0, 0.1);
+            border-color: #ffd700;
+        }
+    </style>
+</head>
+<body class="bg-primary text-white min-h-screen">
+    <!-- News Bar -->
+    <div class="bg-gold text-black text-center py-2 text-sm font-medium">
+        <div class="container mx-auto">
+            <span class="animate-pulse">📢 Site adresimiz 455.com dur bir sonraki adres 456.com olacaktır</span>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="bg-secondary shadow-lg border-b border-accent">
+        <div class="container mx-auto px-4">
+            <div class="flex items-center justify-between h-16">
+                <!-- Logo -->
+                <div class="flex items-center">
+                    <a href="index.html" class="text-gold text-2xl font-bold text-glow">
+                        <i class="fas fa-dice mr-2"></i>BetGround
+                    </a>
+                </div>
+
+                <!-- Navigation Links -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="index.html" class="flex items-center text-white hover:text-gold transition-colors">
+                        <i class="fas fa-home mr-2"></i>Ana Sayfa
+                    </a>
+                    <a href="canli-casino.html" class="flex items-center text-white hover:text-gold transition-colors">
+                        <i class="fas fa-video mr-2"></i>Canlı Casino
+                    </a>
+                    <a href="canli-bahis.html" class="flex items-center text-gold border-b-2 border-gold pb-1">
+                        <i class="fas fa-futbol mr-2"></i>Canlı Bahis
+                    </a>
+                    <a href="slot.html" class="flex items-center text-white hover:text-gold transition-colors">
+                        <i class="fas fa-gamepad mr-2"></i>Slot
+                    </a>
+                    <a href="oyunlar.html" class="flex items-center text-white hover:text-gold transition-colors">
+                        <i class="fas fa-puzzle-piece mr-2"></i>Oyunlar
+                    </a>
+                    <a href="e-sporlar.html" class="flex items-center text-white hover:text-gold transition-colors">
+                        <i class="fas fa-desktop mr-2"></i>E-Sporlar
+                    </a>
+                    <a href="sanal-sporlar.html" class="flex items-center text-white hover:text-gold transition-colors">
+                        <i class="fas fa-robot mr-2"></i>Sanal Sporlar
+                    </a>
+                    <a href="promosyonlar.html" class="flex items-center text-white hover:text-gold transition-colors">
+                        <i class="fas fa-gift mr-2"></i>Promosyonlar
+                    </a>
+                </div>
+
+                <!-- User Actions -->
+                <div class="flex items-center space-x-4">
+                    <a href="giris.html" class="bg-gold text-black px-4 py-2 rounded-lg hover:bg-yellow-500 transition-colors font-medium">
+                        <i class="fas fa-sign-in-alt mr-2"></i>Giriş
+                    </a>
+                    <a href="kayit.html" class="border border-gold text-gold px-4 py-2 rounded-lg hover:bg-gold hover:text-black transition-colors">
+                        <i class="fas fa-user-plus mr-2"></i>Kayıt
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8">
+        <!-- Page Header -->
+        <section class="mb-8">
+            <div class="text-center">
+                <h1 class="text-4xl font-bold mb-4 text-glow">
+                    <i class="fas fa-futbol mr-3"></i>Canlı Bahis
+                </h1>
+                <p class="text-xl text-gray-300">Maçları canlı izleyip en iyi oranlarla bahis yapın</p>
+            </div>
+        </section>
+
+        <!-- Sports Categories -->
+        <section class="mb-8" x-data="{ selectedSport: 'futbol' }">
+            <div class="flex flex-wrap gap-4 justify-center mb-8">
+                <button @click="selectedSport = 'futbol'" 
+                        :class="selectedSport === 'futbol' ? 'bg-gold text-black' : 'bg-secondary text-white hover:bg-accent'"
+                        class="px-6 py-2 rounded-lg font-medium transition-colors">
+                    <i class="fas fa-futbol mr-2"></i>Futbol
+                </button>
+                <button @click="selectedSport = 'basketbol'" 
+                        :class="selectedSport === 'basketbol' ? 'bg-gold text-black' : 'bg-secondary text-white hover:bg-accent'"
+                        class="px-6 py-2 rounded-lg font-medium transition-colors">
+                    <i class="fas fa-basketball-ball mr-2"></i>Basketbol
+                </button>
+                <button @click="selectedSport = 'tenis'" 
+                        :class="selectedSport === 'tenis' ? 'bg-gold text-black' : 'bg-secondary text-white hover:bg-accent'"
+                        class="px-6 py-2 rounded-lg font-medium transition-colors">
+                    <i class="fas fa-table-tennis-paddle-ball mr-2"></i>Tenis
+                </button>
+                <button @click="selectedSport = 'voleybol'" 
+                        :class="selectedSport === 'voleybol' ? 'bg-gold text-black' : 'bg-secondary text-white hover:bg-accent'"
+                        class="px-6 py-2 rounded-lg font-medium transition-colors">
+                    <i class="fas fa-volleyball-ball mr-2"></i>Voleybol
+                </button>
+                <button @click="selectedSport = 'hentbol'" 
+                        :class="selectedSport === 'hentbol' ? 'bg-gold text-black' : 'bg-secondary text-white hover:bg-accent'"
+                        class="px-6 py-2 rounded-lg font-medium transition-colors">
+                    <i class="fas fa-hand-fist mr-2"></i>Hentbol
+                </button>
+            </div>
+
+            <!-- Live Matches -->
+            <div class="space-y-4">
+                <!-- Premier League Match -->
+                <div class="bg-secondary rounded-xl p-6 card-hover">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="flex items-center">
+                            <span class="bg-red-600 text-white px-2 py-1 rounded text-xs match-live mr-3">
+                                <i class="fas fa-circle text-red-400 animate-pulse mr-1"></i>CANLI
+                            </span>
+                            <div>
+                                <h3 class="font-bold text-lg">Premier League</h3>
+                                <p class="text-sm text-gray-400">67' dakika</p>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <div class="text-gold font-bold text-xl">2 - 1</div>
+                            <p class="text-sm text-gray-400">Son gol: 65'</p>
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <!-- Teams -->
+                        <div class="space-y-4">
+                            <div class="flex items-center justify-between p-3 bg-accent rounded-lg">
+                                <div class="flex items-center">
+                                    <img src="https://via.placeholder.com/32x32" alt="Manchester United" class="w-8 h-8 mr-3">
+                                    <span class="font-medium">Manchester United</span>
+                                </div>
+                                <span class="text-gold font-bold">2</span>
+                            </div>
+                            <div class="flex items-center justify-between p-3 bg-accent rounded-lg">
+                                <div class="flex items-center">
+                                    <img src="https://via.placeholder.com/32x32" alt="Liverpool" class="w-8 h-8 mr-3">
+                                    <span class="font-medium">Liverpool</span>
+                                </div>
+                                <span class="text-gold font-bold">1</span>
+                            </div>
+                        </div>
+
+                        <!-- 1X2 Betting -->
+                        <div>
+                            <h4 class="text-center font-medium mb-4">1X2</h4>
+                            <div class="grid grid-cols-3 gap-2">
+                                <button class="odds-button bg-accent border border-gray-600 p-3 rounded-lg text-center hover:border-gold transition-all">
+                                    <div class="text-sm text-gray-400">1</div>
+                                    <div class="font-bold text-gold">2.15</div>
+                                </button>
+                                <button class="odds-button bg-accent border border-gray-600 p-3 rounded-lg text-center hover:border-gold transition-all">
+                                    <div class="text-sm text-gray-400">X</div>
+                                    <div class="font-bold text-gold">3.40</div>
+                                </button>
+                                <button class="odds-button bg-accent border border-gray-600 p-3 rounded-lg text-center hover:border-gold transition-all">
+                                    <div class="text-sm text-gray-400">2</div>
+                                    <div class="font-bold text-gold">4.25</div>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Additional Markets -->
+                        <div>
+                            <h4 class="text-center font-medium mb-4">Daha Fazla</h4>
+                            <div class="space-y-2">
+                                <button class="odds-button w-full bg-accent border border-gray-600 p-2 rounded-lg flex justify-between items-center hover:border-gold transition-all">
+                                    <span class="text-sm">Alt/Üst 2.5 Gol</span>
+                                    <span class="text-gold font-bold">1.85</span>
+                                </button>
+                                <button class="odds-button w-full bg-accent border border-gray-600 p-2 rounded-lg flex justify-between items-center hover:border-gold transition-all">
+                                    <span class="text-sm">Çifte Şans</span>
+                                    <span class="text-gold font-bold">1.12</span>
+                                </button>
+                                <button class="bg-gold text-black p-2 rounded-lg font-medium text-center w-full hover:bg-yellow-500 transition-colors">
+                                    +47 Bahis Seçeneği
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- La Liga Match -->
+                <div class="bg-secondary rounded-xl p-6 card-hover">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="flex items-center">
+                            <span class="bg-red-600 text-white px-2 py-1 rounded text-xs match-live mr-3">
+                                <i class="fas fa-circle text-red-400 animate-pulse mr-1"></i>CANLI
+                            </span>
+                            <div>
+                                <h3 class="font-bold text-lg">La Liga</h3>
+                                <p class="text-sm text-gray-400">45' dakika - Devre arası</p>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <div class="text-gold font-bold text-xl">1 - 0</div>
+                            <p class="text-sm text-gray-400">Son gol: 23'</p>
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <!-- Teams -->
+                        <div class="space-y-4">
+                            <div class="flex items-center justify-between p-3 bg-accent rounded-lg">
+                                <div class="flex items-center">
+                                    <img src="https://via.placeholder.com/32x32" alt="Barcelona" class="w-8 h-8 mr-3">
+                                    <span class="font-medium">Barcelona</span>
+                                </div>
+                                <span class="text-gold font-bold">1</span>
+                            </div>
+                            <div class="flex items-center justify-between p-3 bg-accent rounded-lg">
+                                <div class="flex items-center">
+                                    <img src="https://via.placeholder.com/32x32" alt="Real Madrid" class="w-8 h-8 mr-3">
+                                    <span class="font-medium">Real Madrid</span>
+                                </div>
+                                <span class="text-gold font-bold">0</span>
+                            </div>
+                        </div>
+
+                        <!-- 1X2 Betting -->
+                        <div>
+                            <h4 class="text-center font-medium mb-4">1X2</h4>
+                            <div class="grid grid-cols-3 gap-2">
+                                <button class="odds-button bg-accent border border-gray-600 p-3 rounded-lg text-center hover:border-gold transition-all">
+                                    <div class="text-sm text-gray-400">1</div>
+                                    <div class="font-bold text-gold">1.95</div>
+                                </button>
+                                <button class="odds-button bg-accent border border-gray-600 p-3 rounded-lg text-center hover:border-gold transition-all">
+                                    <div class="text-sm text-gray-400">X</div>
+                                    <div class="font-bold text-gold">3.20</div>
+                                </button>
+                                <button class="odds-button bg-accent border border-gray-600 p-3 rounded-lg text-center hover:border-gold transition-all">
+                                    <div class="text-sm text-gray-400">2</div>
+                                    <div class="font-bold text-gold">3.85</div>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Additional Markets -->
+                        <div>
+                            <h4 class="text-center font-medium mb-4">Daha Fazla</h4>
+                            <div class="space-y-2">
+                                <button class="odds-button w-full bg-accent border border-gray-600 p-2 rounded-lg flex justify-between items-center hover:border-gold transition-all">
+                                    <span class="text-sm">Alt/Üst 2.5 Gol</span>
+                                    <span class="text-gold font-bold">1.92</span>
+                                </button>
+                                <button class="odds-button w-full bg-accent border border-gray-600 p-2 rounded-lg flex justify-between items-center hover:border-gold transition-all">
+                                    <span class="text-sm">Çifte Şans</span>
+                                    <span class="text-gold font-bold">1.25</span>
+                                </button>
+                                <button class="bg-gold text-black p-2 rounded-lg font-medium text-center w-full hover:bg-yellow-500 transition-colors">
+                                    +52 Bahis Seçeneği
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Serie A Match -->
+                <div class="bg-secondary rounded-xl p-6 card-hover">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="flex items-center">
+                            <span class="bg-green-600 text-white px-2 py-1 rounded text-xs mr-3">
+                                <i class="fas fa-clock mr-1"></i>Başlamamış
+                            </span>
+                            <div>
+                                <h3 class="font-bold text-lg">Serie A</h3>
+                                <p class="text-sm text-gray-400">20:00 - Bu Akşam</p>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <div class="text-gray-400 text-lg">vs</div>
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <!-- Teams -->
+                        <div class="space-y-4">
+                            <div class="flex items-center justify-between p-3 bg-accent rounded-lg">
+                                <div class="flex items-center">
+                                    <img src="https://via.placeholder.com/32x32" alt="Juventus" class="w-8 h-8 mr-3">
+                                    <span class="font-medium">Juventus</span>
+                                </div>
+                                <span class="text-gray-500">-</span>
+                            </div>
+                            <div class="flex items-center justify-between p-3 bg-accent rounded-lg">
+                                <div class="flex items-center">
+                                    <img src="https://via.placeholder.com/32x32" alt="AC Milan" class="w-8 h-8 mr-3">
+                                    <span class="font-medium">AC Milan</span>
+                                </div>
+                                <span class="text-gray-500">-</span>
+                            </div>
+                        </div>
+
+                        <!-- 1X2 Betting -->
+                        <div>
+                            <h4 class="text-center font-medium mb-4">1X2</h4>
+                            <div class="grid grid-cols-3 gap-2">
+                                <button class="odds-button bg-accent border border-gray-600 p-3 rounded-lg text-center hover:border-gold transition-all">
+                                    <div class="text-sm text-gray-400">1</div>
+                                    <div class="font-bold text-gold">2.45</div>
+                                </button>
+                                <button class="odds-button bg-accent border border-gray-600 p-3 rounded-lg text-center hover:border-gold transition-all">
+                                    <div class="text-sm text-gray-400">X</div>
+                                    <div class="font-bold text-gold">3.15</div>
+                                </button>
+                                <button class="odds-button bg-accent border border-gray-600 p-3 rounded-lg text-center hover:border-gold transition-all">
+                                    <div class="text-sm text-gray-400">2</div>
+                                    <div class="font-bold text-gold">2.95</div>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Additional Markets -->
+                        <div>
+                            <h4 class="text-center font-medium mb-4">Daha Fazla</h4>
+                            <div class="space-y-2">
+                                <button class="odds-button w-full bg-accent border border-gray-600 p-2 rounded-lg flex justify-between items-center hover:border-gold transition-all">
+                                    <span class="text-sm">Alt/Üst 2.5 Gol</span>
+                                    <span class="text-gold font-bold">1.78</span>
+                                </button>
+                                <button class="odds-button w-full bg-accent border border-gray-600 p-2 rounded-lg flex justify-between items-center hover:border-gold transition-all">
+                                    <span class="text-sm">Çifte Şans</span>
+                                    <span class="text-gold font-bold">1.35</span>
+                                </button>
+                                <button class="bg-gold text-black p-2 rounded-lg font-medium text-center w-full hover:bg-yellow-500 transition-colors">
+                                    +38 Bahis Seçeneği
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bet Slip (Floating) -->
+        <div x-data="{ open: false, bets: [] }" class="fixed bottom-4 right-4 z-50">
+            <!-- Bet Slip Button -->
+            <button @click="open = !open" 
+                    class="bg-gold text-black p-4 rounded-full shadow-lg hover:bg-yellow-500 transition-colors">
+                <i class="fas fa-ticket-alt text-xl"></i>
+                <span x-show="bets.length > 0" x-text="bets.length" 
+                      class="absolute -top-2 -right-2 bg-red-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold">
+                </span>
+            </button>
+
+            <!-- Bet Slip Panel -->
+            <div x-show="open" 
+                 x-transition:enter="transition ease-out duration-200"
+                 x-transition:enter-start="opacity-0 transform translate-y-1"
+                 x-transition:enter-end="opacity-100 transform translate-y-0"
+                 x-transition:leave="transition ease-in duration-150"
+                 x-transition:leave-start="opacity-100 transform translate-y-0"
+                 x-transition:leave-end="opacity-0 transform translate-y-1"
+                 class="absolute bottom-16 right-0 w-80 bg-secondary rounded-xl shadow-2xl border border-accent">
+                
+                <div class="p-4">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="font-bold text-lg">Bahis Kuponu</h3>
+                        <button @click="open = false" class="text-gray-400 hover:text-white">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    
+                    <div x-show="bets.length === 0" class="text-center py-8 text-gray-400">
+                        <i class="fas fa-ticket-alt text-4xl mb-4"></i>
+                        <p>Henüz bahis seçmediniz</p>
+                    </div>
+                    
+                    <!-- Sample bet for demo -->
+                    <div x-show="bets.length === 0" class="hidden">
+                        <div class="bg-accent p-3 rounded-lg mb-4">
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="text-sm text-gray-300">Manchester United vs Liverpool</span>
+                                <button class="text-red-400 hover:text-red-300">
+                                    <i class="fas fa-trash text-sm"></i>
+                                </button>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="font-medium">1 - Man United Kazanır</span>
+                                <span class="text-gold font-bold">2.15</span>
+                            </div>
+                        </div>
+                        
+                        <div class="space-y-3">
+                            <div class="flex justify-between">
+                                <span>Bahis Tutarı:</span>
+                                <input type="number" placeholder="₺0" class="bg-accent border border-gray-600 rounded px-2 py-1 w-20 text-right">
+                            </div>
+                            <div class="flex justify-between">
+                                <span>Potansiyel Kazanç:</span>
+                                <span class="text-gold font-bold">₺0</span>
+                            </div>
+                            <button class="w-full bg-gold text-black py-2 rounded-lg font-bold hover:bg-yellow-500">
+                                Bahis Yap
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Stats Section -->
+        <section class="mt-12">
+            <h2 class="text-3xl font-bold mb-8 text-center">Canlı İstatistikler</h2>
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+                <div class="bg-secondary p-6 rounded-xl text-center">
+                    <div class="text-gold text-3xl mb-2">
+                        <i class="fas fa-futbol"></i>
+                    </div>
+                    <div class="text-2xl font-bold mb-1">24</div>
+                    <div class="text-sm text-gray-400">Canlı Maç</div>
+                </div>
+                
+                <div class="bg-secondary p-6 rounded-xl text-center">
+                    <div class="text-gold text-3xl mb-2">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="text-2xl font-bold mb-1">8,456</div>
+                    <div class="text-sm text-gray-400">Aktif Bahisçi</div>
+                </div>
+                
+                <div class="bg-secondary p-6 rounded-xl text-center">
+                    <div class="text-gold text-3xl mb-2">
+                        <i class="fas fa-trophy"></i>
+                    </div>
+                    <div class="text-2xl font-bold mb-1">%98.5</div>
+                    <div class="text-sm text-gray-400">Ödeme Oranı</div>
+                </div>
+                
+                <div class="bg-secondary p-6 rounded-xl text-center">
+                    <div class="text-gold text-3xl mb-2">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <div class="text-2xl font-bold mb-1">1.85</div>
+                    <div class="text-sm text-gray-400">Ortalama Oran</div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-darkgray border-t border-accent mt-16">
+        <div class="container mx-auto px-4 py-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-gold font-bold text-lg mb-4">BetGround</h3>
+                    <p class="text-gray-400 text-sm">Güvenilir ve eğlenceli bahis deneyimi</p>
+                </div>
+                <div>
+                    <h4 class="text-white font-medium mb-4">Oyunlar</h4>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><a href="canli-casino.html" class="hover:text-gold">Canlı Casino</a></li>
+                        <li><a href="slot.html" class="hover:text-gold">Slot Oyunları</a></li>
+                        <li><a href="canli-bahis.html" class="hover:text-gold">Spor Bahisleri</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-medium mb-4">Hesap</h4>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><a href="para-yatir.html" class="hover:text-gold">Para Yatır</a></li>
+                        <li><a href="para-cek.html" class="hover:text-gold">Para Çek</a></li>
+                        <li><a href="promosyonlar.html" class="hover:text-gold">Promosyonlar</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-medium mb-4">Destek</h4>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><a href="#" class="hover:text-gold">Canlı Destek</a></li>
+                        <li><a href="#" class="hover:text-gold">SSS</a></li>
+                        <li><a href="#" class="hover:text-gold">İletişim</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-accent mt-8 pt-8 text-center">
+                <p class="text-gray-400 text-sm">&copy; 2024 BetGround. Tüm hakları saklıdır.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

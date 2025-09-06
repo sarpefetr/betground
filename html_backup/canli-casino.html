@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="tr" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BetGround - Canlı Casino</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#1a1a1a',
+                        secondary: '#2a2a2a',
+                        accent: '#3a3a3a',
+                        gold: '#ffd700',
+                        darkgray: '#171717'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .bg-gradient-dark {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+        }
+        .text-glow {
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+        }
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(255, 215, 0, 0.1);
+        }
+        .game-card {
+            position: relative;
+            overflow: hidden;
+        }
+        .game-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .game-card:hover::before {
+            opacity: 1;
+        }
+        .play-button {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .game-card:hover .play-button {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body class="bg-primary text-white min-h-screen">
+    <!-- News Bar -->
+    <div class="bg-gold text-black text-center py-2 text-sm font-medium">
+        <div class="container mx-auto">
+            <span class="animate-pulse">📢 Site adresimiz 455.com dur bir sonraki adres 456.com olacaktır</span>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="bg-secondary shadow-lg border-b border-accent">
+        <div class="container mx-auto px-4">
+            <div class="flex items-center justify-between h-16">
+                <!-- Logo -->
+                <div class="flex items-center">
+                    <a href="index.html" class="text-gold text-2xl font-bold text-glow">
+                        <i class="fas fa-dice mr-2"></i>BetGround
+                    </a>
+                </div>
+
+                <!-- Navigation Links -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="index.html" class="flex items-center text-white hover:text-gold transition-colors">
+                        <i class="fas fa-home mr-2"></i>Ana Sayfa
+                    </a>
+                    <a href="canli-casino.html" class="flex items-center text-gold border-b-2 border-gold pb-1">
+                        <i class="fas fa-video mr-2"></i>Canlı Casino
+                    </a>
+                    <a href="canli-bahis.html" class="flex items-center text-white hover:text-gold transition-colors">
+                        <i class="fas fa-futbol mr-2"></i>Canlı Bahis
+                    </a>
+                    <a href="slot.html" class="flex items-center text-white hover:text-gold transition-colors">
+                        <i class="fas fa-gamepad mr-2"></i>Slot
+                    </a>
+                    <a href="oyunlar.html" class="flex items-center text-white hover:text-gold transition-colors">
+                        <i class="fas fa-puzzle-piece mr-2"></i>Oyunlar
+                    </a>
+                    <a href="e-sporlar.html" class="flex items-center text-white hover:text-gold transition-colors">
+                        <i class="fas fa-desktop mr-2"></i>E-Sporlar
+                    </a>
+                    <a href="sanal-sporlar.html" class="flex items-center text-white hover:text-gold transition-colors">
+                        <i class="fas fa-robot mr-2"></i>Sanal Sporlar
+                    </a>
+                    <a href="promosyonlar.html" class="flex items-center text-white hover:text-gold transition-colors">
+                        <i class="fas fa-gift mr-2"></i>Promosyonlar
+                    </a>
+                </div>
+
+                <!-- User Actions -->
+                <div class="flex items-center space-x-4">
+                    <a href="giris.html" class="bg-gold text-black px-4 py-2 rounded-lg hover:bg-yellow-500 transition-colors font-medium">
+                        <i class="fas fa-sign-in-alt mr-2"></i>Giriş
+                    </a>
+                    <a href="kayit.html" class="border border-gold text-gold px-4 py-2 rounded-lg hover:bg-gold hover:text-black transition-colors">
+                        <i class="fas fa-user-plus mr-2"></i>Kayıt
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8">
+        <!-- Page Header -->
+        <section class="mb-12">
+            <div class="text-center">
+                <h1 class="text-4xl font-bold mb-4 text-glow">
+                    <i class="fas fa-video mr-3"></i>Canlı Casino
+                </h1>
+                <p class="text-xl text-gray-300">Gerçek krupiyeler ile heyecan dolu casino deneyimi yaşayın</p>
+            </div>
+        </section>
+
+        <!-- Live Casino Games -->
+        <section class="mb-12">
+            <h2 class="text-3xl font-bold mb-8">Canlı Masalar</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                <!-- Live Blackjack -->
+                <div class="game-card bg-secondary rounded-xl overflow-hidden card-hover cursor-pointer">
+                    <div class="relative h-48 bg-gradient-to-br from-green-900 to-green-700">
+                        <div class="absolute top-4 left-4 bg-red-600 text-white px-2 py-1 rounded text-xs">
+                            <i class="fas fa-circle text-red-400 animate-pulse mr-1"></i>CANLI
+                        </div>
+                        <div class="absolute bottom-4 left-4">
+                            <h3 class="text-white font-bold text-lg">Blackjack VIP</h3>
+                            <p class="text-gray-200 text-sm">Masa Limiti: ₺10 - ₺50.000</p>
+                        </div>
+                        <div class="play-button">
+                            <button class="bg-gold text-black px-6 py-3 rounded-full font-bold hover:bg-yellow-500">
+                                <i class="fas fa-play mr-2"></i>Oyna
+                            </button>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center">
+                                <img src="https://via.placeholder.com/32x32" alt="Dealer" class="w-8 h-8 rounded-full mr-2">
+                                <span class="text-sm">Dealer Sarah</span>
+                            </div>
+                            <div class="text-gold font-bold">7 Oyuncu</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Live Roulette -->
+                <div class="game-card bg-secondary rounded-xl overflow-hidden card-hover cursor-pointer">
+                    <div class="relative h-48 bg-gradient-to-br from-red-900 to-red-700">
+                        <div class="absolute top-4 left-4 bg-red-600 text-white px-2 py-1 rounded text-xs">
+                            <i class="fas fa-circle text-red-400 animate-pulse mr-1"></i>CANLI
+                        </div>
+                        <div class="absolute bottom-4 left-4">
+                            <h3 class="text-white font-bold text-lg">Türk Ruleti</h3>
+                            <p class="text-gray-200 text-sm">Masa Limiti: ₺5 - ₺25.000</p>
+                        </div>
+                        <div class="play-button">
+                            <button class="bg-gold text-black px-6 py-3 rounded-full font-bold hover:bg-yellow-500">
+                                <i class="fas fa-play mr-2"></i>Oyna
+                            </button>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center">
+                                <img src="https://via.placeholder.com/32x32" alt="Dealer" class="w-8 h-8 rounded-full mr-2">
+                                <span class="text-sm">Dealer Ayşe</span>
+                            </div>
+                            <div class="text-gold font-bold">12 Oyuncu</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Live Baccarat -->
+                <div class="game-card bg-secondary rounded-xl overflow-hidden card-hover cursor-pointer">
+                    <div class="relative h-48 bg-gradient-to-br from-purple-900 to-purple-700">
+                        <div class="absolute top-4 left-4 bg-red-600 text-white px-2 py-1 rounded text-xs">
+                            <i class="fas fa-circle text-red-400 animate-pulse mr-1"></i>CANLI
+                        </div>
+                        <div class="absolute bottom-4 left-4">
+                            <h3 class="text-white font-bold text-lg">Baccarat Salon</h3>
+                            <p class="text-gray-200 text-sm">Masa Limiti: ₺25 - ₺100.000</p>
+                        </div>
+                        <div class="play-button">
+                            <button class="bg-gold text-black px-6 py-3 rounded-full font-bold hover:bg-yellow-500">
+                                <i class="fas fa-play mr-2"></i>Oyna
+                            </button>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center">
+                                <img src="https://via.placeholder.com/32x32" alt="Dealer" class="w-8 h-8 rounded-full mr-2">
+                                <span class="text-sm">Dealer Maria</span>
+                            </div>
+                            <div class="text-gold font-bold">5 Oyuncu</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Live Poker -->
+                <div class="game-card bg-secondary rounded-xl overflow-hidden card-hover cursor-pointer">
+                    <div class="relative h-48 bg-gradient-to-br from-blue-900 to-blue-700">
+                        <div class="absolute top-4 left-4 bg-red-600 text-white px-2 py-1 rounded text-xs">
+                            <i class="fas fa-circle text-red-400 animate-pulse mr-1"></i>CANLI
+                        </div>
+                        <div class="absolute bottom-4 left-4">
+                            <h3 class="text-white font-bold text-lg">Casino Hold'em</h3>
+                            <p class="text-gray-200 text-sm">Masa Limiti: ₺10 - ₺10.000</p>
+                        </div>
+                        <div class="play-button">
+                            <button class="bg-gold text-black px-6 py-3 rounded-full font-bold hover:bg-yellow-500">
+                                <i class="fas fa-play mr-2"></i>Oyna
+                            </button>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center">
+                                <img src="https://via.placeholder.com/32x32" alt="Dealer" class="w-8 h-8 rounded-full mr-2">
+                                <span class="text-sm">Dealer John</span>
+                            </div>
+                            <div class="text-gold font-bold">8 Oyuncu</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Game Shows -->
+        <section class="mb-12">
+            <h2 class="text-3xl font-bold mb-8">Oyun Şovları</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Crazy Time -->
+                <div class="game-card bg-secondary rounded-xl overflow-hidden card-hover cursor-pointer">
+                    <div class="relative h-56 bg-gradient-to-br from-pink-900 to-pink-700">
+                        <div class="absolute top-4 left-4 bg-red-600 text-white px-2 py-1 rounded text-xs">
+                            <i class="fas fa-circle text-red-400 animate-pulse mr-1"></i>CANLI
+                        </div>
+                        <div class="absolute top-4 right-4 bg-gold text-black px-2 py-1 rounded text-xs font-bold">
+                            HOT!
+                        </div>
+                        <div class="absolute bottom-4 left-4">
+                            <h3 class="text-white font-bold text-xl">Crazy Time</h3>
+                            <p class="text-gray-200 text-sm">En popüler oyun şovu</p>
+                        </div>
+                        <div class="play-button">
+                            <button class="bg-gold text-black px-6 py-3 rounded-full font-bold hover:bg-yellow-500">
+                                <i class="fas fa-play mr-2"></i>Oyna
+                            </button>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <div class="flex justify-between items-center">
+                            <span class="text-sm text-gray-300">Sonraki Tur: 45sn</span>
+                            <div class="text-gold font-bold">234 Oyuncu</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Monopoly Live -->
+                <div class="game-card bg-secondary rounded-xl overflow-hidden card-hover cursor-pointer">
+                    <div class="relative h-56 bg-gradient-to-br from-green-900 to-green-700">
+                        <div class="absolute top-4 left-4 bg-red-600 text-white px-2 py-1 rounded text-xs">
+                            <i class="fas fa-circle text-red-400 animate-pulse mr-1"></i>CANLI
+                        </div>
+                        <div class="absolute bottom-4 left-4">
+                            <h3 class="text-white font-bold text-xl">Monopoly Live</h3>
+                            <p class="text-gray-200 text-sm">3D Bonus oyunu ile</p>
+                        </div>
+                        <div class="play-button">
+                            <button class="bg-gold text-black px-6 py-3 rounded-full font-bold hover:bg-yellow-500">
+                                <i class="fas fa-play mr-2"></i>Oyna
+                            </button>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <div class="flex justify-between items-center">
+                            <span class="text-sm text-gray-300">Sonraki Tur: 12sn</span>
+                            <div class="text-gold font-bold">187 Oyuncu</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Dream Catcher -->
+                <div class="game-card bg-secondary rounded-xl overflow-hidden card-hover cursor-pointer">
+                    <div class="relative h-56 bg-gradient-to-br from-yellow-900 to-yellow-700">
+                        <div class="absolute top-4 left-4 bg-red-600 text-white px-2 py-1 rounded text-xs">
+                            <i class="fas fa-circle text-red-400 animate-pulse mr-1"></i>CANLI
+                        </div>
+                        <div class="absolute bottom-4 left-4">
+                            <h3 class="text-white font-bold text-xl">Dream Catcher</h3>
+                            <p class="text-gray-200 text-sm">Para Tekerleği oyunu</p>
+                        </div>
+                        <div class="play-button">
+                            <button class="bg-gold text-black px-6 py-3 rounded-full font-bold hover:bg-yellow-500">
+                                <i class="fas fa-play mr-2"></i>Oyna
+                            </button>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <div class="flex justify-between items-center">
+                            <span class="text-sm text-gray-300">Sonraki Tur: 28sn</span>
+                            <div class="text-gold font-bold">156 Oyuncu</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Promotions Banner -->
+        <section class="mb-12">
+            <div class="bg-gradient-dark rounded-2xl p-8 text-center">
+                <h2 class="text-3xl font-bold mb-4 text-glow">Canlı Casino Bonusu</h2>
+                <p class="text-xl text-gray-300 mb-6">İlk yatırımınıza %100 bonus + 50 freespin</p>
+                <a href="promosyonlar.html" class="bg-gold text-black px-8 py-3 rounded-lg font-bold text-lg hover:bg-yellow-500 transition-colors">
+                    <i class="fas fa-gift mr-2"></i>Bonusu Al
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-darkgray border-t border-accent mt-16">
+        <div class="container mx-auto px-4 py-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-gold font-bold text-lg mb-4">BetGround</h3>
+                    <p class="text-gray-400 text-sm">Güvenilir ve eğlenceli bahis deneyimi</p>
+                </div>
+                <div>
+                    <h4 class="text-white font-medium mb-4">Oyunlar</h4>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><a href="canli-casino.html" class="hover:text-gold">Canlı Casino</a></li>
+                        <li><a href="slot.html" class="hover:text-gold">Slot Oyunları</a></li>
+                        <li><a href="canli-bahis.html" class="hover:text-gold">Spor Bahisleri</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-medium mb-4">Hesap</h4>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><a href="para-yatir.html" class="hover:text-gold">Para Yatır</a></li>
+                        <li><a href="para-cek.html" class="hover:text-gold">Para Çek</a></li>
+                        <li><a href="promosyonlar.html" class="hover:text-gold">Promosyonlar</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-medium mb-4">Destek</h4>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><a href="#" class="hover:text-gold">Canlı Destek</a></li>
+                        <li><a href="#" class="hover:text-gold">SSS</a></li>
+                        <li><a href="#" class="hover:text-gold">İletişim</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-accent mt-8 pt-8 text-center">
+                <p class="text-gray-400 text-sm">&copy; 2024 BetGround. Tüm hakları saklıdır.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

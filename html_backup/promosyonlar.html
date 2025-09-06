@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="tr" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BetGround - Promosyonlar</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#1a1a1a',
+                        secondary: '#2a2a2a',
+                        accent: '#3a3a3a',
+                        gold: '#ffd700',
+                        darkgray: '#171717'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .bg-gradient-dark {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+        }
+        .bg-gradient-gold {
+            background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+        }
+        .text-glow {
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+        }
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(255, 215, 0, 0.15);
+        }
+        .promo-card {
+            position: relative;
+            overflow: hidden;
+        }
+        .promo-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, transparent 30%, rgba(255, 215, 0, 0.1) 50%, transparent 70%);
+            transform: translateX(-100%);
+            transition: transform 0.6s ease;
+        }
+        .promo-card:hover::before {
+            transform: translateX(100%);
+        }
+        .countdown {
+            font-family: 'Courier New', monospace;
+        }
+        .hot-badge {
+            animation: bounce 1s infinite alternate;
+        }
+    </style>
+</head>
+<body class="bg-primary text-white min-h-screen">
+    <!-- News Bar -->
+    <div class="bg-gold text-black text-center py-2 text-sm font-medium">
+        <div class="container mx-auto">
+            <span class="animate-pulse">📢 Site adresimiz 455.com dur bir sonraki adres 456.com olacaktır</span>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="bg-secondary shadow-lg border-b border-accent">
+        <div class="container mx-auto px-4">
+            <div class="flex items-center justify-between h-16">
+                <!-- Logo -->
+                <div class="flex items-center">
+                    <a href="index.html" class="text-gold text-2xl font-bold text-glow">
+                        <i class="fas fa-dice mr-2"></i>BetGround
+                    </a>
+                </div>
+
+                <!-- Navigation Links -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="index.html" class="flex items-center text-white hover:text-gold transition-colors">
+                        <i class="fas fa-home mr-2"></i>Ana Sayfa
+                    </a>
+                    <a href="canli-casino.html" class="flex items-center text-white hover:text-gold transition-colors">
+                        <i class="fas fa-video mr-2"></i>Canlı Casino
+                    </a>
+                    <a href="canli-bahis.html" class="flex items-center text-white hover:text-gold transition-colors">
+                        <i class="fas fa-futbol mr-2"></i>Canlı Bahis
+                    </a>
+                    <a href="slot.html" class="flex items-center text-white hover:text-gold transition-colors">
+                        <i class="fas fa-gamepad mr-2"></i>Slot
+                    </a>
+                    <a href="oyunlar.html" class="flex items-center text-white hover:text-gold transition-colors">
+                        <i class="fas fa-puzzle-piece mr-2"></i>Oyunlar
+                    </a>
+                    <a href="e-sporlar.html" class="flex items-center text-white hover:text-gold transition-colors">
+                        <i class="fas fa-desktop mr-2"></i>E-Sporlar
+                    </a>
+                    <a href="sanal-sporlar.html" class="flex items-center text-white hover:text-gold transition-colors">
+                        <i class="fas fa-robot mr-2"></i>Sanal Sporlar
+                    </a>
+                    <a href="promosyonlar.html" class="flex items-center text-gold border-b-2 border-gold pb-1">
+                        <i class="fas fa-gift mr-2"></i>Promosyonlar
+                    </a>
+                </div>
+
+                <!-- User Actions -->
+                <div class="flex items-center space-x-4">
+                    <a href="giris.html" class="bg-gold text-black px-4 py-2 rounded-lg hover:bg-yellow-500 transition-colors font-medium">
+                        <i class="fas fa-sign-in-alt mr-2"></i>Giriş
+                    </a>
+                    <a href="kayit.html" class="border border-gold text-gold px-4 py-2 rounded-lg hover:bg-gold hover:text-black transition-colors">
+                        <i class="fas fa-user-plus mr-2"></i>Kayıt
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8">
+        <!-- Page Header -->
+        <section class="mb-12">
+            <div class="text-center">
+                <h1 class="text-4xl font-bold mb-4 text-glow">
+                    <i class="fas fa-gift mr-3"></i>Promosyonlar
+                </h1>
+                <p class="text-xl text-gray-300">Günlük bonuslar ve özel kampanyalarla kazancınızı artırın</p>
+            </div>
+        </section>
+
+        <!-- Featured Promotion -->
+        <section class="mb-12">
+            <div class="promo-card bg-gradient-gold rounded-2xl p-8 text-black card-hover relative overflow-hidden">
+                <div class="absolute top-4 right-4 hot-badge">
+                    <span class="bg-red-600 text-white px-3 py-1 rounded-full text-sm font-bold">
+                        🔥 HOT
+                    </span>
+                </div>
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                    <div>
+                        <h2 class="text-4xl font-bold mb-4">Hoş Geldin Bonusu</h2>
+                        <p class="text-xl mb-6">İlk yatırımınıza <strong>%200 BONUS</strong> + <strong>100 Freespin</strong></p>
+                        <ul class="space-y-2 mb-6">
+                            <li class="flex items-center"><i class="fas fa-check text-green-600 mr-2"></i>Minimum yatırım: ₺50</li>
+                            <li class="flex items-center"><i class="fas fa-check text-green-600 mr-2"></i>Maksimum bonus: ₺5.000</li>
+                            <li class="flex items-center"><i class="fas fa-check text-green-600 mr-2"></i>Çevrim şartı: 35x</li>
+                        </ul>
+                        <a href="kayit.html" class="bg-black text-gold px-8 py-3 rounded-lg font-bold text-lg hover:bg-gray-800 transition-colors inline-block">
+                            <i class="fas fa-rocket mr-2"></i>Hemen Al
+                        </a>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-6xl font-bold mb-4">₺5.000</div>
+                        <div class="text-2xl">Bonus Şansı</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Active Promotions -->
+        <section class="mb-12">
+            <h2 class="text-3xl font-bold mb-8">Aktif Kampanyalar</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Daily Bonus -->
+                <div class="promo-card bg-secondary rounded-xl overflow-hidden card-hover">
+                    <div class="bg-gradient-to-br from-blue-600 to-purple-600 p-6 text-center">
+                        <div class="text-4xl mb-4">📅</div>
+                        <h3 class="text-xl font-bold mb-2">Günlük Bonus</h3>
+                        <div class="text-3xl font-bold text-gold">%50</div>
+                    </div>
+                    <div class="p-6">
+                        <p class="text-gray-300 mb-4">Her gün yatırımınıza %50 bonus kazanın!</p>
+                        <ul class="text-sm space-y-1 mb-4 text-gray-400">
+                            <li>• Min. yatırım: ₺100</li>
+                            <li>• Maks. bonus: ₺500</li>
+                            <li>• Geçerlilik: Her gün 1 kez</li>
+                        </ul>
+                        <div class="countdown text-center text-gold font-bold mb-4">
+                            Kalan Süre: 14:32:15
+                        </div>
+                        <button class="w-full bg-gold text-black py-2 rounded-lg font-medium hover:bg-yellow-500 transition-colors">
+                            Al
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Weekend Special -->
+                <div class="promo-card bg-secondary rounded-xl overflow-hidden card-hover">
+                    <div class="bg-gradient-to-br from-green-600 to-emerald-600 p-6 text-center">
+                        <div class="text-4xl mb-4">🎉</div>
+                        <h3 class="text-xl font-bold mb-2">Hafta Sonu Özel</h3>
+                        <div class="text-3xl font-bold text-gold">%75</div>
+                    </div>
+                    <div class="p-6">
+                        <p class="text-gray-300 mb-4">Hafta sonları özel bonus oranı!</p>
+                        <ul class="text-sm space-y-1 mb-4 text-gray-400">
+                            <li>• Min. yatırım: ₺200</li>
+                            <li>• Maks. bonus: ₺1.500</li>
+                            <li>• Geçerlilik: Cmt-Paz</li>
+                        </ul>
+                        <div class="flex items-center justify-center mb-4">
+                            <span class="bg-green-600 text-white px-2 py-1 rounded text-xs">
+                                AKTİF
+                            </span>
+                        </div>
+                        <button class="w-full bg-gold text-black py-2 rounded-lg font-medium hover:bg-yellow-500 transition-colors">
+                            Al
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Slot Tournament -->
+                <div class="promo-card bg-secondary rounded-xl overflow-hidden card-hover">
+                    <div class="bg-gradient-to-br from-purple-600 to-pink-600 p-6 text-center">
+                        <div class="text-4xl mb-4">🏆</div>
+                        <h3 class="text-xl font-bold mb-2">Slot Turnuvası</h3>
+                        <div class="text-3xl font-bold text-gold">₺50K</div>
+                    </div>
+                    <div class="p-6">
+                        <p class="text-gray-300 mb-4">Toplam ₺50.000 ödül havuzu!</p>
+                        <ul class="text-sm space-y-1 mb-4 text-gray-400">
+                            <li>• 1. ₺15.000</li>
+                            <li>• 2. ₺10.000</li>
+                            <li>• 3. ₺5.000</li>
+                        </ul>
+                        <div class="text-center text-gold font-bold mb-4">
+                            147 Katılımcı
+                        </div>
+                        <button class="w-full bg-gold text-black py-2 rounded-lg font-medium hover:bg-yellow-500 transition-colors">
+                            Katıl
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Cashback -->
+                <div class="promo-card bg-secondary rounded-xl overflow-hidden card-hover">
+                    <div class="bg-gradient-to-br from-orange-600 to-red-600 p-6 text-center">
+                        <div class="text-4xl mb-4">💰</div>
+                        <h3 class="text-xl font-bold mb-2">Cashback</h3>
+                        <div class="text-3xl font-bold text-gold">%20</div>
+                    </div>
+                    <div class="p-6">
+                        <p class="text-gray-300 mb-4">Kayıplarınızın %20'sini geri alın!</p>
+                        <ul class="text-sm space-y-1 mb-4 text-gray-400">
+                            <li>• Min. kayıp: ₺500</li>
+                            <li>• Maks. cashback: ₺2.000</li>
+                            <li>• Haftalık hesaplama</li>
+                        </ul>
+                        <div class="text-center text-gold font-bold mb-4">
+                            Otomatik
+                        </div>
+                        <button class="w-full bg-gray-600 text-gray-300 py-2 rounded-lg font-medium cursor-not-allowed">
+                            Otomatik Aktif
+                        </button>
+                    </div>
+                </div>
+
+                <!-- VIP Program -->
+                <div class="promo-card bg-secondary rounded-xl overflow-hidden card-hover">
+                    <div class="bg-gradient-to-br from-yellow-600 to-orange-600 p-6 text-center">
+                        <div class="text-4xl mb-4">👑</div>
+                        <h3 class="text-xl font-bold mb-2">VIP Program</h3>
+                        <div class="text-3xl font-bold text-gold">Özel</div>
+                    </div>
+                    <div class="p-6">
+                        <p class="text-gray-300 mb-4">VIP üyelerimize özel ayrıcalıklar!</p>
+                        <ul class="text-sm space-y-1 mb-4 text-gray-400">
+                            <li>• Özel bonuslar</li>
+                            <li>• Hızlı para çekme</li>
+                            <li>• Kişisel müşteri temsilcisi</li>
+                        </ul>
+                        <div class="text-center text-gold font-bold mb-4">
+                            Sadece Davetiye
+                        </div>
+                        <button class="w-full bg-gold text-black py-2 rounded-lg font-medium hover:bg-yellow-500 transition-colors">
+                            Başvur
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Refer a Friend -->
+                <div class="promo-card bg-secondary rounded-xl overflow-hidden card-hover">
+                    <div class="bg-gradient-to-br from-teal-600 to-cyan-600 p-6 text-center">
+                        <div class="text-4xl mb-4">🤝</div>
+                        <h3 class="text-xl font-bold mb-2">Arkadaş Davet Et</h3>
+                        <div class="text-3xl font-bold text-gold">₺250</div>
+                    </div>
+                    <div class="p-6">
+                        <p class="text-gray-300 mb-4">Arkadaş davet et, bonus kazan!</p>
+                        <ul class="text-sm space-y-1 mb-4 text-gray-400">
+                            <li>• Her arkadaş için ₺250</li>
+                            <li>• Arkadaşına ₺100 bonus</li>
+                            <li>• Sınırsız davet</li>
+                        </ul>
+                        <div class="text-center text-gold font-bold mb-4">
+                            23 Kişi Davet Edildi
+                        </div>
+                        <button class="w-full bg-gold text-black py-2 rounded-lg font-medium hover:bg-yellow-500 transition-colors">
+                            Davet Et
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Promotion Terms -->
+        <section class="mb-12">
+            <div class="bg-secondary rounded-xl p-6">
+                <h2 class="text-2xl font-bold mb-6">Genel Şartlar ve Koşullar</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 text-sm text-gray-300">
+                    <div>
+                        <h3 class="font-bold text-white mb-3">Bonus Kuralları</h3>
+                        <ul class="space-y-2">
+                            <li>• Bonuslar sadece kayıtlı üyelere verilir</li>
+                            <li>• Her promosyon için çevrim şartları farklıdır</li>
+                            <li>• Bonus kullanımı için minimum yatırım gereklidir</li>
+                            <li>• Bonuslar belirtilen süre içinde kullanılmalıdır</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-white mb-3">Genel Koşullar</h3>
+                        <ul class="space-y-2">
+                            <li>• BetGround promosyon şartlarını değiştirme hakkını saklı tutar</li>
+                            <li>• Suistimal durumunda hesap kapatılabilir</li>
+                            <li>• Bir kişi sadece bir hesap açabilir</li>
+                            <li>• Promosyonlar ülke sınırlamalarına tabidir</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Newsletter -->
+        <section>
+            <div class="bg-gradient-dark rounded-2xl p-8 text-center">
+                <h2 class="text-3xl font-bold mb-4">Özel Promosyonlardan Haberdar Olun</h2>
+                <p class="text-xl text-gray-300 mb-6">E-posta listemize katılın, özel bonuslardan ilk siz haberdar olun</p>
+                <div class="flex flex-col md:flex-row gap-4 max-w-md mx-auto">
+                    <input type="email" placeholder="E-posta adresiniz" class="flex-1 bg-secondary border border-accent text-white px-4 py-3 rounded-lg focus:outline-none focus:border-gold">
+                    <button class="bg-gold text-black px-6 py-3 rounded-lg font-bold hover:bg-yellow-500 transition-colors">
+                        <i class="fas fa-envelope mr-2"></i>Abone Ol
+                    </button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-darkgray border-t border-accent mt-16">
+        <div class="container mx-auto px-4 py-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-gold font-bold text-lg mb-4">BetGround</h3>
+                    <p class="text-gray-400 text-sm">Güvenilir ve eğlenceli bahis deneyimi</p>
+                </div>
+                <div>
+                    <h4 class="text-white font-medium mb-4">Oyunlar</h4>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><a href="canli-casino.html" class="hover:text-gold">Canlı Casino</a></li>
+                        <li><a href="slot.html" class="hover:text-gold">Slot Oyunları</a></li>
+                        <li><a href="canli-bahis.html" class="hover:text-gold">Spor Bahisleri</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-medium mb-4">Hesap</h4>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><a href="para-yatir.html" class="hover:text-gold">Para Yatır</a></li>
+                        <li><a href="para-cek.html" class="hover:text-gold">Para Çek</a></li>
+                        <li><a href="promosyonlar.html" class="hover:text-gold">Promosyonlar</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-medium mb-4">Destek</h4>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><a href="#" class="hover:text-gold">Canlı Destek</a></li>
+                        <li><a href="#" class="hover:text-gold">SSS</a></li>
+                        <li><a href="#" class="hover:text-gold">İletişim</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-accent mt-8 pt-8 text-center">
+                <p class="text-gray-400 text-sm">&copy; 2024 BetGround. Tüm hakları saklıdır.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="tr" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BetGround - Para Çek</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#1a1a1a',
+                        secondary: '#2a2a2a',
+                        accent: '#3a3a3a',
+                        gold: '#ffd700',
+                        darkgray: '#171717'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .bg-gradient-dark {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+        }
+        .text-glow {
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+        }
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(255, 215, 0, 0.1);
+        }
+        .withdrawal-method {
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+        .withdrawal-method.selected {
+            border-color: #ffd700;
+            background: rgba(255, 215, 0, 0.1);
+        }
+        .withdrawal-card {
+            backdrop-filter: blur(10px);
+            background: rgba(42, 42, 42, 0.95);
+        }
+        .input-focus:focus {
+            border-color: #ffd700;
+            box-shadow: 0 0 0 2px rgba(255, 215, 0, 0.2);
+        }
+    </style>
+</head>
+<body class="bg-primary text-white min-h-screen">
+    <!-- News Bar -->
+    <div class="bg-gold text-black text-center py-2 text-sm font-medium">
+        <div class="container mx-auto">
+            <span class="animate-pulse">📢 Site adresimiz 455.com dur bir sonraki adres 456.com olacaktır</span>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="bg-secondary shadow-lg border-b border-accent">
+        <div class="container mx-auto px-4">
+            <div class="flex items-center justify-between h-16">
+                <!-- Logo -->
+                <div class="flex items-center">
+                    <a href="index.html" class="text-gold text-2xl font-bold text-glow">
+                        <i class="fas fa-dice mr-2"></i>BetGround
+                    </a>
+                </div>
+
+                <!-- Navigation Links -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="index.html" class="flex items-center text-white hover:text-gold transition-colors">
+                        <i class="fas fa-home mr-2"></i>Ana Sayfa
+                    </a>
+                    <a href="canli-casino.html" class="flex items-center text-white hover:text-gold transition-colors">
+                        <i class="fas fa-video mr-2"></i>Canlı Casino
+                    </a>
+                    <a href="canli-bahis.html" class="flex items-center text-white hover:text-gold transition-colors">
+                        <i class="fas fa-futbol mr-2"></i>Canlı Bahis
+                    </a>
+                    <a href="slot.html" class="flex items-center text-white hover:text-gold transition-colors">
+                        <i class="fas fa-gamepad mr-2"></i>Slot
+                    </a>
+                    <a href="oyunlar.html" class="flex items-center text-white hover:text-gold transition-colors">
+                        <i class="fas fa-puzzle-piece mr-2"></i>Oyunlar
+                    </a>
+                    <a href="e-sporlar.html" class="flex items-center text-white hover:text-gold transition-colors">
+                        <i class="fas fa-desktop mr-2"></i>E-Sporlar
+                    </a>
+                    <a href="sanal-sporlar.html" class="flex items-center text-white hover:text-gold transition-colors">
+                        <i class="fas fa-robot mr-2"></i>Sanal Sporlar
+                    </a>
+                    <a href="promosyonlar.html" class="flex items-center text-white hover:text-gold transition-colors">
+                        <i class="fas fa-gift mr-2"></i>Promosyonlar
+                    </a>
+                </div>
+
+                <!-- User Info -->
+                <div class="flex items-center space-x-4">
+                    <div class="text-right">
+                        <div class="text-sm text-gray-300">Çekilebilir Bakiye</div>
+                        <div class="text-gold font-bold">₺1.122,50</div>
+                    </div>
+                    <div class="bg-accent rounded-full p-2">
+                        <i class="fas fa-user text-gold"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8">
+        <!-- Page Header -->
+        <section class="mb-8">
+            <div class="text-center">
+                <h1 class="text-4xl font-bold mb-4 text-glow">
+                    <i class="fas fa-money-bill-wave mr-3"></i>Para Çek
+                </h1>
+                <p class="text-xl text-gray-300">Kazancınızı hızlı ve güvenli şekilde çekin</p>
+            </div>
+        </section>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- Withdrawal Methods -->
+            <div class="lg:col-span-2">
+                <div class="withdrawal-card rounded-2xl p-6 border border-accent">
+                    <h2 class="text-2xl font-bold mb-6">Para Çekme Yöntemi Seçin</h2>
+                    
+                    <div x-data="{ selectedMethod: 'bank-transfer' }" class="space-y-4">
+                        <!-- Bank Transfer -->
+                        <div @click="selectedMethod = 'bank-transfer'" 
+                             :class="selectedMethod === 'bank-transfer' ? 'selected' : ''"
+                             class="withdrawal-method bg-secondary rounded-xl p-4 cursor-pointer card-hover">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center">
+                                    <div class="text-gold text-2xl mr-4">
+                                        <i class="fas fa-university"></i>
+                                    </div>
+                                    <div>
+                                        <h3 class="font-bold text-lg">Banka Havalesi</h3>
+                                        <p class="text-sm text-gray-400">Kendi banka hesabınıza</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-center space-x-2">
+                                    <span class="bg-blue-600 text-white px-2 py-1 rounded text-xs">1-24 SAAT</span>
+                                </div>
+                            </div>
+                            <div class="mt-3 text-sm text-gray-300">
+                                Min: ₺100 - Maks: ₺50.000 | Komisyon: %0
+                            </div>
+                        </div>
+
+                        <!-- Crypto -->
+                        <div @click="selectedMethod = 'crypto'" 
+                             :class="selectedMethod === 'crypto' ? 'selected' : ''"
+                             class="withdrawal-method bg-secondary rounded-xl p-4 cursor-pointer card-hover">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center">
+                                    <div class="text-gold text-2xl mr-4">
+                                        <i class="fab fa-bitcoin"></i>
+                                    </div>
+                                    <div>
+                                        <h3 class="font-bold text-lg">Kripto Para</h3>
+                                        <p class="text-sm text-gray-400">Bitcoin, Ethereum, USDT</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-center space-x-2">
+                                    <span class="bg-green-600 text-white px-2 py-1 rounded text-xs">ANLIK</span>
+                                    <i class="fab fa-bitcoin text-2xl text-orange-500"></i>
+                                </div>
+                            </div>
+                            <div class="mt-3 text-sm text-gray-300">
+                                Min: ₺200 - Maks: ₺100.000 | Komisyon: %1
+                            </div>
+                        </div>
+
+                        <!-- E-Wallet -->
+                        <div @click="selectedMethod = 'ewallet'" 
+                             :class="selectedMethod === 'ewallet' ? 'selected' : ''"
+                             class="withdrawal-method bg-secondary rounded-xl p-4 cursor-pointer card-hover">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center">
+                                    <div class="text-gold text-2xl mr-4">
+                                        <i class="fas fa-wallet"></i>
+                                    </div>
+                                    <div>
+                                        <h3 class="font-bold text-lg">E-Cüzdan</h3>
+                                        <p class="text-sm text-gray-400">PayPal, Skrill, Neteller</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-center space-x-2">
+                                    <span class="bg-green-600 text-white px-2 py-1 rounded text-xs">ANLIK</span>
+                                </div>
+                            </div>
+                            <div class="mt-3 text-sm text-gray-300">
+                                Min: ₺75 - Maks: ₺15.000 | Komisyon: %3
+                            </div>
+                        </div>
+
+                        <!-- Withdrawal Form -->
+                        <div x-show="selectedMethod" x-transition class="mt-8 p-6 bg-accent rounded-xl">
+                            <h3 class="text-xl font-bold mb-4">Para Çekme Detayları</h3>
+                            
+                            <!-- Amount -->
+                            <div class="mb-6">
+                                <label class="block text-sm font-medium mb-2">Çekim Tutarı</label>
+                                <div class="relative">
+                                    <input type="number" 
+                                           placeholder="0"
+                                           max="1122.50"
+                                           class="w-full bg-secondary border border-gray-600 rounded-lg px-4 py-3 text-white text-xl font-bold text-center focus:outline-none input-focus transition-all">
+                                    <div class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gold font-bold">₺</div>
+                                </div>
+                                
+                                <!-- Quick amounts -->
+                                <div class="grid grid-cols-4 gap-2 mt-3">
+                                    <button class="bg-secondary border border-gray-600 rounded-lg py-2 text-sm hover:border-gold transition-colors">₺250</button>
+                                    <button class="bg-secondary border border-gray-600 rounded-lg py-2 text-sm hover:border-gold transition-colors">₺500</button>
+                                    <button class="bg-secondary border border-gray-600 rounded-lg py-2 text-sm hover:border-gold transition-colors">₺750</button>
+                                    <button class="bg-gold text-black border border-gold rounded-lg py-2 text-sm font-bold hover:bg-yellow-500 transition-colors">Tümü</button>
+                                </div>
+                                
+                                <div class="mt-2 text-xs text-gray-400">
+                                    Mevcut bakiye: <span class="text-gold">₺1.122,50</span>
+                                </div>
+                            </div>
+
+                            <!-- Bank Transfer Form -->
+                            <div x-show="selectedMethod === 'bank-transfer'" x-transition class="space-y-4">
+                                <div>
+                                    <label class="block text-sm font-medium mb-2">Banka</label>
+                                    <select class="w-full bg-secondary border border-gray-600 rounded-lg px-4 py-3 text-white focus:outline-none input-focus transition-all">
+                                        <option>Banka Seçiniz</option>
+                                        <option>Türkiye İş Bankası</option>
+                                        <option>Garanti BBVA</option>
+                                        <option>Yapı Kredi</option>
+                                        <option>Akbank</option>
+                                        <option>Ziraat Bankası</option>
+                                        <option>Halkbank</option>
+                                        <option>Vakıfbank</option>
+                                        <option>QNB Finansbank</option>
+                                        <option>Diğer</option>
+                                    </select>
+                                </div>
+                                <div class="grid grid-cols-2 gap-4">
+                                    <div>
+                                        <label class="block text-sm font-medium mb-2">Hesap Sahibi Adı</label>
+                                        <input type="text" 
+                                               placeholder="Ad Soyad"
+                                               class="w-full bg-secondary border border-gray-600 rounded-lg px-4 py-3 text-white focus:outline-none input-focus transition-all">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium mb-2">TC Kimlik No</label>
+                                        <input type="text" 
+                                               placeholder="12345678901"
+                                               class="w-full bg-secondary border border-gray-600 rounded-lg px-4 py-3 text-white focus:outline-none input-focus transition-all">
+                                    </div>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium mb-2">IBAN</label>
+                                    <input type="text" 
+                                           placeholder="TR12 3456 7890 1234 5678 9012 34"
+                                           class="w-full bg-secondary border border-gray-600 rounded-lg px-4 py-3 text-white focus:outline-none input-focus transition-all">
+                                </div>
+                            </div>
+
+                            <!-- Crypto Form -->
+                            <div x-show="selectedMethod === 'crypto'" x-transition class="space-y-4">
+                                <div>
+                                    <label class="block text-sm font-medium mb-2">Kripto Para</label>
+                                    <select class="w-full bg-secondary border border-gray-600 rounded-lg px-4 py-3 text-white focus:outline-none input-focus transition-all">
+                                        <option>Bitcoin (BTC)</option>
+                                        <option>Ethereum (ETH)</option>
+                                        <option>Tether (USDT)</option>
+                                        <option>Binance Coin (BNB)</option>
+                                        <option>Litecoin (LTC)</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium mb-2">Cüzdan Adresi</label>
+                                    <input type="text" 
+                                           placeholder="Kripto para cüzdan adresinizi girin"
+                                           class="w-full bg-secondary border border-gray-600 rounded-lg px-4 py-3 text-white focus:outline-none input-focus transition-all">
+                                </div>
+                                <div class="bg-yellow-600 text-black p-3 rounded-lg text-sm">
+                                    <i class="fas fa-exclamation-triangle mr-2"></i>
+                                    <strong>Dikkat:</strong> Cüzdan adresini kontrol edin. Yanlış adres para kaybına neden olabilir.
+                                </div>
+                            </div>
+
+                            <!-- E-Wallet Form -->
+                            <div x-show="selectedMethod === 'ewallet'" x-transition class="space-y-4">
+                                <div>
+                                    <label class="block text-sm font-medium mb-2">E-Cüzdan Türü</label>
+                                    <select class="w-full bg-secondary border border-gray-600 rounded-lg px-4 py-3 text-white focus:outline-none input-focus transition-all">
+                                        <option>PayPal</option>
+                                        <option>Skrill</option>
+                                        <option>Neteller</option>
+                                        <option>ecoPayz</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium mb-2">E-posta/Hesap ID</label>
+                                    <input type="text" 
+                                           placeholder="E-cüzdan hesap bilginizi girin"
+                                           class="w-full bg-secondary border border-gray-600 rounded-lg px-4 py-3 text-white focus:outline-none input-focus transition-all">
+                                </div>
+                            </div>
+
+                            <!-- Additional Info -->
+                            <div class="mt-6 p-4 bg-secondary rounded-lg">
+                                <h4 class="font-bold mb-2 flex items-center">
+                                    <i class="fas fa-info-circle text-blue-500 mr-2"></i>
+                                    Önemli Bilgiler
+                                </h4>
+                                <ul class="text-sm space-y-1 text-gray-300">
+                                    <li>• Para çekme işlemi 1-24 saat içinde gerçekleşir</li>
+                                    <li>• Kimlik doğrulaması gerekli olabilir</li>
+                                    <li>• Günlük çekim limiti: ₺10.000</li>
+                                    <li>• Aylık çekim limiti: ₺100.000</li>
+                                </ul>
+                            </div>
+
+                            <!-- Submit Button -->
+                            <button class="w-full bg-gold text-black py-3 rounded-lg font-bold text-lg hover:bg-yellow-500 transition-colors mt-6">
+                                <i class="fas fa-money-bill-wave mr-2"></i>Para Çekme Talebini Gönder
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sidebar -->
+            <div class="space-y-6">
+                <!-- Balance Info -->
+                <div class="bg-secondary rounded-xl p-6 border border-accent">
+                    <h3 class="text-xl font-bold mb-4">Bakiye Bilgileri</h3>
+                    <div class="space-y-3">
+                        <div class="flex justify-between">
+                            <span>Ana Bakiye:</span>
+                            <span class="text-gold font-bold">₺1.122,50</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span>Bonus Bakiye:</span>
+                            <span class="text-blue-400 font-bold">₺125,00</span>
+                        </div>
+                        <div class="flex justify-between border-t border-accent pt-2">
+                            <span>Çekilebilir:</span>
+                            <span class="text-green-400 font-bold">₺1.122,50</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span>Çevrim Gereken:</span>
+                            <span class="text-orange-400 font-bold">₺375,00</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Withdrawal History -->
+                <div class="bg-secondary rounded-xl p-6 border border-accent">
+                    <h3 class="text-xl font-bold mb-4">Para Çekme Geçmişi</h3>
+                    <div class="space-y-3">
+                        <div class="flex justify-between items-center pb-2 border-b border-accent">
+                            <div>
+                                <div class="font-medium">₺750</div>
+                                <div class="text-xs text-gray-400">Banka Havalesi</div>
+                                <div class="text-xs text-gray-400">15.03.2024</div>
+                            </div>
+                            <div class="text-green-500 text-xs bg-green-500/20 px-2 py-1 rounded">
+                                Tamamlandı
+                            </div>
+                        </div>
+                        <div class="flex justify-between items-center pb-2 border-b border-accent">
+                            <div>
+                                <div class="font-medium">₺500</div>
+                                <div class="text-xs text-gray-400">Bitcoin</div>
+                                <div class="text-xs text-gray-400">12.03.2024</div>
+                            </div>
+                            <div class="text-green-500 text-xs bg-green-500/20 px-2 py-1 rounded">
+                                Tamamlandı
+                            </div>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <div>
+                                <div class="font-medium">₺300</div>
+                                <div class="text-xs text-gray-400">Banka Havalesi</div>
+                                <div class="text-xs text-gray-400">10.03.2024</div>
+                            </div>
+                            <div class="text-yellow-500 text-xs bg-yellow-500/20 px-2 py-1 rounded">
+                                İşlemde
+                            </div>
+                        </div>
+                    </div>
+                    <a href="#" class="block text-center text-gold text-sm hover:text-yellow-500 mt-4">
+                        Tümünü Gör <i class="fas fa-arrow-right ml-1"></i>
+                    </a>
+                </div>
+
+                <!-- Limits & Fees -->
+                <div class="bg-secondary rounded-xl p-6 border border-accent">
+                    <h3 class="text-xl font-bold mb-4">Limitler & Ücretler</h3>
+                    <div class="space-y-3 text-sm">
+                        <div class="flex justify-between">
+                            <span>Günlük Limit:</span>
+                            <span>₺10.000</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span>Aylık Limit:</span>
+                            <span>₺100.000</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span>Min. Çekim:</span>
+                            <span>₺75</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span>İşlem Ücreti:</span>
+                            <span>%0-3</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Support -->
+                <div class="bg-secondary rounded-xl p-6 border border-accent text-center">
+                    <div class="text-gold text-3xl mb-3">
+                        <i class="fas fa-headset"></i>
+                    </div>
+                    <h3 class="font-bold mb-2">Yardım mı gerekiyor?</h3>
+                    <p class="text-sm text-gray-400 mb-4">7/24 destek hizmetimiz</p>
+                    <button class="bg-gold text-black px-4 py-2 rounded-lg font-medium hover:bg-yellow-500 transition-colors">
+                        <i class="fas fa-comments mr-2"></i>Canlı Destek
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-darkgray border-t border-accent mt-16">
+        <div class="container mx-auto px-4 py-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-gold font-bold text-lg mb-4">BetGround</h3>
+                    <p class="text-gray-400 text-sm">Güvenilir ve eğlenceli bahis deneyimi</p>
+                </div>
+                <div>
+                    <h4 class="text-white font-medium mb-4">Oyunlar</h4>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><a href="canli-casino.html" class="hover:text-gold">Canlı Casino</a></li>
+                        <li><a href="slot.html" class="hover:text-gold">Slot Oyunları</a></li>
+                        <li><a href="canli-bahis.html" class="hover:text-gold">Spor Bahisleri</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-medium mb-4">Hesap</h4>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><a href="para-yatir.html" class="hover:text-gold">Para Yatır</a></li>
+                        <li><a href="para-cek.html" class="hover:text-gold">Para Çek</a></li>
+                        <li><a href="promosyonlar.html" class="hover:text-gold">Promosyonlar</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-medium mb-4">Destek</h4>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><a href="#" class="hover:text-gold">Canlı Destek</a></li>
+                        <li><a href="#" class="hover:text-gold">SSS</a></li>
+                        <li><a href="#" class="hover:text-gold">İletişim</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-accent mt-8 pt-8 text-center">
+                <p class="text-gray-400 text-sm">&copy; 2024 BetGround. Tüm hakları saklıdır.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

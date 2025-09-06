@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="tr" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BetGround - Kayıt Ol</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#1a1a1a',
+                        secondary: '#2a2a2a',
+                        accent: '#3a3a3a',
+                        gold: '#ffd700',
+                        darkgray: '#171717'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .bg-gradient-dark {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+        }
+        .bg-gradient-gold {
+            background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+        }
+        .text-glow {
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+        }
+        .register-card {
+            backdrop-filter: blur(10px);
+            background: rgba(42, 42, 42, 0.95);
+        }
+        .input-focus:focus {
+            border-color: #ffd700;
+            box-shadow: 0 0 0 2px rgba(255, 215, 0, 0.2);
+        }
+        .step-indicator {
+            transition: all 0.3s ease;
+        }
+        .step-active {
+            background: #ffd700;
+            color: #000;
+        }
+        .step-completed {
+            background: #10b981;
+            color: #fff;
+        }
+    </style>
+</head>
+<body class="bg-primary text-white min-h-screen">
+    <!-- News Bar -->
+    <div class="bg-gold text-black text-center py-2 text-sm font-medium">
+        <div class="container mx-auto">
+            <span class="animate-pulse">📢 Site adresimiz 455.com dur bir sonraki adres 456.com olacaktır</span>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="bg-secondary shadow-lg border-b border-accent">
+        <div class="container mx-auto px-4">
+            <div class="flex items-center justify-between h-16">
+                <!-- Logo -->
+                <div class="flex items-center">
+                    <a href="index.html" class="text-gold text-2xl font-bold text-glow">
+                        <i class="fas fa-dice mr-2"></i>BetGround
+                    </a>
+                </div>
+
+                <!-- Navigation Links -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="index.html" class="flex items-center text-white hover:text-gold transition-colors">
+                        <i class="fas fa-home mr-2"></i>Ana Sayfa
+                    </a>
+                    <a href="canli-casino.html" class="flex items-center text-white hover:text-gold transition-colors">
+                        <i class="fas fa-video mr-2"></i>Canlı Casino
+                    </a>
+                    <a href="canli-bahis.html" class="flex items-center text-white hover:text-gold transition-colors">
+                        <i class="fas fa-futbol mr-2"></i>Canlı Bahis
+                    </a>
+                    <a href="slot.html" class="flex items-center text-white hover:text-gold transition-colors">
+                        <i class="fas fa-gamepad mr-2"></i>Slot
+                    </a>
+                    <a href="oyunlar.html" class="flex items-center text-white hover:text-gold transition-colors">
+                        <i class="fas fa-puzzle-piece mr-2"></i>Oyunlar
+                    </a>
+                    <a href="e-sporlar.html" class="flex items-center text-white hover:text-gold transition-colors">
+                        <i class="fas fa-desktop mr-2"></i>E-Sporlar
+                    </a>
+                    <a href="sanal-sporlar.html" class="flex items-center text-white hover:text-gold transition-colors">
+                        <i class="fas fa-robot mr-2"></i>Sanal Sporlar
+                    </a>
+                    <a href="promosyonlar.html" class="flex items-center text-white hover:text-gold transition-colors">
+                        <i class="fas fa-gift mr-2"></i>Promosyonlar
+                    </a>
+                </div>
+
+                <!-- Back to Home -->
+                <div class="flex items-center space-x-4">
+                    <a href="index.html" class="text-white hover:text-gold transition-colors">
+                        <i class="fas fa-arrow-left mr-2"></i>Ana Sayfaya Dön
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Bonus Banner -->
+    <section class="bg-gradient-gold text-black py-6">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-2xl font-bold mb-2">🎉 Hoş Geldin Bonusu 🎉</h2>
+            <p class="text-lg">İlk yatırımınıza <strong>%200 BONUS</strong> + <strong>100 Freespin</strong></p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="py-12 px-4">
+        <div class="max-w-2xl mx-auto">
+            <!-- Registration Card -->
+            <div class="register-card rounded-2xl p-8 border border-accent">
+                <div class="text-center mb-8">
+                    <h1 class="text-3xl font-bold text-glow mb-2">Kayıt Ol</h1>
+                    <p class="text-gray-300">Hemen hesap oluşturun ve bonuslardan faydalanın</p>
+                </div>
+
+                <!-- Registration Form -->
+                <form x-data="{ 
+                    step: 1, 
+                    showPassword: false,
+                    showConfirmPassword: false,
+                    form: {
+                        email: '',
+                        username: '',
+                        password: '',
+                        confirmPassword: '',
+                        firstName: '',
+                        lastName: '',
+                        phone: '',
+                        birthDate: '',
+                        gender: '',
+                        country: 'TR',
+                        currency: 'TRY',
+                        promoCode: '',
+                        acceptTerms: false,
+                        acceptMarketing: false
+                    }
+                }" class="space-y-6">
+
+                    <!-- Step Indicator -->
+                    <div class="flex items-center justify-center mb-8">
+                        <div class="flex items-center space-x-4">
+                            <div :class="step >= 1 ? (step > 1 ? 'step-completed' : 'step-active') : ''" 
+                                 class="step-indicator w-10 h-10 rounded-full bg-accent flex items-center justify-center font-bold">
+                                <span x-show="step === 1">1</span>
+                                <i x-show="step > 1" class="fas fa-check"></i>
+                            </div>
+                            <div class="w-16 h-1 bg-accent"></div>
+                            <div :class="step >= 2 ? (step > 2 ? 'step-completed' : 'step-active') : ''" 
+                                 class="step-indicator w-10 h-10 rounded-full bg-accent flex items-center justify-center font-bold">
+                                <span x-show="step <= 2">2</span>
+                                <i x-show="step > 2" class="fas fa-check"></i>
+                            </div>
+                            <div class="w-16 h-1 bg-accent"></div>
+                            <div :class="step >= 3 ? 'step-active' : ''" 
+                                 class="step-indicator w-10 h-10 rounded-full bg-accent flex items-center justify-center font-bold">3</div>
+                        </div>
+                    </div>
+
+                    <!-- Step 1: Account Information -->
+                    <div x-show="step === 1" x-transition class="space-y-6">
+                        <h3 class="text-xl font-bold text-center mb-6">Hesap Bilgileri</h3>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <!-- Email -->
+                            <div>
+                                <label for="email" class="block text-sm font-medium mb-2">E-posta</label>
+                                <input type="email" 
+                                       id="email" 
+                                       x-model="form.email"
+                                       class="w-full bg-accent border border-gray-600 rounded-lg px-4 py-3 text-white placeholder-gray-400 focus:outline-none input-focus transition-all"
+                                       placeholder="ornek@email.com">
+                            </div>
+
+                            <!-- Username -->
+                            <div>
+                                <label for="username" class="block text-sm font-medium mb-2">Kullanıcı Adı</label>
+                                <input type="text" 
+                                       id="username" 
+                                       x-model="form.username"
+                                       class="w-full bg-accent border border-gray-600 rounded-lg px-4 py-3 text-white placeholder-gray-400 focus:outline-none input-focus transition-all"
+                                       placeholder="Kullanıcı adınız">
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <!-- Password -->
+                            <div>
+                                <label for="password" class="block text-sm font-medium mb-2">Şifre</label>
+                                <div class="relative">
+                                    <input :type="showPassword ? 'text' : 'password'" 
+                                           id="password" 
+                                           x-model="form.password"
+                                           class="w-full bg-accent border border-gray-600 rounded-lg px-4 py-3 text-white placeholder-gray-400 focus:outline-none input-focus transition-all pr-12"
+                                           placeholder="Şifreniz (min. 8 karakter)">
+                                    <button type="button" 
+                                            @click="showPassword = !showPassword"
+                                            class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gold transition-colors">
+                                        <i :class="showPassword ? 'fas fa-eye-slash' : 'fas fa-eye'"></i>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Confirm Password -->
+                            <div>
+                                <label for="confirmPassword" class="block text-sm font-medium mb-2">Şifre Tekrar</label>
+                                <div class="relative">
+                                    <input :type="showConfirmPassword ? 'text' : 'password'" 
+                                           id="confirmPassword" 
+                                           x-model="form.confirmPassword"
+                                           class="w-full bg-accent border border-gray-600 rounded-lg px-4 py-3 text-white placeholder-gray-400 focus:outline-none input-focus transition-all pr-12"
+                                           placeholder="Şifrenizi tekrar girin">
+                                    <button type="button" 
+                                            @click="showConfirmPassword = !showConfirmPassword"
+                                            class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gold transition-colors">
+                                        <i :class="showConfirmPassword ? 'fas fa-eye-slash' : 'fas fa-eye'"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button type="button" 
+                                @click="step = 2"
+                                class="w-full bg-gold text-black py-3 rounded-lg font-bold text-lg hover:bg-yellow-500 transition-colors">
+                            İleri <i class="fas fa-arrow-right ml-2"></i>
+                        </button>
+                    </div>
+
+                    <!-- Step 2: Personal Information -->
+                    <div x-show="step === 2" x-transition class="space-y-6">
+                        <h3 class="text-xl font-bold text-center mb-6">Kişisel Bilgiler</h3>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <!-- First Name -->
+                            <div>
+                                <label for="firstName" class="block text-sm font-medium mb-2">Ad</label>
+                                <input type="text" 
+                                       id="firstName" 
+                                       x-model="form.firstName"
+                                       class="w-full bg-accent border border-gray-600 rounded-lg px-4 py-3 text-white placeholder-gray-400 focus:outline-none input-focus transition-all"
+                                       placeholder="Adınız">
+                            </div>
+
+                            <!-- Last Name -->
+                            <div>
+                                <label for="lastName" class="block text-sm font-medium mb-2">Soyad</label>
+                                <input type="text" 
+                                       id="lastName" 
+                                       x-model="form.lastName"
+                                       class="w-full bg-accent border border-gray-600 rounded-lg px-4 py-3 text-white placeholder-gray-400 focus:outline-none input-focus transition-all"
+                                       placeholder="Soyadınız">
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <!-- Phone -->
+                            <div>
+                                <label for="phone" class="block text-sm font-medium mb-2">Telefon</label>
+                                <input type="tel" 
+                                       id="phone" 
+                                       x-model="form.phone"
+                                       class="w-full bg-accent border border-gray-600 rounded-lg px-4 py-3 text-white placeholder-gray-400 focus:outline-none input-focus transition-all"
+                                       placeholder="05XX XXX XX XX">
+                            </div>
+
+                            <!-- Birth Date -->
+                            <div>
+                                <label for="birthDate" class="block text-sm font-medium mb-2">Doğum Tarihi</label>
+                                <input type="date" 
+                                       id="birthDate" 
+                                       x-model="form.birthDate"
+                                       class="w-full bg-accent border border-gray-600 rounded-lg px-4 py-3 text-white focus:outline-none input-focus transition-all">
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <!-- Gender -->
+                            <div>
+                                <label for="gender" class="block text-sm font-medium mb-2">Cinsiyet</label>
+                                <select id="gender" 
+                                        x-model="form.gender"
+                                        class="w-full bg-accent border border-gray-600 rounded-lg px-4 py-3 text-white focus:outline-none input-focus transition-all">
+                                    <option value="">Seçiniz</option>
+                                    <option value="male">Erkek</option>
+                                    <option value="female">Kadın</option>
+                                    <option value="other">Diğer</option>
+                                </select>
+                            </div>
+
+                            <!-- Currency -->
+                            <div>
+                                <label for="currency" class="block text-sm font-medium mb-2">Para Birimi</label>
+                                <select id="currency" 
+                                        x-model="form.currency"
+                                        class="w-full bg-accent border border-gray-600 rounded-lg px-4 py-3 text-white focus:outline-none input-focus transition-all">
+                                    <option value="TRY">Türk Lirası (₺)</option>
+                                    <option value="USD">US Dollar ($)</option>
+                                    <option value="EUR">Euro (€)</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Promo Code -->
+                        <div>
+                            <label for="promoCode" class="block text-sm font-medium mb-2">Promosyon Kodu (Opsiyonel)</label>
+                            <input type="text" 
+                                   id="promoCode" 
+                                   x-model="form.promoCode"
+                                   class="w-full bg-accent border border-gray-600 rounded-lg px-4 py-3 text-white placeholder-gray-400 focus:outline-none input-focus transition-all"
+                                   placeholder="Promosyon kodunuz">
+                        </div>
+
+                        <div class="flex space-x-4">
+                            <button type="button" 
+                                    @click="step = 1"
+                                    class="flex-1 bg-accent text-white py-3 rounded-lg font-bold text-lg hover:bg-gray-600 transition-colors">
+                                <i class="fas fa-arrow-left mr-2"></i>Geri
+                            </button>
+                            <button type="button" 
+                                    @click="step = 3"
+                                    class="flex-1 bg-gold text-black py-3 rounded-lg font-bold text-lg hover:bg-yellow-500 transition-colors">
+                                İleri <i class="fas fa-arrow-right ml-2"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Step 3: Terms and Confirmation -->
+                    <div x-show="step === 3" x-transition class="space-y-6">
+                        <h3 class="text-xl font-bold text-center mb-6">Şartlar ve Onay</h3>
+                        
+                        <!-- Terms -->
+                        <div class="space-y-4">
+                            <label class="flex items-start">
+                                <input type="checkbox" 
+                                       x-model="form.acceptTerms"
+                                       class="w-5 h-5 text-gold bg-accent border-gray-600 rounded focus:ring-gold focus:ring-2 mt-1">
+                                <span class="ml-3 text-sm text-gray-300">
+                                    <a href="#" class="text-gold hover:text-yellow-500">Kullanım Şartları</a> ve 
+                                    <a href="#" class="text-gold hover:text-yellow-500">Gizlilik Politikası</a>'nı okudum ve kabul ediyorum.
+                                </span>
+                            </label>
+
+                            <label class="flex items-start">
+                                <input type="checkbox" 
+                                       x-model="form.acceptMarketing"
+                                       class="w-5 h-5 text-gold bg-accent border-gray-600 rounded focus:ring-gold focus:ring-2 mt-1">
+                                <span class="ml-3 text-sm text-gray-300">
+                                    Promosyonlar ve kampanyalar hakkında e-posta almak istiyorum.
+                                </span>
+                            </label>
+                        </div>
+
+                        <!-- Age Verification -->
+                        <div class="bg-accent p-4 rounded-lg">
+                            <div class="flex items-center text-yellow-500 mb-2">
+                                <i class="fas fa-exclamation-triangle mr-2"></i>
+                                <span class="font-medium">Yaş Sınırı</span>
+                            </div>
+                            <p class="text-sm text-gray-300">
+                                18 yaşından büyük olduğunuzu ve sorumlu oyun oynayacağınızı onaylıyorsunuz.
+                            </p>
+                        </div>
+
+                        <div class="flex space-x-4">
+                            <button type="button" 
+                                    @click="step = 2"
+                                    class="flex-1 bg-accent text-white py-3 rounded-lg font-bold text-lg hover:bg-gray-600 transition-colors">
+                                <i class="fas fa-arrow-left mr-2"></i>Geri
+                            </button>
+                            <button type="submit" 
+                                    :disabled="!form.acceptTerms"
+                                    :class="form.acceptTerms ? 'bg-gold hover:bg-yellow-500' : 'bg-gray-600 cursor-not-allowed'"
+                                    class="flex-1 text-black py-3 rounded-lg font-bold text-lg transition-colors">
+                                <i class="fas fa-user-plus mr-2"></i>Kayıt Ol
+                            </button>
+                        </div>
+                    </div>
+                </form>
+
+                <!-- Login Link -->
+                <div class="text-center mt-8 pt-6 border-t border-gray-600">
+                    <p class="text-gray-300">
+                        Zaten hesabınız var mı? 
+                        <a href="giris.html" class="text-gold hover:text-yellow-500 font-medium transition-colors">
+                            Giriş yapın
+                        </a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Benefits Section -->
+    <section class="bg-secondary py-16">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-12">Neden BetGround'u Seçmelisiniz?</h2>
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div class="text-center">
+                    <div class="text-gold text-4xl mb-4">
+                        <i class="fas fa-gift"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">%200 Bonus</h3>
+                    <p class="text-gray-300">İlk yatırımınıza devasa bonus</p>
+                </div>
+                <div class="text-center">
+                    <div class="text-gold text-4xl mb-4">
+                        <i class="fas fa-gamepad"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">5000+ Oyun</h3>
+                    <p class="text-gray-300">Binlerce slot ve casino oyunu</p>
+                </div>
+                <div class="text-center">
+                    <div class="text-gold text-4xl mb-4">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">Güvenli</h3>
+                    <p class="text-gray-300">SSL şifreleme ve lisanslı</p>
+                </div>
+                <div class="text-center">
+                    <div class="text-gold text-4xl mb-4">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">Hızlı Ödemeler</h3>
+                    <p class="text-gray-300">Anında para yatırma ve çekme</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-darkgray border-t border-accent">
+        <div class="container mx-auto px-4 py-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-gold font-bold text-lg mb-4">BetGround</h3>
+                    <p class="text-gray-400 text-sm">Güvenilir ve eğlenceli bahis deneyimi</p>
+                </div>
+                <div>
+                    <h4 class="text-white font-medium mb-4">Oyunlar</h4>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><a href="canli-casino.html" class="hover:text-gold">Canlı Casino</a></li>
+                        <li><a href="slot.html" class="hover:text-gold">Slot Oyunları</a></li>
+                        <li><a href="canli-bahis.html" class="hover:text-gold">Spor Bahisleri</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-medium mb-4">Hesap</h4>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><a href="para-yatir.html" class="hover:text-gold">Para Yatır</a></li>
+                        <li><a href="para-cek.html" class="hover:text-gold">Para Çek</a></li>
+                        <li><a href="promosyonlar.html" class="hover:text-gold">Promosyonlar</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-medium mb-4">Destek</h4>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><a href="#" class="hover:text-gold">Canlı Destek</a></li>
+                        <li><a href="#" class="hover:text-gold">SSS</a></li>
+                        <li><a href="#" class="hover:text-gold">İletişim</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-accent mt-8 pt-8 text-center">
+                <p class="text-gray-400 text-sm">&copy; 2024 BetGround. Tüm hakları saklıdır.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
