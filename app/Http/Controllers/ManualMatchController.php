@@ -125,4 +125,40 @@ class ManualMatchController extends Controller
             'markets' => $markets
         ]);
     }
+    
+    /**
+     * Get live manual matches
+     */
+    public function getLiveMatches()
+    {
+        $liveMatches = ManualMatch::where('is_live', true)
+            ->orderBy('created_at', 'desc')
+            ->get()
+            ->map(function($match) {
+                return [
+                    'id' => 'manual-' . $match->id,
+                    'home_team' => $match->home_team,
+                    'away_team' => $match->away_team,
+                    'league' => $match->league,
+                    'home_score' => $match->home_score,
+                    'away_score' => $match->away_score,
+                    'minute' => $match->getCurrentMinuteAttribute(),
+                    'odds' => [
+                        'home' => $match->odds['match_result']['home'] ?? 2.00,
+                        'draw' => $match->odds['match_result']['draw'] ?? 3.20,
+                        'away' => $match->odds['match_result']['away'] ?? 3.50,
+                    ],
+                    'bestOdds' => [
+                        'home' => $match->odds['match_result']['home'] ?? 2.00,
+                        'draw' => $match->odds['match_result']['draw'] ?? 3.20,
+                        'away' => $match->odds['match_result']['away'] ?? 3.50,
+                    ]
+                ];
+            });
+        
+        return response()->json([
+            'success' => true,
+            'matches' => $liveMatches
+        ]);
+    }
 }

@@ -76,6 +76,26 @@ class RegisterController extends Controller
             ]);
 
             // Cüzdan otomatik olarak User model observer'ı tarafından oluşturulur
+            
+            // 500 TL Hoşgeldin Bonusu ver (gerçek para olarak)
+            if ($user->wallet) {
+                $user->wallet->balance += 500;
+                $user->wallet->save();
+                
+                // Transaction kaydı oluştur
+                $user->wallet->transactions()->create([
+                    'user_id' => $user->id,
+                    'type' => 'bonus',
+                    'amount' => 500,
+                    'balance_before' => 0,
+                    'balance_after' => 500,
+                    'currency' => 'TRY',
+                    'description' => 'Hoşgeldin Bonusu - 500 TL',
+                    'reference_type' => 'welcome_bonus',
+                    'reference_id' => $user->id,
+                    'status' => 'completed'
+                ]);
+            }
 
             // Email doğrulama maili gönder (opsiyonel)
             // $user->sendEmailVerificationNotification();
@@ -85,7 +105,7 @@ class RegisterController extends Controller
             // Kullanıcıyı giriş yap
             auth()->login($user);
 
-            return redirect('/')->with('success', 'Hesabınız başarıyla oluşturuldu! Hoş geldiniz.');
+            return redirect('/')->with('success', 'Hesabınız başarıyla oluşturuldu! 500 TL hoşgeldin bonusu hesabınıza tanımlandı. İyi şanslar!');
             
         } catch (\Exception $e) {
             DB::rollBack();

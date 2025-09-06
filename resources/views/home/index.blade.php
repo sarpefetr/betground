@@ -359,7 +359,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Canlı maçları yükle
 function loadLiveMatchesForHome() {
-    fetch('/api/sports/live-matches')
+    // Manuel maçları çek
+    fetch('/api/manual-matches/live')
         .then(response => response.json())
         .then(data => {
             const container = document.getElementById('liveMatchesContainer');

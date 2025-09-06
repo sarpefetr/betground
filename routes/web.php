@@ -41,28 +41,29 @@ Route::middleware(['auth'])->group(function () {
     // Dynamic Payment Pages
     Route::get('/payment/{paymentMethod:slug}', [\App\Http\Controllers\PaymentController::class, 'show'])->name('payment.method');
     Route::post('/payment/{paymentMethod:slug}/process', [\App\Http\Controllers\PaymentController::class, 'process'])->name('payment.process');
-
-    // Sports Betting API Routes
-    Route::prefix('api/sports')->name('api.sports.')->group(function () {
-        Route::get('live-matches', [\App\Http\Controllers\SportsBettingController::class, 'getLiveMatches'])->name('live-matches');
-        Route::get('upcoming-matches', [\App\Http\Controllers\SportsBettingController::class, 'getUpcomingMatches'])->name('upcoming-matches');
-        Route::get('match/{matchId}', [\App\Http\Controllers\SportsBettingController::class, 'getMatchDetails'])->name('match-details');
-        Route::get('match/{matchId}/markets', [\App\Http\Controllers\SportsBettingController::class, 'getMatchAllMarkets'])->name('match-markets');
-        Route::post('match/{matchId}/refresh-odds', [\App\Http\Controllers\SportsBettingController::class, 'refreshOdds'])->name('refresh-odds');
-    });
-    
-    // Bet Slip Routes
-    Route::prefix('api/betslip')->name('api.betslip.')->group(function () {
-        Route::get('/', [\App\Http\Controllers\BetSlipController::class, 'getBetSlip'])->name('get');
-        Route::post('/add', [\App\Http\Controllers\BetSlipController::class, 'addToBetSlip'])->name('add');
-        Route::delete('/remove/{id}', [\App\Http\Controllers\BetSlipController::class, 'removeFromBetSlip'])->name('remove');
-        Route::delete('/clear', [\App\Http\Controllers\BetSlipController::class, 'clearBetSlip'])->name('clear');
-        Route::post('/place', [\App\Http\Controllers\BetSlipController::class, 'placeBet'])->name('place');
-    });
-    
-    // Manuel Maç API Routes (Public)
-    Route::get('/api/manual-matches/{manualMatch}/markets', [\App\Http\Controllers\ManualMatchController::class, 'getMarkets'])->name('api.manual-matches.markets');
 });
+
+// API Routes (Public - No Auth Required)
+Route::prefix('api/sports')->name('api.sports.')->group(function () {
+    Route::get('live-matches', [\App\Http\Controllers\SportsBettingController::class, 'getLiveMatches'])->name('live-matches');
+    Route::get('upcoming-matches', [\App\Http\Controllers\SportsBettingController::class, 'getUpcomingMatches'])->name('upcoming-matches');
+    Route::get('match/{matchId}', [\App\Http\Controllers\SportsBettingController::class, 'getMatchDetails'])->name('match-details');
+    Route::get('match/{matchId}/markets', [\App\Http\Controllers\SportsBettingController::class, 'getMatchAllMarkets'])->name('match-markets');
+    Route::post('match/{matchId}/refresh-odds', [\App\Http\Controllers\SportsBettingController::class, 'refreshOdds'])->name('refresh-odds');
+});
+
+// Bet Slip Routes (Public - Session Based)
+Route::prefix('api/betslip')->name('api.betslip.')->group(function () {
+    Route::get('/', [\App\Http\Controllers\BetSlipController::class, 'getBetSlip'])->name('get');
+    Route::post('/add', [\App\Http\Controllers\BetSlipController::class, 'addToBetSlip'])->name('add');
+    Route::delete('/remove/{id}', [\App\Http\Controllers\BetSlipController::class, 'removeFromBetSlip'])->name('remove');
+    Route::delete('/clear', [\App\Http\Controllers\BetSlipController::class, 'clearBetSlip'])->name('clear');
+    Route::post('/place', [\App\Http\Controllers\BetSlipController::class, 'placeBet'])->name('place')->middleware('auth');
+});
+
+// Manuel Maç API Routes (Public)
+Route::get('/api/manual-matches/live', [\App\Http\Controllers\ManualMatchController::class, 'getLiveMatches'])->name('api.manual-matches.live');
+Route::get('/api/manual-matches/{manualMatch}/markets', [\App\Http\Controllers\ManualMatchController::class, 'getMarkets'])->name('api.manual-matches.markets');
 
 // Oyun Sayfaları (Giriş gerektirmez ama giriş yapılmışsa kullanıcı bilgisi gösterilir)
 Route::get('/canli-casino', function () {

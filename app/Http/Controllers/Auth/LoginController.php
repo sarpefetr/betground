@@ -63,6 +63,14 @@ class LoginController extends Controller
             // Session yenileme
             $request->session()->regenerate();
 
+            // Intended URL kontrolü
+            $intended = redirect()->intended()->getTargetUrl();
+            
+            // Eğer API endpoint'ine yönlendiriyorsa, ana sayfaya yönlendir
+            if (str_contains($intended, '/api/') || str_contains($intended, 'api.')) {
+                return redirect('/')->with('success', 'Başarıyla giriş yaptınız!');
+            }
+            
             return redirect()->intended('/')->with('success', 'Başarıyla giriş yaptınız!');
         }
 
